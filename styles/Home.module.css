@@ -59,7 +59,7 @@
 }
 @keyframes warningAnim {
   0% {
-    color: hsl(0, 100%, 50%);
+    color: hsl(0, 100%, 60%);
     color: var(--grapefruit);
   }
   100% {

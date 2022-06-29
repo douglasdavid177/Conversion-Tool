@@ -109,12 +109,13 @@ export default function Home() {
 
             <input
               // type="text"
+              key="dec"
+              name="dec"
               type="number"
               //pattern="\d*"
               inputMode="decimal"
               value={decVal}
               onChange={(e) => {
-                //const result = e.target.value.replace(/\D/g, "");
                 let result = e.target.value;
                 console.log(result);
                 result = Math.abs(result);
@@ -127,15 +128,14 @@ export default function Home() {
           <label>
             <h3>Fraction denominator</h3>
             <input
+              key="den"
+              name="den"
               // type="text"
               type="text"
               //pattern="\d*"
               inputMode="decimal"
               value={denVal}
               onChange={(e) => {
-                // const result = e.target.value.replace(/\D/g, "");
-                // console.log(result);
-                // setDenVal(result);
                 let result = e.target.value;
                 console.log(result);
                 result = Math.abs(result);
