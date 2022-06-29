@@ -29,21 +29,22 @@ const InputSection = ({
             value={dec}
             inputMode="decimal"
             onChange={handleInputDec}
+            onBlur={validateInputDec}
           />
         </label>
         <label>
           <h3>Fraction denominator</h3>
           <input
-            key="den"
-            name="den"
+            // key="den"
+            // name="den"
             type="text"
             inputMode="decimal"
             value={den}
             onChange={(e) => {
               let result = e.target.value;
               console.log(result);
-              result = Math.abs(result);
               result = parseInt(result);
+              result = Math.abs(result);
               setDenFunc(result);
             }}
           />
@@ -57,9 +58,9 @@ const InputSection = ({
   }
   function validateInputDec() {
     let result = dec;
-
-    result = Math.abs(result);
     result = parseFloat(result);
+    result = Math.abs(result);
+
     const leftOverDecimal = result - Math.floor(result);
     console.log(result);
     setDecFunc(leftOverDecimal);
