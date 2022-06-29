@@ -55,9 +55,9 @@ export default function Home() {
 
             <input
               // type="text"
-              // pattern="\d*"
-              value={decVal}
               type="number"
+              pattern="\d*"
+              value={decVal}
               onChange={(e) => {
                 //const result = e.target.value.replace(/\D/g, "");
                 const result = e.target.value;
@@ -70,13 +70,16 @@ export default function Home() {
             <h3>Fraction denominator</h3>
             <input
               // type="text"
-              // pattern="{0-9}*"
               type="number"
+              pattern="\d*"
               value={denVal}
               onChange={(e) => {
-                const result = e.target.value.replace(/\D/g, "");
+                // const result = e.target.value.replace(/\D/g, "");
+                // console.log(result);
+                // setDenVal(result);
+                const result = e.target.value;
                 console.log(result);
-                setDenVal(result);
+                setDecVal(result);
               }}
             />
           </label>

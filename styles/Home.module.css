@@ -1,6 +1,8 @@
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 .content {
   display: flex;
@@ -9,7 +11,7 @@
   justify-content: center;
   text-align: left;
   /* width: 50%; */
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .content > * {
