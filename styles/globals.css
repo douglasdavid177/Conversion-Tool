@@ -4,7 +4,9 @@
   --yellow: #ffce54;
   --yellow-dark: #f6bb42;
   --grass: #a0d468;
-  --grass: #8cc152;
+  --grass-dark: #8cc152;
+  --aqua: #4fc1e9;
+  --aqua-dark: #3bafda;
 }
 html,
 body {

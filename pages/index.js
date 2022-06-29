@@ -4,30 +4,54 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
-  const [decVal, setDecVal] = useState(1);
-  const [denVal, setDenVal] = useState(1);
+  const [decVal, setDecVal] = useState(0);
+  const [denVal, setDenVal] = useState(0);
+  const [resultsVal, setResultsVal] = useState(-1);
+  const [resultsSndVal, setResultsSndVal] = useState(5);
   const calculate = (dec, den) => {
+    dec = Math.abs(dec);
+    den = Math.abs(den);
     const fractionsArray = new Array(den + 1);
-    for (let n = 0; n <= den; n++) {
+    let n = 0;
+    for (n = 0; n <= den; n++) {
       fractionsArray[n] = n / den;
     }
     console.log("fractions: ");
     console.log(fractionsArray);
-    // const closest = fractionsArray.reduce(function (prev, curr) {
-    //   return Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev;
-    // });
+    const leftOverDec = dec - Math.floor(dec);
+    const fractionsArrayCopy = [...fractionsArray];
+    const fractionsArrayCopy2 = [...fractionsArray];
+
+    const closest = fractionsArrayCopy.reduce(function (prev, curr) {
+      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
+        ? curr
+        : prev;
+    });
+
+    const closestIndex = fractionsArray.indexOf(closest);
+    fractionsArrayCopy2.splice(closestIndex, 1);
+    const secondClosest = fractionsArrayCopy2.reduce(function (prev, curr) {
+      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
+        ? curr
+        : prev;
+    });
+    const secondClosestIndex = fractionsArray.indexOf(secondClosest);
+    setResultsVal(closestIndex);
+    setResultsSndVal(secondClosestIndex);
     setShowResults(true);
   };
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <img
-          src="/buildingsvgturquoise.svg"
-          alt="An SVG of a construction worker checking a clipboard"
-          className={styles.heroimg}
-        />
-        <h4>Welcome to...</h4>
-        <h1>...Lucas&apos;s Conversion Tool!</h1>
+        <div className={styles.header}>
+          <img
+            src="/buildingsvgturquoise.svg"
+            alt="An SVG of a construction worker checking a clipboard"
+            className={styles.heroimg}
+          />
+          <h4>Welcome to...</h4>
+          <h1>...Lucas&apos;s Conversion Tool!</h1>
+        </div>
 
         <AnimatePresence exitBeforeEnter>
           <motion.div
@@ -43,7 +67,7 @@ export default function Home() {
         <div className={styles.buttonHolder}>
           <button
             onClick={() => {
-              showResults ? setShowResults(false) : calculate(decVal, denVal);
+              showResults ? resetInput() : gotoResults();
             }}
           >
             {showResults ? "Change Input" : "View Results"}
@@ -53,6 +77,14 @@ export default function Home() {
     </div>
   );
 
+  function gotoResults() {
+    console.log(showResults);
+    calculate(decVal, denVal);
+  }
+  function resetInput() {
+    setShowResults(false);
+    setResultsVal(-1);
+  }
   function InputSection() {
     return (
       <div className={styles.inputSection}>
@@ -72,8 +104,10 @@ export default function Home() {
               value={decVal}
               onChange={(e) => {
                 //const result = e.target.value.replace(/\D/g, "");
-                const result = e.target.value;
+                let result = e.target.value;
                 console.log(result);
+                result = Math.abs(result);
+                result = parseFloat(result);
                 setDecVal(result);
               }}
             />
@@ -90,8 +124,10 @@ export default function Home() {
                 // const result = e.target.value.replace(/\D/g, "");
                 // console.log(result);
                 // setDenVal(result);
-                const result = e.target.value;
+                let result = e.target.value;
                 console.log(result);
+                result = Math.abs(result);
+                result = parseInt(result);
                 setDenVal(result);
               }}
             />
@@ -102,9 +138,36 @@ export default function Home() {
   }
 
   function ResultsSection() {
+    let firstStyle =
+      resultsVal / denVal > decVal ? styles.higher : styles.lower;
+    firstStyle = resultsVal / denVal == decVal ? styles.correct : firstStyle;
+    let secondStyle =
+      resultsSndVal / denVal > decVal ? styles.higher : styles.lower;
     return (
       <div>
-        <h2>Results Section</h2>
+        <h2>Results</h2>
+        <h1>
+          {resultsVal}/{denVal}
+        </h1>
+        <h3>
+          is the closest fraction to the desired decimal. It's decimal value is{" "}
+          <span className={firstStyle}>
+            {(resultsVal / denVal).toFixed(2)}{" "}
+          </span>
+          while the desired value was{" "}
+          <span className={styles.correct}>
+            {parseFloat(decVal).toFixed(2)}
+          </span>
+          .{" "}
+          <span className={secondStyle}>
+            {resultsSndVal}/{denVal}
+          </span>{" "}
+          was the second closest, with a decimal value of{" "}
+          <span className={secondStyle}>
+            {(resultsSndVal / denVal).toFixed(2)}
+          </span>
+          .
+        </h3>
       </div>
     );
   }
