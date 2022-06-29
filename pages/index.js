@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence } from "framer-motion";
-import InputSection from "../components/inputSection";
+import InputSection from "../components/inputsection";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
