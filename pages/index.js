@@ -162,7 +162,8 @@ export default function Home() {
           {resultsVal}/{denVal}
         </h1>
         <h3>
-          is the closest fraction to the desired decimal. It's decimal value is{" "}
+          is the closest fraction to the desired decimal. It&apos;s decimal
+          value is{" "}
           <span className={firstStyle}>
             {(resultsVal / denVal).toFixed(2)}{" "}
           </span>
