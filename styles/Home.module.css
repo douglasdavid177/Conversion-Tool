@@ -113,7 +113,7 @@
   border-bottom: 3px solid white;
   color: white;
   text-align: center;
-  width: 2.5rem;
+  width: 3rem;
   transition: ease-in-out, width 0.25s;
 }
 
@@ -137,6 +137,29 @@
 }
 .correct {
   color: var(--turquoise);
+}
+.higherBig {
+  color: cyan;
+  color: var(--aqua);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: var(--aqua);
+  text-decoration-thickness: 5px;
+}
+.lowerBig {
+  color: yellow;
+  color: var(--yellow);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 5px;
+}
+.correctBig {
+  color: var(--turquoise);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: var(--turquoise);
+  text-decoration-thickness: 5px;
 }
 /* Media queries adjust the amount of columns based on the width of the screen, to better accommodate smaller devices  */
 @media only screen and (min-width: 678px) {
