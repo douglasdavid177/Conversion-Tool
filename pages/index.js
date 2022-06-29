@@ -12,7 +12,7 @@ export default function Home() {
           className={styles.heroimg}
         />
         <h4>Welcome to...</h4>
-        <h1>...Lucas\'s Conversion Tool!</h1>
+        <h1>...Lucas&apos;s Conversion Tool!</h1>
 
         {showResults ? <ResultsSection /> : <InputSection />}
         <div className={styles.buttonHolder}>
