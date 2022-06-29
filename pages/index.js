@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence } from "framer-motion";
+import InputSection from "../components/inputSection";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
@@ -66,7 +67,18 @@ export default function Home() {
             exit={{ y: -10, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {showResults ? <ResultsSection /> : <InputSection />}
+            {showResults ? (
+              <ResultsSection />
+            ) : (
+              <InputSection
+                dec={decVal}
+                den={denVal}
+                setDecFunc={setDecVal}
+                setDenFunc={setDenVal}
+                triggerW={triggerWarning}
+                setTriggerFunc={setTriggerWarning}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
         <div className={styles.buttonHolder}>
@@ -90,64 +102,58 @@ export default function Home() {
     setShowResults(false);
     setResultsVal(-1);
   }
-  function InputSection() {
-    return (
-      <div className={styles.inputSection}>
-        <h5
-          className={triggerWarning ? styles.warning : {}}
-          onAnimationEnd={() => {
-            console.log("yayy");
-            setTriggerWarning(false);
-          }}
-        >
-          Please enter the decimal you want converted, and the denominator of
-          the fraction you want it converted to.
-        </h5>
-        <form className={styles.inputFields}>
-          <label>
-            <h3>Decimal value</h3>
 
-            <input
-              // type="text"
-              key="dec"
-              name="dec"
-              type="number"
-              //pattern="\d*"
-              inputMode="decimal"
-              value={decVal}
-              onChange={(e) => {
-                let result = e.target.value;
-                console.log(result);
-                result = Math.abs(result);
-                result = parseFloat(result);
-                const leftOverDecimal = result - Math.floor(result);
-                setDecVal(leftOverDecimal);
-              }}
-            />
-          </label>
-          <label>
-            <h3>Fraction denominator</h3>
-            <input
-              key="den"
-              name="den"
-              // type="text"
-              type="text"
-              //pattern="\d*"
-              inputMode="decimal"
-              value={denVal}
-              onChange={(e) => {
-                let result = e.target.value;
-                console.log(result);
-                result = Math.abs(result);
-                result = parseInt(result);
-                setDenVal(result);
-              }}
-            />
-          </label>
-        </form>
-      </div>
-    );
-  }
+  // function InputSection() {
+  //   return (
+  //     <div className={styles.inputSection}>
+  //       <h5
+  //         className={triggerWarning ? styles.warning : {}}
+  //         onAnimationEnd={() => {
+  //           console.log("yayy");
+  //           setTriggerWarning(false);
+  //         }}
+  //       >
+  //         Please enter the decimal you want converted, and the denominator of
+  //         the fraction you want it converted to.
+  //       </h5>
+  //       <form className={styles.inputFields} key="myform">
+  //         <label>
+  //           <h3>Decimal value</h3>
+
+  //           <input
+  //             // type="text"
+  //             // key="dec"
+  //             // name="dec"
+  //             type="text"
+  //             //pattern="\d*"
+  //             value={decVal.toString()}
+  //             inputMode="decimal"
+  //             onChange={handleInputDec}
+  //           />
+  //         </label>
+  //         <label>
+  //           <h3>Fraction denominator</h3>
+  //           <input
+  //             key="den"
+  //             name="den"
+  //             // type="text"
+  //             type="text"
+  //             //pattern="\d*"
+  //             inputMode="decimal"
+  //             value={denVal}
+  //             onChange={(e) => {
+  //               let result = e.target.value;
+  //               console.log(result);
+  //               result = Math.abs(result);
+  //               result = parseInt(result);
+  //               setDenVal(result);
+  //             }}
+  //           />
+  //         </label>
+  //       </form>
+  //     </div>
+  //   );
+  // }
 
   function ResultsSection() {
     let firstStyle =
