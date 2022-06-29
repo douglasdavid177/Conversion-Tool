@@ -8,9 +8,14 @@ export default function Home() {
   const [denVal, setDenVal] = useState(0);
   const [resultsVal, setResultsVal] = useState(-1);
   const [resultsSndVal, setResultsSndVal] = useState(5);
+  const [triggerWarning, setTriggerWarning] = useState(false);
   const calculate = (dec, den) => {
     dec = Math.abs(dec);
     den = Math.abs(den);
+    if (den == 0) {
+      setTriggerWarning(true);
+      return;
+    }
     const fractionsArray = new Array(den + 1);
     let n = 0;
     for (n = 0; n <= den; n++) {
@@ -78,7 +83,7 @@ export default function Home() {
   );
 
   function gotoResults() {
-    console.log(showResults);
+    //console.log(showResults);
     calculate(decVal, denVal);
   }
   function resetInput() {
@@ -88,7 +93,13 @@ export default function Home() {
   function InputSection() {
     return (
       <div className={styles.inputSection}>
-        <h5>
+        <h5
+          className={triggerWarning ? styles.warning : {}}
+          onAnimationEnd={() => {
+            console.log("yayy");
+            setTriggerWarning(false);
+          }}
+        >
           Please enter the decimal you want converted, and the denominator of
           the fraction you want it converted to.
         </h5>
@@ -108,7 +119,8 @@ export default function Home() {
                 console.log(result);
                 result = Math.abs(result);
                 result = parseFloat(result);
-                setDecVal(result);
+                const leftOverDecimal = result - Math.floor(result);
+                setDecVal(leftOverDecimal);
               }}
             />
           </label>
