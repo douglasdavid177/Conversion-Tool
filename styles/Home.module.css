@@ -1,8 +1,8 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: top;
+  height: 90vh;
 }
 .content {
   display: flex;
@@ -11,7 +11,7 @@
   justify-content: center;
   text-align: left;
   /* width: 50%; */
-  min-height: 90vh;
+  min-height: 90%;
 }
 
 .content > * {
@@ -97,9 +97,10 @@
 }
 .inputFields input {
   margin-top: 1rem;
-  background-color: rgb(0 0 0 /0);
+  background: none;
   outline: none;
   border: none;
+  border-radius: 0%;
   border-bottom: 3px solid white;
   color: white;
   text-align: center;
