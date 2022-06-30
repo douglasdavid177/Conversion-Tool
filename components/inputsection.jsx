@@ -27,7 +27,7 @@ const InputSection = ({
 
           <input
             type="text"
-            value={isNaN(dec) && dec != "." ? "" : dec}
+            value={isNaN(Number(dec)) && dec != "." ? "" : dec}
             inputMode="decimal"
             onChange={handleInputDec}
             onBlur={validateInputDec}
@@ -56,14 +56,13 @@ const InputSection = ({
     result = Math.abs(result);
 
     const leftOverDecimal = result - Math.floor(result);
-    console.log(result);
     if (isNaN(leftOverDecimal)) {
       setDecFunc(0);
     } else {
-      const decplaces = countDecimalPlaces(leftOverDecimal);
-      console.log("decimal places: ");
-      console.log(decplaces);
-      setDecFunc(Number(leftOverDecimal).toFixed(decplaces));
+      const decplaces = countDecimalPlaces(result);
+      setDecFunc(
+        Number(leftOverDecimal).toFixed(decplaces > 2 ? decplaces : 2)
+      );
       setDecPlacesFunc(decplaces > 2 ? decplaces : 2);
     }
   }
@@ -81,10 +80,10 @@ const InputSection = ({
     } else {
       setDenFunc(result);
     }
-    console.log("validated den...");
   }
   function countDecimalPlaces(value) {
     const str = value.toString().split(".")[1];
+
     const result = str ? str.length : 0;
     if (result > 0 && result < 10) {
       return result;

@@ -8,6 +8,8 @@
   --aqua: #4fc1e9;
   --aqua-dark: #3bafda;
   --grapefruit: #da4453;
+  --flexchildren-alignment: flex-start;
+  --text-alignment: left;
 }
 html,
 body {

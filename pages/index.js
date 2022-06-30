@@ -12,6 +12,7 @@ export default function Home() {
   const [resultsSndVal, setResultsSndVal] = useState(5);
   const [triggerWarning, setTriggerWarning] = useState(false);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
+
   const calculate = (dec, den) => {
     dec = Math.abs(dec);
     den = Math.abs(den);
@@ -48,17 +49,19 @@ export default function Home() {
     setResultsSndVal(secondClosestIndex);
     setShowResults(true);
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
           <img
-            src="/buildingsvgturquoise.svg"
+            src="/workersvg-turquoise.svg"
             alt="An SVG of a construction worker checking a clipboard"
             className={styles.heroimg}
           />
           <h4>Welcome to...</h4>
-          <h1>...Lucas&apos;s Conversion Tool!</h1>
+          {/* <h1>...Lucas&apos;s Conversion Tool!</h1> */}
+          <h1>Decimal to Fraction Converter Tool!</h1>
         </div>
 
         <AnimatePresence exitBeforeEnter>
