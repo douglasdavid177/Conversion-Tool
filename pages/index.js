@@ -61,7 +61,7 @@ export default function Home() {
           />
           <h4>Welcome to...</h4>
           {/* <h1>...Lucas&apos;s Conversion Tool!</h1> */}
-          <h1>Decimal to Fraction Converter Tool!</h1>
+          <h1>Lucas&apos;s Decimal to Fraction Converter Tool!</h1>
         </div>
 
         <AnimatePresence exitBeforeEnter>

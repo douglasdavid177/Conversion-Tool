@@ -23,6 +23,8 @@
   flex-direction: column;
   align-items: var(--flexchildren-alignment);
   justify-content: center;
+  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
 }
 
 .content h5 {
@@ -62,6 +64,16 @@
   text-decoration-color: var(--turquoise);
   text-decoration-thickness: 5px;
   text-align: var(--text-alignment);
+  position: relative;
+}
+.header h1::after {
+  content: "...App built by David Douglas with NextJS";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(2rem);
+  font-size: 0.875rem;
+  color: hsl(0, 0%, 50%);
 }
 
 .warning {
@@ -122,7 +134,6 @@
 
 .inputFields {
   display: flex;
-  padding-top: 1rem;
   justify-content: space-evenly;
   text-align: center;
   align-items: center;
