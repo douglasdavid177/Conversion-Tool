@@ -59,7 +59,7 @@ export default function Home() {
             alt="An SVG of a construction worker checking a clipboard"
             className={styles.heroimg}
           />
-          <h4>Welcome to...</h4>
+          <h5>Welcome to...</h5>
           {/* <h1>...Lucas&apos;s Conversion Tool!</h1> */}
           <h1>Lucas&apos;s Decimal to Fraction Converter Tool!</h1>
         </div>

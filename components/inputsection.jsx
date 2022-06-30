@@ -12,7 +12,7 @@ const InputSection = ({
 }) => {
   return (
     <div className={styles.inputSection}>
-      <h5
+      <h4
         className={triggerW ? styles.warning : {}}
         onAnimationEnd={() => {
           setTriggerFunc(false);
@@ -20,7 +20,7 @@ const InputSection = ({
       >
         Please enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
-      </h5>
+      </h4>
       <form className={styles.inputFields} key="myform">
         <label>
           <h3>Decimal value</h3>
