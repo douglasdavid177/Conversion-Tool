@@ -5,15 +5,15 @@ import InputSection from "../components/inputsection";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
-  const [decVal, setDecVal] = useState(0);
-  const [denVal, setDenVal] = useState(0);
+  const [decVal, setDecVal] = useState("");
+  const [denVal, setDenVal] = useState("");
   const [resultsVal, setResultsVal] = useState(-1);
   const [resultsSndVal, setResultsSndVal] = useState(5);
   const [triggerWarning, setTriggerWarning] = useState(false);
   const calculate = (dec, den) => {
     dec = Math.abs(dec);
     den = Math.abs(den);
-    if (den == 0) {
+    if (den == 0 || isNaN(dec) || isNaN(den)) {
       setTriggerWarning(true);
       return;
     }

@@ -26,7 +26,7 @@ const InputSection = ({
 
           <input
             type="text"
-            value={dec}
+            value={isNaN(dec) ? "" : dec}
             inputMode="decimal"
             onChange={handleInputDec}
             onBlur={validateInputDec}
@@ -39,14 +39,9 @@ const InputSection = ({
             // name="den"
             type="text"
             inputMode="decimal"
-            value={den}
-            onChange={(e) => {
-              let result = e.target.value;
-              console.log(result);
-              result = parseInt(result);
-              result = Math.abs(result);
-              setDenFunc(result);
-            }}
+            value={isNaN(den) ? "" : den}
+            onChange={handleInputDen}
+            onBlur={validateInputDen}
           />
         </label>
       </form>
@@ -63,9 +58,28 @@ const InputSection = ({
 
     const leftOverDecimal = result - Math.floor(result);
     console.log(result);
-    setDecFunc(leftOverDecimal);
+    if (isNaN(leftOverDecimal)) {
+      setDecFunc(0);
+    } else {
+      setDecFunc(leftOverDecimal);
+    }
   }
-  function validateInputDen(e) {}
+  function handleInputDen(e) {
+    let result = e.target.value;
+    setDenFunc(result);
+  }
+  function validateInputDen() {
+    let result = den;
+    result = parseInt(result);
+    result = Math.abs(result);
+
+    if (isNaN(result)) {
+      setDenFunc(0);
+    } else {
+      setDenFunc(result);
+    }
+    console.log("validated den...");
+  }
 };
 
 export default InputSection;
