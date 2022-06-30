@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import InputSection from "../components/inputsection";
+import ResultsSection from "../components/resultssection";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
@@ -10,6 +11,7 @@ export default function Home() {
   const [resultsVal, setResultsVal] = useState(-1);
   const [resultsSndVal, setResultsSndVal] = useState(5);
   const [triggerWarning, setTriggerWarning] = useState(false);
+  const [decimalPlaces, setDecimalPlaces] = useState(2);
   const calculate = (dec, den) => {
     dec = Math.abs(dec);
     den = Math.abs(den);
@@ -68,7 +70,13 @@ export default function Home() {
             transition={{ duration: 0.2 }}
           >
             {showResults ? (
-              <ResultsSection />
+              <ResultsSection
+                decVal={decVal}
+                denVal={denVal}
+                resultsVal={resultsVal}
+                resultsSndVal={resultsSndVal}
+                decimalPlaces={decimalPlaces}
+              />
             ) : (
               <InputSection
                 dec={decVal}
@@ -77,6 +85,7 @@ export default function Home() {
                 setDenFunc={setDenVal}
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
+                setDecPlacesFunc={setDecimalPlaces}
               />
             )}
           </motion.div>
@@ -101,93 +110,5 @@ export default function Home() {
   function resetInput() {
     setShowResults(false);
     setResultsVal(-1);
-  }
-
-  // function InputSection() {
-  //   return (
-  //     <div className={styles.inputSection}>
-  //       <h5
-  //         className={triggerWarning ? styles.warning : {}}
-  //         onAnimationEnd={() => {
-  //           console.log("yayy");
-  //           setTriggerWarning(false);
-  //         }}
-  //       >
-  //         Please enter the decimal you want converted, and the denominator of
-  //         the fraction you want it converted to.
-  //       </h5>
-  //       <form className={styles.inputFields} key="myform">
-  //         <label>
-  //           <h3>Decimal value</h3>
-
-  //           <input
-  //             // type="text"
-  //             // key="dec"
-  //             // name="dec"
-  //             type="text"
-  //             //pattern="\d*"
-  //             value={decVal.toString()}
-  //             inputMode="decimal"
-  //             onChange={handleInputDec}
-  //           />
-  //         </label>
-  //         <label>
-  //           <h3>Fraction denominator</h3>
-  //           <input
-  //             key="den"
-  //             name="den"
-  //             // type="text"
-  //             type="text"
-  //             //pattern="\d*"
-  //             inputMode="decimal"
-  //             value={denVal}
-  //             onChange={(e) => {
-  //               let result = e.target.value;
-  //               console.log(result);
-  //               result = Math.abs(result);
-  //               result = parseInt(result);
-  //               setDenVal(result);
-  //             }}
-  //           />
-  //         </label>
-  //       </form>
-  //     </div>
-  //   );
-  // }
-
-  function ResultsSection() {
-    let firstStyle =
-      resultsVal / denVal > decVal ? styles.higher : styles.lower;
-    firstStyle = resultsVal / denVal == decVal ? styles.correct : firstStyle;
-    let secondStyle =
-      resultsSndVal / denVal > decVal ? styles.higher : styles.lower;
-    return (
-      <div>
-        <h2>Results</h2>
-        <h1>
-          {resultsVal}/{denVal}
-        </h1>
-        <h3>
-          is the closest fraction to the desired decimal. It&apos;s decimal
-          value is{" "}
-          <span className={firstStyle}>
-            {(resultsVal / denVal).toFixed(2)}{" "}
-          </span>
-          while the desired value was{" "}
-          <span className={styles.correct}>
-            {parseFloat(decVal).toFixed(2)}
-          </span>
-          .{" "}
-          <span className={secondStyle}>
-            {resultsSndVal}/{denVal}
-          </span>{" "}
-          was the second closest, with a decimal value of{" "}
-          <span className={secondStyle}>
-            {(resultsSndVal / denVal).toFixed(2)}
-          </span>
-          .
-        </h3>
-      </div>
-    );
   }
 }

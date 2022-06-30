@@ -8,6 +8,7 @@ const InputSection = ({
   setDenFunc,
   triggerW,
   setTriggerFunc,
+  setDecPlacesFunc,
 }) => {
   return (
     <div className={styles.inputSection}>
@@ -26,7 +27,7 @@ const InputSection = ({
 
           <input
             type="text"
-            value={isNaN(dec) ? "" : dec}
+            value={isNaN(dec) && dec != "." ? "" : dec}
             inputMode="decimal"
             onChange={handleInputDec}
             onBlur={validateInputDec}
@@ -35,8 +36,6 @@ const InputSection = ({
         <label>
           <h3>Fraction denominator</h3>
           <input
-            // key="den"
-            // name="den"
             type="text"
             inputMode="decimal"
             value={isNaN(den) ? "" : den}
@@ -61,7 +60,11 @@ const InputSection = ({
     if (isNaN(leftOverDecimal)) {
       setDecFunc(0);
     } else {
-      setDecFunc(leftOverDecimal);
+      const decplaces = countDecimalPlaces(leftOverDecimal);
+      console.log("decimal places: ");
+      console.log(decplaces);
+      setDecFunc(Number(leftOverDecimal).toFixed(decplaces));
+      setDecPlacesFunc(decplaces > 2 ? decplaces : 2);
     }
   }
   function handleInputDen(e) {
@@ -79,6 +82,15 @@ const InputSection = ({
       setDenFunc(result);
     }
     console.log("validated den...");
+  }
+  function countDecimalPlaces(value) {
+    const str = value.toString().split(".")[1];
+    const result = str ? str.length : 0;
+    if (result > 0 && result < 10) {
+      return result;
+    }
+
+    return 0;
   }
 };
 
