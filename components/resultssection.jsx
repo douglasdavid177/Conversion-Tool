@@ -18,7 +18,7 @@ const ResultsSection = ({
       <h1>
         {resultsVal}/{denVal}
       </h1>
-      <h3>
+      <h3 className={styles.description}>
         is the closest fraction to the desired decimal. It&apos;s decimal value
         is{" "}
         <span className={firstStyle}>

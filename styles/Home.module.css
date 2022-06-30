@@ -23,8 +23,8 @@
   flex-direction: column;
   align-items: var(--flexchildren-alignment);
   justify-content: center;
-  margin-bottom: 0.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
+  /* margin-bottom: 2rem; */
 }
 
 .content h5 {
@@ -150,7 +150,7 @@
   align-items: center;
 }
 .inputFields input {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background: none;
   outline: none;
   border: none;
@@ -179,6 +179,9 @@
 .resultsSection h3 {
   text-align: center;
   margin-bottom: 0rem;
+}
+.resultsSection .description {
+  text-align: left;
 }
 .resultsSection h2 {
   text-align: center;
