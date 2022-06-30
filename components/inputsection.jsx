@@ -18,7 +18,7 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        Please enter the decimal you want converted, and the denominator of the
+        Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
       </h4>
       <form className={styles.inputFields} key="myform">
