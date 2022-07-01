@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import InputSection from "../components/inputsection";
@@ -12,7 +12,25 @@ export default function Home() {
   const [resultsSndVal, setResultsSndVal] = useState(5);
   const [triggerWarning, setTriggerWarning] = useState(false);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
+  const [useFixedLayout, setUseFixedLayout] = useState(false);
+  const compRef = useRef();
 
+  useEffect(() => {
+    fixHeight();
+  }, []);
+  function fixHeight() {
+    const winheight = window.innerHeight;
+    const compHeight = compRef.current.clientHeight;
+    console.log("comp height: ");
+    console.log(compHeight);
+    console.log("win height: ");
+    console.log(winheight);
+    if (compHeight < winheight) {
+      setUseFixedLayout(true);
+    } else {
+      setUseFixedLayout(false);
+    }
+  }
   const calculate = (dec, den) => {
     dec = Math.abs(dec);
     den = Math.abs(den);
@@ -51,7 +69,12 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        useFixedLayout ? styles.fixedLayout : {}
+      }`}
+      ref={compRef}
+    >
       <div className={styles.content}>
         <div className={styles.header}>
           <img
@@ -71,6 +94,7 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -10, opacity: 0 }}
             transition={{ duration: 0.2 }}
+            className={styles.mainSectionHolder}
           >
             {showResults ? (
               <ResultsSection

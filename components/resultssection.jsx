@@ -13,7 +13,7 @@ const ResultsSection = ({
   let secondStyle =
     resultsSndVal / denVal > decVal ? styles.higher : styles.lower;
   return (
-    <div className={styles.resultsSection}>
+    <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
         {resultsVal}/{denVal}

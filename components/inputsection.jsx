@@ -11,7 +11,10 @@ const InputSection = ({
   setDecPlacesFunc,
 }) => {
   return (
-    <div className={styles.inputSection}>
+    <div
+      //className={styles.inputSection}
+      className={`${styles.inputSection} ${styles.mainSection}`}
+    >
       <h4
         className={triggerW ? styles.warning : {}}
         onAnimationEnd={() => {
