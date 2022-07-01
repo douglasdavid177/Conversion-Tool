@@ -69,7 +69,7 @@
   position: relative;
 }
 .header h1::after {
-  content: "...App built by David Douglas with NextJS";
+  content: "...App built by David Douglas";
   position: absolute;
   bottom: 0;
   left: 0;
