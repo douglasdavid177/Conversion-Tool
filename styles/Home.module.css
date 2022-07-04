@@ -1,13 +1,14 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: top;
+  align-items: flex-start;
   min-height: 90vh;
 }
 
 .fixedLayout {
   top: 0;
-  /* bottom: 0; */
+  left: 0;
+  right: 0;
   position: fixed;
 }
 .content {
