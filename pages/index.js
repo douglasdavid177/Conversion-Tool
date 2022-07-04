@@ -12,7 +12,7 @@ export default function Home() {
   const [resultsSndVal, setResultsSndVal] = useState(5);
   const [triggerWarning, setTriggerWarning] = useState(false);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
-  const [useFixedLayout, setUseFixedLayout] = useState(false);
+  const [useFixedLayout, setUseFixedLayout] = useState(false); // Not happy with how this turned out so it's not in use
   const compRef = useRef();
 
   useEffect(() => {

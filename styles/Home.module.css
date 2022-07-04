@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  align-items: stretch;
   min-height: 90vh;
 }
 
@@ -9,6 +10,7 @@
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   position: fixed;
 }
 .content {
@@ -18,7 +20,8 @@
   justify-content: center;
   text-align: left;
   /* width: 50%; */
-  min-height: 90%;
+  /* min-height: 100%; */
+  /* This is unnecessary because the parent stretches it anyway */
 }
 
 .content > * {
@@ -129,11 +132,10 @@
   background: none;
   color: white;
   border: 3.5px solid white;
-  margin-bottom: 4rem;
+  /* margin-bottom: 4rem; */
   margin-top: 2.5rem;
   border-radius: 2rem;
   padding: 0.5rem;
-  flex-grow: 1;
 }
 .mainSectionHolder {
   flex-grow: 1;
