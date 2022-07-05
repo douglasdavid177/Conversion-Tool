@@ -117,7 +117,11 @@ export default function Home() {
             )}
           </motion.div>
         </AnimatePresence>
-        <div className={styles.buttonHolder}>
+        <div
+          className={`${styles.buttonHolder} ${
+            useFixedLayout ? styles.fixedButton : {}
+          }`}
+        >
           <button
             onClick={() => {
               showResults ? resetInput() : gotoResults();
