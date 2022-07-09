@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { motion, AnimatePresence } from "framer-motion";
-import InputSection from "../components/inputsection";
+import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import InputSectionDecToFrac from "../components/inputsectionfrac";
 import ResultsSection from "../components/resultssection";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
-  const [decVal, setDecVal] = useState("");
-  const [denVal, setDenVal] = useState("");
+  const [inputVal1, setinputVal1] = useState("");
+  const [inputVal2, setinputVal2] = useState("");
   const [resultsVal, setResultsVal] = useState(-1);
   const [resultsSndVal, setResultsSndVal] = useState(5);
   const [triggerWarning, setTriggerWarning] = useState(false);
@@ -16,7 +16,7 @@ export default function Home() {
   const compRef = useRef();
 
   useEffect(() => {
-    fixHeight();
+    //fixHeight();
   }, []);
   function fixHeight() {
     const winheight = window.innerHeight;
@@ -75,19 +75,19 @@ export default function Home() {
       }`}
       ref={compRef}
     >
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <img
-            src="/workersvg-turquoise.svg"
-            alt="An SVG of a construction worker checking a clipboard"
-            className={styles.heroimg}
-          />
-          <h5>Welcome to...</h5>
-          {/* <h1>...Lucas&apos;s Conversion Tool!</h1> */}
-          <h1>Lucas&apos;s Decimal to Fraction Converter Tool!</h1>
-        </div>
+      <AnimateSharedLayout>
+        <div className={styles.content}>
+          <div className={styles.header}>
+            <img
+              src="/workersvg-turquoise.svg"
+              alt="An SVG of a construction worker checking a clipboard"
+              className={styles.heroimg}
+            />
+            <h5>Welcome to...</h5>
+            {/* <h1>...Lucas&apos;s Conversion Tool!</h1> */}
+            <h1>Lucas&apos;s Decimal to Fraction Converter Tool!</h1>
+          </div>
 
-        <AnimatePresence exitBeforeEnter>
           <motion.div
             key={showResults ? "results" : "input"}
             initial={{ y: 10, opacity: 0 }}
@@ -98,45 +98,49 @@ export default function Home() {
           >
             {showResults ? (
               <ResultsSection
-                decVal={decVal}
-                denVal={denVal}
+                decVal={inputVal1}
+                denVal={inputVal2}
                 resultsVal={resultsVal}
                 resultsSndVal={resultsSndVal}
                 decimalPlaces={decimalPlaces}
               />
             ) : (
-              <InputSection
-                dec={decVal}
-                den={denVal}
-                setDecFunc={setDecVal}
-                setDenFunc={setDenVal}
+              <InputSectionDecToFrac
+                dec={inputVal1}
+                den={inputVal2}
+                setDecFunc={setinputVal1}
+                setDenFunc={setinputVal2}
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
                 setDecPlacesFunc={setDecimalPlaces}
               />
             )}
           </motion.div>
-        </AnimatePresence>
-        <div
-          className={`${styles.buttonHolder} ${
-            useFixedLayout ? styles.fixedButton : {}
-          }`}
-        >
-          <button
-            onClick={() => {
-              showResults ? resetInput() : gotoResults();
-            }}
-          >
-            {showResults ? "Change Input" : "View Results"}
-          </button>
+
+          <motion.div>
+            <div
+              className={`${styles.buttonHolder} ${
+                useFixedLayout ? styles.fixedButton : {}
+              }`}
+            >
+              <button
+                onClick={() => {
+                  showResults ? resetInput() : gotoResults();
+                }}
+                className={showResults ? styles.secondary : styles.primary}
+              >
+                {showResults ? "Change Input" : "View Results"}
+              </button>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </AnimateSharedLayout>
     </div>
   );
 
   function gotoResults() {
     //console.log(showResults);
-    calculate(decVal, denVal);
+    calculate(inputVal1, inputVal2);
   }
   function resetInput() {
     setShowResults(false);

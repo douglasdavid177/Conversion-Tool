@@ -10,6 +10,7 @@
   --grapefruit: #da4453;
   --flexchildren-alignment: flex-start;
   --text-alignment: left;
+  --button-border-radius: 2rem;
 }
 html,
 body {

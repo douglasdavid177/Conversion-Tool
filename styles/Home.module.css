@@ -65,7 +65,7 @@
   text-align: var(--text-alignment);
 }
 .header h1 {
-  text-decoration-line: underline;
+  /* text-decoration-line: underline; */
   text-decoration-style: solid;
   text-decoration-color: var(--turquoise);
   text-decoration-thickness: 5px;
@@ -122,15 +122,61 @@
   height: 3rem;
   font: inherit;
   cursor: pointer;
-  outline: inherit;
+  outline: none;
   background: none;
   color: white;
   border: 3.5px solid white;
   margin-bottom: 4rem;
   margin-top: 2.5rem;
-  border-radius: 2rem;
+  border-radius: var(--button-border-radius);
   padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
 }
+button.primary {
+  background-color: var(--turquoise);
+  color: black;
+  font-weight: bold;
+  border: none;
+  position: relative;
+}
+button.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* z-index: -1; */
+
+  background-color: rgb(0 0 0 / 0.125);
+  transform: scale(1.5);
+}
+button.secondary {
+  background: transparent;
+  border: none;
+  color: white;
+  justify-content: flex-start;
+  width: 11rem;
+  /* transition: color 0.5s ease; */
+}
+
+button.secondary::before {
+  color: white;
+  content: "\2190  ";
+  font-size: 3rem;
+  margin-top: -0.5rem;
+  margin-right: 1rem;
+}
+
+.content button:active {
+  font-weight: 800;
+}
+button.secondary:active::before {
+  font-weight: 900;
+  color: var(--turquoise);
+}
+
 .mainSectionHolder {
   flex-grow: 1;
   display: flex;
