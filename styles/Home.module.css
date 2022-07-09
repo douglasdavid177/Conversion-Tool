@@ -134,7 +134,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 button.primary {
   background-color: var(--turquoise);
@@ -149,7 +149,7 @@ button.primary::after {
   inset: 0;
   /* z-index: -1; */
 
-  background-color: rgb(0 0 0 / 0.125);
+  background-color: rgb(0 0 0 / 0.1);
   transform: scale(1.5);
 }
 button.secondary {
@@ -164,8 +164,8 @@ button.secondary {
 button.secondary::before {
   color: white;
   content: "\2190  ";
-  font-size: 3rem;
-  margin-top: -0.5rem;
+  font-size: 2rem;
+  margin-top: -0.25rem;
   margin-right: 1rem;
 }
 
@@ -197,6 +197,7 @@ button.secondary:active::before {
 .inputSection {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .inputSection h5 {
