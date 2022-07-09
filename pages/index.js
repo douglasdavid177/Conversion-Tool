@@ -1,72 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import InputSectionDecToFrac from "../components/inputsectionfrac";
-import ResultsSection from "../components/resultssection";
+import {
+  motion,
+  AnimatePresence,
+  AnimateSharedLayout,
+  LayoutGroup,
+} from "framer-motion";
+// import InputSectionDecToFrac from "../components/inputsectionfrac";
+// import ResultsSection from "../components/resultssection";
+import HomeSection from "../components/homesection";
+import DecToFracSection from "../components/dectofrac/decfracsection";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
-  const [inputVal1, setinputVal1] = useState("");
-  const [inputVal2, setinputVal2] = useState("");
-  const [resultsVal, setResultsVal] = useState(-1);
-  const [resultsSndVal, setResultsSndVal] = useState(5);
-  const [triggerWarning, setTriggerWarning] = useState(false);
-  const [decimalPlaces, setDecimalPlaces] = useState(2);
+  const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [useFixedLayout, setUseFixedLayout] = useState(false); // Not happy with how this turned out so it's not in use
   const compRef = useRef();
 
   useEffect(() => {
     //fixHeight();
   }, []);
-  function fixHeight() {
-    const winheight = window.innerHeight;
-    const compHeight = compRef.current.clientHeight;
-    console.log("comp height: ");
-    console.log(compHeight);
-    console.log("win height: ");
-    console.log(winheight);
-    if (compHeight < winheight) {
-      setUseFixedLayout(true);
-    } else {
-      setUseFixedLayout(false);
-    }
-  }
-  const calculate = (dec, den) => {
-    dec = Math.abs(dec);
-    den = Math.abs(den);
-    if (den == 0 || isNaN(dec) || isNaN(den)) {
-      setTriggerWarning(true);
-      return;
-    }
-    const fractionsArray = new Array(den + 1);
-    let n = 0;
-    for (n = 0; n <= den; n++) {
-      fractionsArray[n] = n / den;
-    }
-    console.log("fractions: ");
-    console.log(fractionsArray);
-    const leftOverDec = dec - Math.floor(dec);
-    const fractionsArrayCopy = [...fractionsArray];
-    const fractionsArrayCopy2 = [...fractionsArray];
-
-    const closest = fractionsArrayCopy.reduce(function (prev, curr) {
-      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
-        ? curr
-        : prev;
-    });
-
-    const closestIndex = fractionsArray.indexOf(closest);
-    fractionsArrayCopy2.splice(closestIndex, 1);
-    const secondClosest = fractionsArrayCopy2.reduce(function (prev, curr) {
-      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
-        ? curr
-        : prev;
-    });
-    const secondClosestIndex = fractionsArray.indexOf(secondClosest);
-    setResultsVal(closestIndex);
-    setResultsSndVal(secondClosestIndex);
-    setShowResults(true);
-  };
 
   return (
     <div
@@ -75,8 +28,8 @@ export default function Home() {
       }`}
       ref={compRef}
     >
-      <AnimateSharedLayout>
-        <div className={styles.content}>
+      <div className={styles.content}>
+        <LayoutGroup>
           <div className={styles.header}>
             <img
               src="/workersvg-turquoise.svg"
@@ -88,36 +41,16 @@ export default function Home() {
             <h1>Lucas&apos;s Decimal to Fraction Converter Tool!</h1>
           </div>
 
-          <motion.div
-            key={showResults ? "results" : "input"}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -10, opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className={styles.mainSectionHolder}
-          >
-            {showResults ? (
-              <ResultsSection
-                decVal={inputVal1}
-                denVal={inputVal2}
-                resultsVal={resultsVal}
-                resultsSndVal={resultsSndVal}
-                decimalPlaces={decimalPlaces}
-              />
-            ) : (
-              <InputSectionDecToFrac
-                dec={inputVal1}
-                den={inputVal2}
-                setDecFunc={setinputVal1}
-                setDenFunc={setinputVal2}
-                triggerW={triggerWarning}
-                setTriggerFunc={setTriggerWarning}
-                setDecPlacesFunc={setDecimalPlaces}
-              />
-            )}
+          <motion.div layout>
+            <DecToFracSection
+              showResults={showResults}
+              setShowResults={setShowResults}
+              attemptCalculate={attemptCalculate}
+              setAttemptCalculate={setAttemptCalculate}
+            />
           </motion.div>
 
-          <motion.div>
+          <motion.div layout>
             <div
               className={`${styles.buttonHolder} ${
                 useFixedLayout ? styles.fixedButton : {}
@@ -133,17 +66,32 @@ export default function Home() {
               </button>
             </div>
           </motion.div>
-        </div>
-      </AnimateSharedLayout>
+        </LayoutGroup>
+      </div>
     </div>
   );
 
   function gotoResults() {
     //console.log(showResults);
-    calculate(inputVal1, inputVal2);
+    //calculate(inputVal1, inputVal2);
+    //setShowResults(true);
+    setAttemptCalculate(true);
   }
   function resetInput() {
     setShowResults(false);
-    setResultsVal(-1);
+    setAttemptCalculate(false);
+  }
+  function fixHeight() {
+    const winheight = window.innerHeight;
+    const compHeight = compRef.current.clientHeight;
+    console.log("comp height: ");
+    console.log(compHeight);
+    console.log("win height: ");
+    console.log(winheight);
+    if (compHeight < winheight) {
+      setUseFixedLayout(true);
+    } else {
+      setUseFixedLayout(false);
+    }
   }
 }

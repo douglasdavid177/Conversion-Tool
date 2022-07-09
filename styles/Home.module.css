@@ -126,7 +126,7 @@
   background: none;
   color: white;
   border: 3.5px solid white;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
   margin-top: 2.5rem;
   border-radius: var(--button-border-radius);
   padding: 0.5rem;
@@ -134,7 +134,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.35s ease;
 }
 button.primary {
   background-color: var(--turquoise);
@@ -165,7 +165,7 @@ button.secondary::before {
   color: white;
   content: "\2190  ";
   font-size: 2rem;
-  margin-top: -0.25rem;
+  margin-top: -0.125rem;
   margin-right: 1rem;
 }
 

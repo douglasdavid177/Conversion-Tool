@@ -1,0 +1,22 @@
+.container h2,
+.container h3,
+.container h4 {
+  color: white;
+}
+
+.container button {
+  border: none;
+  background: transparent;
+  width: auto;
+  color: var(--turquoise);
+  position: relative;
+  transition: none;
+  filter: brightness(100%);
+}
+
+.container button:active {
+  filter: brightness(65%);
+}
+
+.container button:active::after {
+}
