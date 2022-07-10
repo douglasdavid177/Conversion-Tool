@@ -45,6 +45,7 @@ const InputSection = ({
             value={isNaN(den) ? "" : den}
             onChange={handleInputDen}
             onBlur={validateInputDen}
+            onFocus={reacquireFocus}
           />
         </label>
       </form>
@@ -100,7 +101,7 @@ const InputSection = ({
     console.log(e.target);
     setTimeout(() => {
       e.target.focus();
-    }, 5);
+    }, 10);
   }
 };
 
