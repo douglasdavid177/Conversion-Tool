@@ -6,8 +6,9 @@ const HomeSection = ({ setOpenNav }) => {
     <div className={styles.container}>
       <h4>
         {/* <img src="../airplanesvg.svg" alt="An SVG of a plane" /> */}
-        To use this app, start by selecting a mini-tool from the list of
-        available options. Have a splendid day! :D
+        This app is a collection of small numerical mini-tools and calculators
+        for varied purposes. To use this app, start by selecting a mini-tool
+        from the list of available options. Have a splendid day! :D
       </h4>
       <h3>
         <button

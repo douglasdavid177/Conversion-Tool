@@ -22,6 +22,8 @@ const DecToFracSection = (props) => {
     den = Math.abs(den);
     if (den == 0 || isNaN(dec) || isNaN(den)) {
       props.setAttemptCalculate(false);
+      if (triggerWarning) {
+      }
       setTriggerWarning(true);
       props.setShowResults(false);
       return;

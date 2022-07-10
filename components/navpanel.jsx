@@ -1,8 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "../styles/navpanel.module.css";
 
 const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
+  const [comingSoonWarning, setComingSoonWarning] = useState(false);
+  const badge = useRef();
+  const keyFrames = [0];
   return (
     <AnimatePresence>
       {isOpen && (
@@ -18,52 +21,104 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
 
       {isOpen && (
         <motion.div
-          className={styles.panel}
+          className={styles.panelBG}
           onClick={(e) => {
             e.stopPropagation();
           }}
           key={"panel"}
+          //initial={{ x: "200%" }}
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "100%" }}
           transition={{ duration: 0.7, ease: [0, 1.14, 0.75, 0.98] }}
         >
-          <h5>Tools</h5>
-          <hr align="right" />
-          <ul>
-            <li>
-              <button
-                onClick={() => {
-                  setSectionKey(0);
-                  setIsOpen(false);
-                }}
-              >
-                <h2>Home</h2>
-              </button>
-              {/* <hr align="right" className={styles.miniLine} /> */}
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSectionKey(1);
-                  setIsOpen(false);
-                }}
-              >
-                <h2>Decimal to Fraction Converter</h2>
-              </button>
-              {/* <hr align="right" className={styles.miniLine} /> */}
-            </li>
-            <li>
-              <button>
-                <h2>Item 2</h2>
-              </button>
-              {/* <hr align="right" className={styles.miniLine} /> */}
-            </li>
-          </ul>
+          <div className={styles.panel}>
+            <h5>Tools</h5>
+            <hr align="right" />
+            <ul>
+              <li>
+                <button
+                  onClick={() => {
+                    setSectionKey(0);
+                    setIsOpen(false);
+                  }}
+                >
+                  <h3 className={styles.homeLink}>Home</h3>
+                </button>
+                <div
+                  className={styles.bulletPoint}
+                  style={{ background: "transparent" }}
+                ></div>
+              </li>
+              <MenuItem
+                label={"Decimal to Fraction Converter"}
+                sectionKey={1}
+              />
+              <MenuItem label={"Unit Conversion"} sectionKey={-1} />
+              <MenuItem label={"Tip Calculator"} sectionKey={-1} />
+            </ul>
+
+            <WarningBadge />
+
+            <div className={styles.warningContainer}>
+              <h4>
+                {`
+              Many tools in this list are in development and will be ready to blow you away in the near future! ;) Check back soon to experience new tools and increased functionality. `}
+              </h4>
+            </div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
+  function MenuItem(props) {
+    return (
+      <li>
+        <button
+          onClick={() => {
+            if (props.sectionKey == -1) {
+              badge.current.classList.remove(".setWarning");
+              badge.current.style.animation = "none";
+
+              void badge.current.offsetWidth;
+              console.log("badge width");
+              console.log(badge.current.offsetWidth);
+              badge.current.style.animation = "";
+              setComingSoonWarning(true);
+              // setTimeout(() => {
+              //   setComingSoonWarning(false);
+              // }, 500);
+              console.log("at least we in here");
+              return;
+            }
+            setSectionKey(props.sectionKey);
+            setIsOpen(false);
+          }}
+          // disabled={props.sectionKey == -1}
+          className={props.sectionKey == -1 ? styles.disabledButton : ""}
+        >
+          <h3>{props.label}</h3>
+        </button>
+        <div className={styles.bulletPoint}></div>
+      </li>
+    );
+  }
+
+  function WarningBadge() {
+    return (
+      <div className={styles.comingSoonWarning}>
+        <h3
+          ref={badge}
+          className={comingSoonWarning ? styles.setWarning : ""}
+          onAnimationEnd={() => {
+            setComingSoonWarning(false);
+          }}
+        >
+          Coming soon!
+        </h3>
+      </div>
+    );
+  }
 };
 
 export default NavPanel;

@@ -64,9 +64,18 @@ export default function Home() {
               <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
             </div>
           </motion.div>
-
-          <motion.div layout>{componentFromKey(mainSectionKey)}</motion.div>
-
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              layout
+              key={mainSectionKey}
+              initial={{ translateY: 20, opacity: 0 }}
+              animate={{ translateY: 0, opacity: 1 }}
+              exit={{ translateY: -20, opacity: 0 }}
+              transition={{ duration: 0.35 }}
+            >
+              {componentFromKey(mainSectionKey)}
+            </motion.div>
+          </AnimatePresence>
           <motion.div layout>
             {mainSectionKey > 0 ? (
               <div
