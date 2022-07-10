@@ -10,11 +10,14 @@ import {
 // import ResultsSection from "../components/resultssection";
 import HomeSection from "../components/homesection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
+import NavPanel from "../components/navpanel";
 
 export default function Home() {
+  const [mainSectionKey, setMainSectionKey] = useState(1);
   const [showResults, setShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [useFixedLayout, setUseFixedLayout] = useState(false); // Not happy with how this turned out so it's not in use
+  const [navPanelOpen, setNavPanelOpen] = useState(false);
   const compRef = useRef();
 
   useEffect(() => {
@@ -27,49 +30,83 @@ export default function Home() {
         useFixedLayout ? styles.fixedLayout : {}
       }`}
       ref={compRef}
+      onClick={() => {
+        if (!navPanelOpen) return;
+        console.log("clicked bg...");
+
+        setNavPanelOpen(false);
+      }}
     >
+      <button
+        className={styles.hamburger}
+        onClick={() => {
+          console.log("clicked burg...");
+          setNavPanelOpen(!navPanelOpen);
+        }}
+      >
+        <img src="./menu.svg"></img>
+      </button>
+
+      <NavPanel isOpen={navPanelOpen} setIsOpen={setNavPanelOpen} />
+
       <div className={styles.content}>
         <LayoutGroup>
-          <div className={styles.header}>
-            <img
-              src="/workersvg-turquoise.svg"
-              alt="An SVG of a construction worker checking a clipboard"
-              className={styles.heroimg}
-            />
-            <h5>Welcome to...</h5>
-            {/* <h1>...Lucas&apos;s Conversion Tool!</h1> */}
-            <h1>Lucas&apos;s Decimal to Fraction Converter Tool!</h1>
-          </div>
-
           <motion.div layout>
-            <DecToFracSection
-              showResults={showResults}
-              setShowResults={setShowResults}
-              attemptCalculate={attemptCalculate}
-              setAttemptCalculate={setAttemptCalculate}
-            />
+            <div className={styles.header}>
+              <img
+                src="/workersvg-turquoise.svg"
+                alt="An SVG of a construction worker checking a clipboard"
+                className={styles.heroimg}
+              />
+              <h5>Welcome to...</h5>
+              <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
+            </div>
           </motion.div>
 
+          <motion.div layout>{componentFromKey(mainSectionKey)}</motion.div>
+
           <motion.div layout>
-            <div
-              className={`${styles.buttonHolder} ${
-                useFixedLayout ? styles.fixedButton : {}
-              }`}
-            >
-              <button
-                onClick={() => {
-                  showResults ? resetInput() : gotoResults();
-                }}
-                className={showResults ? styles.secondary : styles.primary}
+            {mainSectionKey > 0 ? (
+              <div
+                className={`${styles.buttonHolder} ${
+                  useFixedLayout ? styles.fixedButton : {}
+                }`}
               >
-                {showResults ? "Change Input" : "View Results"}
-              </button>
-            </div>
+                <button
+                  onClick={() => {
+                    showResults ? resetInput() : gotoResults();
+                  }}
+                  className={showResults ? styles.secondary : styles.primary}
+                >
+                  {showResults ? "Change Input" : "View Results"}
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
           </motion.div>
         </LayoutGroup>
       </div>
     </div>
   );
+
+  function componentFromKey(key) {
+    switch (key) {
+      case 0:
+        return <HomeSection setOpenNav={setNavPanelOpen} />;
+      case 1:
+        return (
+          <DecToFracSection
+            showResults={showResults}
+            setShowResults={setShowResults}
+            attemptCalculate={attemptCalculate}
+            setAttemptCalculate={setAttemptCalculate}
+          />
+        );
+      default:
+        return <HomeSection />;
+    }
+  }
 
   function gotoResults() {
     //console.log(showResults);

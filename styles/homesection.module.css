@@ -12,6 +12,8 @@
   position: relative;
   transition: none;
   filter: brightness(100%);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container button:active {
