@@ -1,9 +1,9 @@
 .container h4 {
-  color: hsl(0, 0, 0, 50%);
+  color: hsl(0, 0%, 50%);
   margin-top: 3rem;
 }
 
-.container button {
+.container button.chooseToolButton {
   border: none;
   background: transparent;
   width: auto;

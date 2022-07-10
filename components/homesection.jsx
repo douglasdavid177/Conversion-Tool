@@ -11,6 +11,7 @@ const HomeSection = ({ setOpenNav }) => {
       </h4>
       <h3>
         <button
+          className={styles.chooseToolButton}
           onClick={() => {
             setOpenNav(true);
           }}
