@@ -34,6 +34,7 @@ const InputSection = ({
             inputMode="decimal"
             onChange={handleInputDec}
             onBlur={validateInputDec}
+            onFocus={reacquireFocus}
           />
         </label>
         <label>
@@ -93,6 +94,13 @@ const InputSection = ({
     }
 
     return 0;
+  }
+  function reacquireFocus(e) {
+    console.log("e:");
+    console.log(e.target);
+    setTimeout(() => {
+      e.target.focus();
+    }, 5);
   }
 };
 
