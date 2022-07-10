@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import styles from "../styles/navpanel.module.css";
 
-const NavPanel = ({ isOpen, setIsOpen }) => {
+const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -28,12 +28,36 @@ const NavPanel = ({ isOpen, setIsOpen }) => {
           exit={{ x: "100%" }}
           transition={{ duration: 0.7, ease: [0, 1.14, 0.75, 0.98] }}
         >
+          <h5>Tools</h5>
+          <hr align="right" />
           <ul>
             <li>
-              <button>Item 1</button>
+              <button
+                onClick={() => {
+                  setSectionKey(0);
+                  setIsOpen(false);
+                }}
+              >
+                <h3>Home</h3>
+              </button>
+              {/* <hr align="right" className={styles.miniLine} /> */}
             </li>
             <li>
-              <button>Item 1</button>
+              <button
+                onClick={() => {
+                  setSectionKey(1);
+                  setIsOpen(false);
+                }}
+              >
+                <h3>Decimal to Fraction Converter</h3>
+              </button>
+              {/* <hr align="right" className={styles.miniLine} /> */}
+            </li>
+            <li>
+              <button>
+                <h3>Item 2</h3>
+              </button>
+              {/* <hr align="right" className={styles.miniLine} /> */}
             </li>
           </ul>
         </motion.div>

@@ -18,7 +18,14 @@
   top: 0;
   bottom: 0;
   width: min(80vw, 25rem);
+  text-align: right;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-top: 5rem;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   transition: transform 0.5s cubic-bezier(0, 1.14, 0.77, 0.99);
   transition: transform 0.7s cubic-bezier(0, 1.14, 0.75, 0.98);
 }
@@ -27,10 +34,56 @@
   outline: none;
   background: none;
   color: white;
+  cursor: pointer;
+  margin-right: 0;
+  padding-right: 0;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: var(--turquoise);
+  text-decoration-thickness: 3px;
+  /* color: var(--turquoise); */
+}
+
+.panel button:active {
+  font-weight: 900;
+  color: var(--turquoise);
+}
+.panel h3 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.panel h5 {
+  margin: 0;
+  color: hsl(0, 0%, 50%);
+  /* margin-bottom: 2rem; */
+}
+.panel hr {
+  color: hsl(0, 0%, 50%);
+  background: hsl(0, 0%, 50%);
+  border: 1px solid hsl(0, 0%, 50%);
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+hr.miniLine {
+  width: 20%;
 }
 .closedPanel {
   transform: translateX(100%);
 }
 .openPanel {
   transform: translateX(0%);
+}
+
+.panel ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.panel li::before {
 }

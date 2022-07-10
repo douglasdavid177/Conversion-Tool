@@ -1,7 +1,6 @@
-.container h2,
-.container h3,
 .container h4 {
-  color: white;
+  color: hsl(0, 0, 0, 50%);
+  margin-top: 3rem;
 }
 
 .container button {
@@ -14,6 +13,7 @@
   filter: brightness(100%);
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5rem;
 }
 
 .container button:active {

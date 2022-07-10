@@ -13,7 +13,7 @@ import DecToFracSection from "../components/dectofrac/decfracsection";
 import NavPanel from "../components/navpanel";
 
 export default function Home() {
-  const [mainSectionKey, setMainSectionKey] = useState(1);
+  const [mainSectionKey, setMainSectionKey] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [useFixedLayout, setUseFixedLayout] = useState(false); // Not happy with how this turned out so it's not in use
@@ -32,8 +32,6 @@ export default function Home() {
       ref={compRef}
       onClick={() => {
         if (!navPanelOpen) return;
-        console.log("clicked bg...");
-
         setNavPanelOpen(false);
       }}
     >
@@ -47,7 +45,11 @@ export default function Home() {
         <img src="./menu.svg"></img>
       </button>
 
-      <NavPanel isOpen={navPanelOpen} setIsOpen={setNavPanelOpen} />
+      <NavPanel
+        isOpen={navPanelOpen}
+        setIsOpen={setNavPanelOpen}
+        setSectionKey={setMainSectionKey}
+      />
 
       <div className={styles.content}>
         <LayoutGroup>
