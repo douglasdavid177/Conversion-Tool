@@ -38,7 +38,7 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
                   setIsOpen(false);
                 }}
               >
-                <h3>Home</h3>
+                <h2>Home</h2>
               </button>
               {/* <hr align="right" className={styles.miniLine} /> */}
             </li>
@@ -49,13 +49,13 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
                   setIsOpen(false);
                 }}
               >
-                <h3>Decimal to Fraction Converter</h3>
+                <h2>Decimal to Fraction Converter</h2>
               </button>
               {/* <hr align="right" className={styles.miniLine} /> */}
             </li>
             <li>
               <button>
-                <h3>Item 2</h3>
+                <h2>Item 2</h2>
               </button>
               {/* <hr align="right" className={styles.miniLine} /> */}
             </li>

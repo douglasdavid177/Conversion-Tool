@@ -11,13 +11,13 @@
   z-index: -1;
 }
 .panel {
-  background-color: rgb(50 50 50 /0.5);
+  background-color: rgb(28 28 28 /0.7);
   backdrop-filter: blur(0.8rem);
   position: fixed;
   right: 0;
   top: 0;
   bottom: 0;
-  width: min(80vw, 25rem);
+  width: min(60vw, 25rem);
   text-align: right;
   padding-left: 3rem;
   padding-right: 3rem;
@@ -51,7 +51,7 @@
   font-weight: 900;
   color: var(--turquoise);
 }
-.panel h3 {
+.panel h2 {
   margin: 0;
   padding: 0;
   margin-bottom: 2rem;
