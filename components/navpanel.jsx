@@ -60,7 +60,7 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
 
             <WarningBadge />
 
-            <div className={styles.warningContainer}>
+            <div className={styles.messageContainer}>
               <h4>
                 {`
               Many tools in this list are in development and will be ready to blow you away in the near future! ;) Check back soon to experience new tools and increased functionality. `}

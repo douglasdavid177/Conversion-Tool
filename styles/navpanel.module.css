@@ -126,7 +126,7 @@ hr.miniLine {
   margin-left: 2rem;
 }
 
-.panel .warningContainer {
+.panel .messageContainer {
   text-align: left;
   margin-left: -1.5rem; /*Because of increased left padding on panel */
   color: hsl(0, 0%, 50%);
@@ -140,7 +140,8 @@ hr.miniLine {
 .comingSoonWarning {
   flex-grow: 1;
   display: flex;
-  margin-left: 1.5rem;
+  /* margin-left: -1.5rem; Doesnt work for some reason */
+  transform: translateX(-0.75rem);
   align-items: flex-end;
   text-align: center;
   justify-content: center;
