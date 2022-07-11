@@ -6,7 +6,7 @@ const AboutSection = ({ setOpenNav }) => {
     <div>
       <h4>
         {`
-        This app is a single page web application (SPA) and was written in JavaScript with the NextJS framework. It uses
+        This app is a single page web application (SPA), written in JavaScript with the NextJS framework. It uses
         ReactJS for frontend architecture, controlling state management, data
         binding, events, application lifecycle and routing. CSS modules were used to apply styling, and animations were written using Framer Motion
         API. The app consists of various mathemaical tools including: `}
