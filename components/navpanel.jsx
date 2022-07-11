@@ -43,7 +43,7 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
                     setIsOpen(false);
                   }}
                 >
-                  <h3 className={styles.homeLink}>Home</h3>
+                  <h2 className={styles.homeLink}>Home</h2>
                 </button>
                 <div
                   className={styles.bulletPoint}
@@ -97,7 +97,7 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
           // disabled={props.sectionKey == -1}
           className={props.sectionKey == -1 ? styles.disabledButton : ""}
         >
-          <h3>{props.label}</h3>
+          <h2>{props.label}</h2>
         </button>
         <div className={styles.bulletPoint}></div>
       </li>
@@ -107,7 +107,7 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
   function WarningBadge() {
     return (
       <div className={styles.comingSoonWarning}>
-        <h3
+        <h5
           ref={badge}
           className={comingSoonWarning ? styles.setWarning : ""}
           onAnimationEnd={() => {
@@ -115,7 +115,7 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
           }}
         >
           Coming soon!
-        </h3>
+        </h5>
       </div>
     );
   }

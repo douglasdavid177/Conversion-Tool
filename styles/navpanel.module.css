@@ -63,13 +63,14 @@
   color: var(--turquoise);
 }
 
-.panel h3 {
+.panel h2 {
   margin: 0;
   padding: 0;
   margin-bottom: 2rem;
   font-size: 1.3rem;
+  /* font-size: 1.3rem; */
 }
-.panel button.disabledButton h3 {
+.panel button.disabledButton h2 {
   color: hsl(0, 0%, 50%);
 }
 .panel .homeLink {
@@ -147,9 +148,10 @@ hr.miniLine {
   justify-content: center;
   width: 100%;
 }
-.comingSoonWarning h3 {
+.comingSoonWarning h5 {
   margin: 0;
   background-color: var(--grapefruit);
+  color: white;
   border-radius: 25rem;
   padding: 0.5rem;
   opacity: 0;
@@ -157,7 +159,7 @@ hr.miniLine {
   /* transition: opacity 1s ease !important; */
 }
 
-h3.setWarning {
+h5.setWarning {
   animation: warningAnim 1.5s ease;
 }
 @keyframes warningAnim {
