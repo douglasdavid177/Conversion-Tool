@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import styles from "../styles/navpanel.module.css";
 
-const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
+const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   const [comingSoonWarning, setComingSoonWarning] = useState(false);
   const badge = useRef();
   const keyFrames = [0];
@@ -33,30 +33,31 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
           transition={{ duration: 0.7, ease: [0, 1.14, 0.75, 0.98] }}
         >
           <div className={styles.panel}>
-            <h5>Tools</h5>
+            <h5>Menu</h5>
             <hr align="right" />
-            <ul>
-              <li>
-                <button
-                  onClick={() => {
-                    setSectionKey(0);
-                    setIsOpen(false);
-                  }}
-                >
-                  <h2 className={styles.homeLink}>Home</h2>
-                </button>
-                <div
-                  className={styles.bulletPoint}
-                  style={{ background: "transparent" }}
-                ></div>
-              </li>
+
+            <MiniMenuSection label={"All"}>
+              <MenuItem label={"Home"} sectionKey={0} />
+              <MenuItem label={"About"} sectionKey={1} />
+              <MenuItem
+                label={"Decimal to Fraction Converter"}
+                sectionKey={2}
+              />
+              <MenuItem label={"Unit Conversion"} sectionKey={-1} />
+              <MenuItem label={"Tip Calculator"} sectionKey={-1} />
+            </MiniMenuSection>
+            {/* <MenuSection label={"Info"}>
+              <MenuItem label={"Home"} sectionKey={0} />
+              <MenuItem label={"About"} sectionKey={-1} />
+            </MenuSection>
+            <MenuSection label={"Tools"}>
               <MenuItem
                 label={"Decimal to Fraction Converter"}
                 sectionKey={1}
               />
               <MenuItem label={"Unit Conversion"} sectionKey={-1} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
-            </ul>
+            </MenuSection> */}
 
             <WarningBadge />
 
@@ -95,15 +96,49 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
             setIsOpen(false);
           }}
           // disabled={props.sectionKey == -1}
-          className={props.sectionKey == -1 ? styles.disabledButton : ""}
+          className={`${props.sectionKey == -1 ? styles.disabledButton : ""} ${
+            props.sectionKey == currentSectionKey ? styles.currentMenuItem : ""
+          }`}
         >
-          <h2>{props.label}</h2>
+          <h3>{props.label}</h3>
         </button>
         <div className={styles.bulletPoint}></div>
       </li>
     );
   }
 
+  function MiniMenuItem(props) {
+    return (
+      <li>
+        <button
+          onClick={() => {
+            if (props.sectionKey == -1) {
+              badge.current.classList.remove(".setWarning");
+              badge.current.style.animation = "none";
+
+              void badge.current.offsetWidth;
+              console.log("badge width");
+              console.log(badge.current.offsetWidth);
+              badge.current.style.animation = "";
+              setComingSoonWarning(true);
+              // setTimeout(() => {
+              //   setComingSoonWarning(false);
+              // }, 500);
+              console.log("at least we in here");
+              return;
+            }
+            setSectionKey(props.sectionKey);
+            setIsOpen(false);
+          }}
+          // disabled={props.sectionKey == -1}
+          className={props.sectionKey == -1 ? styles.disabledButton : ""}
+        >
+          <h4>{props.label}</h4>
+        </button>
+        {/* <div className={styles.bulletPoint}></div> */}
+      </li>
+    );
+  }
   function WarningBadge() {
     return (
       <div className={styles.comingSoonWarning}>
@@ -116,6 +151,25 @@ const NavPanel = ({ isOpen, setIsOpen, setSectionKey }) => {
         >
           Coming soon!
         </h5>
+      </div>
+    );
+  }
+
+  function MenuSection(props) {
+    return (
+      <div className={styles.menuSection}>
+        <h5 className={styles.sectionHeading}>{props.label}</h5>
+        <hr align="right" />
+        <ul>{props.children}</ul>
+      </div>
+    );
+  }
+  function MiniMenuSection(props) {
+    return (
+      <div className={styles.menuSection}>
+        {/* <h5>{props.label}</h5> */}
+        <hr align="right" className={styles.miniline} />
+        <ul>{props.children}</ul>
       </div>
     );
   }

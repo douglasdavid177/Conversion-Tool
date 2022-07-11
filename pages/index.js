@@ -9,6 +9,7 @@ import {
 // import InputSectionDecToFrac from "../components/inputsectionfrac";
 // import ResultsSection from "../components/resultssection";
 import HomeSection from "../components/homesection";
+import AboutSection from "../components/aboutsection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
 import NavPanel from "../components/navpanel";
 
@@ -48,12 +49,13 @@ export default function Home() {
       <NavPanel
         isOpen={navPanelOpen}
         setIsOpen={setNavPanelOpen}
+        currentSectionKey={mainSectionKey}
         setSectionKey={setMainSectionKey}
       />
 
       <div className={styles.content}>
         <LayoutGroup>
-          <motion.div layout>
+          <motion.div key={"header"} layout>
             <div className={styles.header}>
               <img
                 src="/workersvg-turquoise.svg"
@@ -64,7 +66,8 @@ export default function Home() {
               <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
             </div>
           </motion.div>
-          <AnimatePresence exitBeforeEnter>
+
+          <AnimatePresence exitBeforeEnter className={styles.mainSectionHolder}>
             <motion.div
               layout
               key={mainSectionKey}
@@ -73,27 +76,26 @@ export default function Home() {
               exit={{ translateY: -20, opacity: 0 }}
               transition={{ duration: 0.35 }}
             >
-              {componentFromKey(mainSectionKey)}
+              <div className={styles.mainSectionHolder}>
+                {componentFromKey(mainSectionKey)}
+              </div>
             </motion.div>
           </AnimatePresence>
-          <motion.div layout>
-            {mainSectionKey > 0 ? (
-              <div
-                className={`${styles.buttonHolder} ${
-                  useFixedLayout ? styles.fixedButton : {}
-                }`}
+          <motion.div
+            className={`${styles.buttonHolder} ${
+              useFixedLayout ? styles.fixedButton : {}
+            }`}
+            layout
+          >
+            {mainSectionKey > 1 && (
+              <button
+                onClick={() => {
+                  showResults ? resetInput() : gotoResults();
+                }}
+                className={showResults ? styles.secondary : styles.primary}
               >
-                <button
-                  onClick={() => {
-                    showResults ? resetInput() : gotoResults();
-                  }}
-                  className={showResults ? styles.secondary : styles.primary}
-                >
-                  {showResults ? "Change Input" : "View Results"}
-                </button>
-              </div>
-            ) : (
-              ""
+                {showResults ? "Change Input" : "View Results"}
+              </button>
             )}
           </motion.div>
         </LayoutGroup>
@@ -106,6 +108,9 @@ export default function Home() {
       case 0:
         return <HomeSection setOpenNav={setNavPanelOpen} />;
       case 1:
+        return <AboutSection />;
+
+      case 2:
         return (
           <DecToFracSection
             showResults={showResults}

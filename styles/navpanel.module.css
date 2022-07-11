@@ -19,6 +19,7 @@
   bottom: 0;
   width: min(60vw, 25rem);
   z-index: 10;
+
   /* transition: transform 0.5s cubic-bezier(0, 1.14, 0.77, 0.99);
   transition: transform 0.7s cubic-bezier(0, 1.14, 0.75, 0.98);
   transform: translateX(-200%); */
@@ -30,14 +31,16 @@
   padding-left: 3rem;
   padding-right: 1.5rem;
   padding-top: 5rem;
-  padding: 5rem 1.5rem 1.5rem 3rem;
+  padding: 1.5rem 1.5rem 1.5rem 3rem;
+  padding: 3rem 1rem 2rem 1rem;
 
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  /* position: relative; */
+  position: relative;
   /* height: 100%;
   justify-content: stretch; */
+  overflow-y: auto;
 }
 .panel button {
   border: none;
@@ -63,14 +66,22 @@
   color: var(--turquoise);
 }
 
-.panel h2 {
+.panel .menuSection h3 {
   margin: 0;
   padding: 0;
-  margin-bottom: 2rem;
-  font-size: 1.3rem;
-  /* font-size: 1.3rem; */
+  margin-bottom: 1.2rem;
+  margin: 0.6rem 0rem;
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
-.panel button.disabledButton h2 {
+.panel .menuSection h5.sectionHeading {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+  margin-right: 1.5rem;
+}
+
+.panel button.disabledButton h3 {
   color: hsl(0, 0%, 50%);
 }
 .panel .homeLink {
@@ -81,20 +92,34 @@
   color: var(--turquoise);
 }
 
-.panel h5 {
+.panel h5,
+.panel h2 {
   margin: 0;
   color: hsl(0, 0%, 50%);
   /* margin-bottom: 2rem; */
 }
+
+.panel h4 {
+  margin: 0;
+  color: hsl(0, 0%, 50%);
+}
 .panel hr {
+  width: 90%;
+  margin-bottom: 0.5rem;
+
   color: hsl(0, 0%, 50%);
   background: hsl(0, 0%, 50%);
   border: 1px solid hsl(0, 0%, 50%);
-  width: 100%;
-  margin-bottom: 2rem;
+
+  height: 0.2rem;
+}
+.panel .menuSection hr {
+  width: min(25%, 2.5rem);
+  /* visibility: hidden; */
+  display: none;
 }
 
-hr.miniLine {
+hr.miniline {
   width: 20%;
 }
 .closedPanel {
@@ -123,30 +148,38 @@ hr.miniLine {
   aspect-ratio: 1;
   background-color: white;
   border-radius: 50%;
-  margin-bottom: 2rem;
-  margin-left: 2rem;
+  margin: 0;
+  padding: 0;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .panel .messageContainer {
   text-align: left;
-  margin-left: -1.5rem; /*Because of increased left padding on panel */
+  /* margin-left: -1.5rem; Because of increased left padding on panel */
   color: hsl(0, 0%, 50%);
-  /* flex-grow: 1; */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  padding: 0.5rem;
+  /* margin-bottom: 1rem; */
 }
 
 .comingSoonWarning {
-  flex-grow: 1;
   display: flex;
   /* margin-left: -1.5rem; Doesnt work for some reason */
-  transform: translateX(-0.75rem);
+  /* transform: translateX(1.2rem); */
   align-items: flex-end;
   text-align: center;
   justify-content: center;
+  padding-bottom: 1rem;
   width: 100%;
+  height: 3rem;
+  position: sticky;
+  bottom: 1vh;
+  flex-grow: 1;
 }
 .comingSoonWarning h5 {
   margin: 0;
@@ -155,17 +188,26 @@ hr.miniLine {
   border-radius: 25rem;
   padding: 0.5rem;
   opacity: 0;
-
-  /* transition: opacity 1s ease !important; */
 }
 
 h5.setWarning {
   animation: warningAnim 1.5s ease;
 }
+
+.menuSection {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+button.currentMenuItem {
+  color: var(--turquoise);
+}
+
 @keyframes warningAnim {
   0% {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(0px);
   }
   10% {
     opacity: 1;
@@ -175,6 +217,6 @@ h5.setWarning {
   }
   100% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
 }
