@@ -12,8 +12,18 @@ const DecToFracSection = (props) => {
   const [resultsSndVal, setResultsSndVal] = useState(-1);
   const [triggerWarning, setTriggerWarning] = useState(false);
 
+  useEffect(
+    () => () => {
+      props.setAttemptCalculate(false);
+      props.setShowResults(false);
+    },
+    []
+  );
+
   useEffect(() => {
-    calculate(decVal, denVal);
+    if (props.attemptCalculate) {
+      calculate(decVal, denVal);
+    }
   }, [props.attemptCalculate]);
 
   const calculate = (dec, den) => {
