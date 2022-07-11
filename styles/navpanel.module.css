@@ -67,6 +67,7 @@
   margin: 0;
   padding: 0;
   margin-bottom: 2rem;
+  font-size: 1.3rem;
 }
 .panel button.disabledButton h3 {
   color: hsl(0, 0%, 50%);
@@ -139,6 +140,7 @@ hr.miniLine {
 .comingSoonWarning {
   flex-grow: 1;
   display: flex;
+  margin-left: 1.5rem;
   align-items: flex-end;
   text-align: center;
   justify-content: center;
@@ -155,7 +157,7 @@ hr.miniLine {
 }
 
 h3.setWarning {
-  animation: warningAnim 3s ease;
+  animation: warningAnim 1.5s ease;
 }
 @keyframes warningAnim {
   0% {
