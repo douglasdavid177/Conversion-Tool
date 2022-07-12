@@ -1,11 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/navpanel.module.css";
 
 const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   const [comingSoonWarning, setComingSoonWarning] = useState(false);
   const badge = useRef();
-  const keyFrames = [0];
+  useEffect(() => {
+    cancelAnim();
+    console.log("effect used");
+  }, [isOpen]);
   return (
     <AnimatePresence>
       {isOpen && (
@@ -59,7 +62,18 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
             </MenuSection> */}
 
-            <WarningBadge />
+            {/* <WarningBadge /> */}
+            <div className={styles.comingSoonWarning}>
+              <h5
+                ref={badge}
+                className={comingSoonWarning ? styles.setWarning : ""}
+                onAnimationEnd={() => {
+                  setComingSoonWarning(false);
+                }}
+              >
+                Coming soon!
+              </h5>
+            </div>
 
             <div className={styles.messageContainer}>
               <h4>
@@ -78,18 +92,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
         <button
           onClick={() => {
             if (props.sectionKey == -1) {
-              badge.current.classList.remove(".setWarning");
-              badge.current.style.animation = "none";
-
-              void badge.current.offsetWidth;
-              console.log("badge width");
-              console.log(badge.current.offsetWidth);
-              badge.current.style.animation = "";
-              setComingSoonWarning(true);
-              // setTimeout(() => {
-              //   setComingSoonWarning(false);
-              // }, 500);
-              console.log("at least we in here");
+              ResetAnim();
               return;
             }
             setSectionKey(props.sectionKey);
@@ -113,19 +116,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
         <button
           onClick={() => {
             if (props.sectionKey == -1) {
-              badge.current.classList.remove(".setWarning");
-              badge.current.style.animation = "none";
-
-              void badge.current.offsetWidth;
-              console.log("badge width");
-              console.log(badge.current.offsetWidth);
-              badge.current.style.animation = "";
-              setComingSoonWarning(true);
-              // setTimeout(() => {
-              //   setComingSoonWarning(false);
-              // }, 500);
-              console.log("at least we in here");
-              return;
+              ResetAnim();
             }
             setSectionKey(props.sectionKey);
             setIsOpen(false);
@@ -172,6 +163,23 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
         <ul>{props.children}</ul>
       </div>
     );
+  }
+  function ResetAnim() {
+    cancelAnim();
+    setComingSoonWarning(true);
+    void badge.current.offsetWidth;
+  }
+  function cancelAnim() {
+    if (!badge.current) {
+      return;
+    }
+    setComingSoonWarning(false);
+    badge.current.classList.remove(".setWarning");
+    void badge.current.offsetWidth;
+    badge.current.style.animation = "none";
+    void badge.current.offsetWidth;
+    badge.current.style.animation = "";
+    void badge.current.offsetWidth;
   }
 };
 
