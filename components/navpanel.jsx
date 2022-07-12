@@ -166,8 +166,10 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   }
   function ResetAnim() {
     cancelAnim();
-    setComingSoonWarning(true);
-    void badge.current.offsetWidth;
+    setTimeout(() => {
+      setComingSoonWarning(true);
+      void badge.current.offsetWidth;
+    }, 10);
   }
   function cancelAnim() {
     if (!badge.current) {
