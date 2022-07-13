@@ -8,13 +8,19 @@
 
   /* with bottom margin on button, this is not needed as total height is already more than 90vh on most normal deveices */
 }
-
-button.hamburger {
-  width: 2rem;
-  aspect-ratio: 1;
+.hamburgerHolder {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
+  width: 2rem;
+  height: 100%;
+}
+button.hamburger {
+  position: sticky;
+  top: 0.6rem;
+
+  width: 2rem;
+  aspect-ratio: 1;
   background: none;
   border: none;
   outline: none;
@@ -145,6 +151,7 @@ button.hamburger img {
   justify-content: flex-end;
   justify-content: center;
 }
+
 .content button {
   width: 100%;
   height: 3rem;
@@ -162,14 +169,14 @@ button.hamburger img {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   transition: all 0.35s ease;
+  border: none;
 }
 button.primary {
   background-color: var(--turquoise);
   color: black;
   font-weight: bold;
-  border: none;
-  position: relative;
 }
 button.primary::after {
   content: "";
@@ -336,6 +343,10 @@ button.secondary:active::before {
   position: fixed;
   bottom: 0;
   width: 85%;
+}
+
+.debugging {
+  /* border: 3px solid red; */
 }
 /* Media queries adjust the amount of columns based on the width of the screen, to better accommodate smaller devices  */
 @media only screen and (min-width: 678px) {

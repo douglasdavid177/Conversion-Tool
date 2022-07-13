@@ -49,31 +49,8 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
               <MenuItem label={"Unit Conversion"} sectionKey={-1} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
             </MiniMenuSection>
-            {/* <MenuSection label={"Info"}>
-              <MenuItem label={"Home"} sectionKey={0} />
-              <MenuItem label={"About"} sectionKey={-1} />
-            </MenuSection>
-            <MenuSection label={"Tools"}>
-              <MenuItem
-                label={"Decimal to Fraction Converter"}
-                sectionKey={1}
-              />
-              <MenuItem label={"Unit Conversion"} sectionKey={-1} />
-              <MenuItem label={"Tip Calculator"} sectionKey={-1} />
-            </MenuSection> */}
 
-            {/* <WarningBadge /> */}
-            <div className={styles.comingSoonWarning}>
-              <h5
-                ref={badge}
-                className={comingSoonWarning ? styles.setWarning : ""}
-                onAnimationEnd={() => {
-                  setComingSoonWarning(false);
-                }}
-              >
-                Coming soon!
-              </h5>
-            </div>
+            <WarningBadge />
 
             <div className={styles.messageContainer}>
               <h4>

@@ -14,6 +14,7 @@ import DecToFracSection from "../components/dectofrac/decfracsection";
 import NavPanel from "../components/navpanel";
 
 export default function Home() {
+  const [targetMainSectionKey, setTargetMainSectionKey] = useState(0);
   const [mainSectionKey, setMainSectionKey] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
@@ -25,8 +26,12 @@ export default function Home() {
     //fixHeight();
   }, []);
 
+  function test(e) {
+    console.log("scrollin...");
+  }
   return (
-    <div
+    <motion.div
+      onScroll={test}
       className={`${styles.container} ${
         useFixedLayout ? styles.fixedLayout : {}
       }`}
@@ -36,16 +41,17 @@ export default function Home() {
         setNavPanelOpen(false);
       }}
     >
-      <button
-        className={styles.hamburger}
-        onClick={() => {
-          console.log("clicked burg...");
-          setNavPanelOpen(!navPanelOpen);
-        }}
-      >
-        <img src="./menu.svg"></img>
-      </button>
-
+      <div className={styles.hamburgerHolder}>
+        <button
+          className={styles.hamburger}
+          onClick={() => {
+            console.log("clicked burg...");
+            setNavPanelOpen(!navPanelOpen);
+          }}
+        >
+          <img src="./menu.svg"></img>
+        </button>
+      </div>
       <NavPanel
         isOpen={navPanelOpen}
         setIsOpen={setNavPanelOpen}
@@ -53,7 +59,7 @@ export default function Home() {
         setSectionKey={setMainSectionKey}
       />
 
-      <div className={styles.content}>
+      <motion.div className={styles.content}>
         <LayoutGroup>
           <motion.div key={"header"} layout>
             <div className={styles.header}>
@@ -65,44 +71,65 @@ export default function Home() {
               <h5>Welcome to...</h5>
               <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
             </div>
+            <TestComp>
+              <h3>maybe thisll show</h3>
+            </TestComp>
           </motion.div>
-
-          <AnimatePresence exitBeforeEnter className={styles.mainSectionHolder}>
-            <motion.div
-              layout
-              key={mainSectionKey}
-              initial={{ translateY: 20, opacity: 0 }}
-              animate={{ translateY: 0, opacity: 1 }}
-              exit={{ translateY: -20, opacity: 0 }}
-              transition={{ duration: 0.35 }}
-            >
-              <div className={styles.mainSectionHolder}>
-                {componentFromKey(mainSectionKey)}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-          <motion.div
-            className={`${styles.buttonHolder} ${
-              useFixedLayout ? styles.fixedButton : {}
-            }`}
-            layout
-          >
-            {mainSectionKey > 1 && (
-              <button
-                onClick={() => {
-                  showResults ? resetInput() : gotoResults();
-                }}
-                className={showResults ? styles.secondary : styles.primary}
+          {/* <motion.div layout className={`${""} ${styles.debugging}`}> */}
+          <motion.div layout>
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                layout
+                key={mainSectionKey}
+                initial={{ translateY: 20, opacity: 0 }}
+                animate={{ translateY: 0, opacity: 1 }}
+                exit={{ translateY: -20, opacity: 0 }}
+                transition={{ duration: 0.35 }}
               >
-                {showResults ? "Change Input" : "View Results"}
-              </button>
-            )}
+                <div>{componentFromKey(mainSectionKey)}</div>
+              </motion.div>
+              <motion.div
+                key={mainSectionKey > 1}
+                className={`${styles.buttonHolder}, ${styles.debugging}`}
+                initial={{ scaleY: 0.0 }}
+                animate={{ scaleY: 1 }}
+                exit={{ scaleY: 0.0 }}
+              >
+                {mainSectionKey > 1 && (
+                  <button
+                    onClick={() => {
+                      showResults ? resetInput() : gotoResults();
+                    }}
+                    className={showResults ? styles.secondary : styles.primary}
+                  >
+                    {showResults ? "Change Input" : "View Results"}
+                  </button>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
+          {/* </motion.div> */}
         </LayoutGroup>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 
+  function TestComp(props) {
+    return <div></div>;
+  }
+
+  function ActionButton(props) {
+    return (
+      <button
+        onClick={() => {
+          showResults ? resetInput() : gotoResults();
+        }}
+        className={showResults ? styles.secondary : styles.primary}
+      >
+        {showResults ? "Change Input" : "View Results"}
+      </button>
+    );
+  }
   function componentFromKey(key) {
     switch (key) {
       case 0:
