@@ -40,13 +40,8 @@ export default function Home() {
             </motion.div>
 
             <motion.div>
-              <AnimatePresence
-                exitBeforeEnter
-                layout
-                transition={{ staggerChildren: 1 }}
-              >
+              <AnimatePresence exitBeforeEnter layout>
                 <motion.div
-                  layout
                   key={mainSectionKey}
                   initial={{ translateY: 30, opacity: 0 }}
                   animate={{
@@ -70,7 +65,7 @@ export default function Home() {
                 {mainSectionKey > 1 && (
                   <motion.div
                     layout
-                    key={true}
+                    key={"button"}
                     className={`${styles.buttonHolder}, ${""}`}
                     initial={{ translateY: 50, opacity: 0 }}
                     animate={{

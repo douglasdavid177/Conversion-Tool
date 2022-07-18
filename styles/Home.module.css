@@ -194,7 +194,7 @@ button.primary::after {
   /* z-index: -1; */
 
   background-color: rgb(0 0 0 / 0.1);
-  transform: scale(1.5);
+  /* transform: scale(1.5); */
 }
 button.secondary {
   background: transparent;
