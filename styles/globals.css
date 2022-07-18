@@ -21,6 +21,7 @@ body {
   height: 100%;
   width: 100%;
   overflow: auto;
+  scroll-behavior: smooth;
 }
 
 body::-webkit-scrollbar {
@@ -44,4 +45,7 @@ a {
 
 * {
   box-sizing: border-box;
+}
+.debugging {
+  border: 3px solid red;
 }

@@ -3,7 +3,7 @@ import styles from "../styles/homesection.module.css";
 
 const AboutSection = ({ setOpenNav }) => {
   return (
-    <div>
+    <div className={styles.aboutSection}>
       <h4>
         {`
         This app is a single page web application (SPA), written in JavaScript with the NextJS framework. It uses

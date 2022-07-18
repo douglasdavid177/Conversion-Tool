@@ -6,8 +6,6 @@ import {
   AnimateSharedLayout,
   LayoutGroup,
 } from "framer-motion";
-// import InputSectionDecToFrac from "../components/inputsectionfrac";
-// import ResultsSection from "../components/resultssection";
 import HomeSection from "../components/homesection";
 import AboutSection from "../components/aboutsection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
@@ -18,29 +16,91 @@ export default function Home() {
   const [mainSectionKey, setMainSectionKey] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
-  const [useFixedLayout, setUseFixedLayout] = useState(false); // Not happy with how this turned out so it's not in use
   const [navPanelOpen, setNavPanelOpen] = useState(false);
   const compRef = useRef();
 
-  useEffect(() => {
-    //fixHeight();
-  }, []);
-
-  function test(e) {
-    console.log("scrollin...");
-  }
   return (
-    <motion.div
-      onScroll={test}
-      className={`${styles.container} ${
-        useFixedLayout ? styles.fixedLayout : {}
-      }`}
-      ref={compRef}
-      onClick={() => {
-        if (!navPanelOpen) return;
-        setNavPanelOpen(false);
-      }}
-    >
+    <div>
+      <motion.div className={`${styles.container}`} ref={compRef}>
+        <motion.div className={styles.content} layout>
+          <LayoutGroup>
+            <motion.div key={"header"} layout>
+              <div className={styles.header}>
+                <img
+                  src="/workersvg-turquoise.svg"
+                  alt="An SVG of a construction worker checking a clipboard"
+                  className={styles.heroimg}
+                />
+                <h5>Welcome to...</h5>
+                <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
+              </div>
+              <TestComp>
+                <h3>maybe thisll show</h3>
+              </TestComp>
+            </motion.div>
+
+            <motion.div>
+              <AnimatePresence
+                exitBeforeEnter
+                layout
+                transition={{ staggerChildren: 1 }}
+              >
+                <motion.div
+                  layout
+                  key={mainSectionKey}
+                  initial={{ translateY: 30, opacity: 0 }}
+                  animate={{
+                    translateY: 0,
+                    opacity: 1,
+                  }}
+                  exit={{
+                    translateY: -10,
+                    opacity: 0,
+                    transition: {
+                      duration: 0.35,
+                      delay: mainSectionKey > 1 ? 0.2 : 0,
+                    },
+                  }}
+                  transition={{
+                    duration: 0.35,
+                  }}
+                >
+                  <div>{componentFromKey(mainSectionKey)}</div>
+                </motion.div>
+                {mainSectionKey > 1 && (
+                  <motion.div
+                    layout
+                    key={true}
+                    className={`${styles.buttonHolder}, ${""}`}
+                    initial={{ translateY: 50, opacity: 0 }}
+                    animate={{
+                      translateY: 0,
+                      opacity: 1,
+                      transition: { duration: 0.35, delay: 0.2 },
+                    }}
+                    exit={{ translateY: -5, opacity: 0 }}
+                    transition={{
+                      duration: 0.35,
+                      // delay: mainSectionKey > 1 ? 0.15 : 0,
+                    }}
+                  >
+                    <button
+                      onClick={() => {
+                        showResults ? resetInput() : gotoResults();
+                      }}
+                      className={
+                        showResults ? styles.secondary : styles.primary
+                      }
+                    >
+                      {showResults ? "Change Input" : "View Results"}
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </LayoutGroup>
+        </motion.div>
+      </motion.div>
       <div className={styles.hamburgerHolder}>
         <button
           className={styles.hamburger}
@@ -58,60 +118,7 @@ export default function Home() {
         currentSectionKey={mainSectionKey}
         setSectionKey={setMainSectionKey}
       />
-
-      <motion.div className={styles.content}>
-        <LayoutGroup>
-          <motion.div key={"header"} layout>
-            <div className={styles.header}>
-              <img
-                src="/workersvg-turquoise.svg"
-                alt="An SVG of a construction worker checking a clipboard"
-                className={styles.heroimg}
-              />
-              <h5>Welcome to...</h5>
-              <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
-            </div>
-            <TestComp>
-              <h3>maybe thisll show</h3>
-            </TestComp>
-          </motion.div>
-          {/* <motion.div layout className={`${""} ${styles.debugging}`}> */}
-          <motion.div layout>
-            <AnimatePresence exitBeforeEnter>
-              <motion.div
-                layout
-                key={mainSectionKey}
-                initial={{ translateY: 20, opacity: 0 }}
-                animate={{ translateY: 0, opacity: 1 }}
-                exit={{ translateY: -20, opacity: 0 }}
-                transition={{ duration: 0.35 }}
-              >
-                <div>{componentFromKey(mainSectionKey)}</div>
-              </motion.div>
-              <motion.div
-                key={mainSectionKey > 1}
-                className={`${styles.buttonHolder}, ${styles.debugging}`}
-                initial={{ scaleY: 0.0 }}
-                animate={{ scaleY: 1 }}
-                exit={{ scaleY: 0.0 }}
-              >
-                {mainSectionKey > 1 && (
-                  <button
-                    onClick={() => {
-                      showResults ? resetInput() : gotoResults();
-                    }}
-                    className={showResults ? styles.secondary : styles.primary}
-                  >
-                    {showResults ? "Change Input" : "View Results"}
-                  </button>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-          {/* </motion.div> */}
-        </LayoutGroup>
-      </motion.div>
-    </motion.div>
+    </div>
   );
 
   function TestComp(props) {

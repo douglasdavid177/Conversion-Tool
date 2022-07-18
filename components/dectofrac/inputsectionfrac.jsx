@@ -54,17 +54,20 @@ const InputSection = ({
   function handleInputDec(e) {
     e.persist();
     setDecFunc(e.target.value);
+    //countDecimalPlacesString(e.target.value);
   }
   function validateInputDec() {
     let result = dec;
+    const decplaces = countDecimalPlacesString(result);
     result = parseFloat(result);
     result = Math.abs(result);
+
+    // const decplaces = countDecimalPlacesFloat(result); // Not needed and doesn't account for trailing zeros
 
     const leftOverDecimal = result - Math.floor(result);
     if (isNaN(leftOverDecimal)) {
       setDecFunc(0);
     } else {
-      const decplaces = countDecimalPlaces(result);
       setDecFunc(
         Number(leftOverDecimal).toFixed(decplaces > 2 ? decplaces : 2)
       );
@@ -86,11 +89,23 @@ const InputSection = ({
       setDenFunc(result);
     }
   }
-  function countDecimalPlaces(value) {
+  function countDecimalPlacesFloat(value) {
     const str = value.toString().split(".")[1];
 
     const result = str ? str.length : 0;
-    if (result > 0 && result < 10) {
+    if (result > 0 && result < 15) {
+      return result;
+    }
+
+    return 0;
+  }
+  function countDecimalPlacesString(value) {
+    const str = value.toString().split(".")[1];
+    if (!str) return;
+    const numString = str.replace(/\D/g, "");
+    const result = str ? str.length : 0;
+    console.log("decimal places in string: " + result);
+    if (result > 0 && result < 15) {
       return result;
     }
 

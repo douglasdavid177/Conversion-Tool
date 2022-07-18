@@ -5,7 +5,14 @@
   align-items: stretch;
   /* min-height: 80vh; */
   position: relative;
-
+  /* This is to make layout changes work smootly for some reason */
+  position: fixed;
+  height: 100%;
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow: overlay;
+  left: 0;
+  right: 0;
   /* with bottom margin on button, this is not needed as total height is already more than 90vh on most normal deveices */
 }
 .hamburgerHolder {
@@ -13,11 +20,11 @@
   top: 1.5rem;
   right: 1.5rem;
   width: 2rem;
-  height: 100%;
+  bottom: 0;
 }
 button.hamburger {
   position: sticky;
-  top: 0.6rem;
+  top: 1rem;
 
   width: 2rem;
   aspect-ratio: 1;
@@ -345,9 +352,10 @@ button.secondary:active::before {
   width: 85%;
 }
 
-.debugging {
-  /* border: 3px solid red; */
+.overflowsho {
+  overflow-y: visible;
 }
+
 /* Media queries adjust the amount of columns based on the width of the screen, to better accommodate smaller devices  */
 @media only screen and (min-width: 678px) {
   .content {

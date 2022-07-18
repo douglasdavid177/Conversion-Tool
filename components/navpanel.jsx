@@ -19,6 +19,10 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
           animate={{ opacity: 0.45 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35 }}
+          onClick={() => {
+            if (!isOpen) return;
+            setIsOpen(false);
+          }}
         ></motion.div>
       )}
 
