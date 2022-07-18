@@ -39,64 +39,66 @@ export default function Home() {
               </TestComp> */}
             </motion.div>
 
-            {/* <motion.div> */}
-            <AnimatePresence exitBeforeEnter>
-              <motion.div
-                layout
-                key={mainSectionKey}
-                initial={{ translateY: 30, opacity: 0 }}
-                animate={{
-                  translateY: 0,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.35,
-                    delay: 0.05,
-                  },
-                }}
-                exit={{
-                  translateY: -10,
-                  opacity: 0,
-                  transition: {
-                    duration: 0.35,
-                    delay: mainSectionKey > 1 ? 0.35 : 0,
-                  },
-                }}
-                transition={{
-                  duration: 0.35,
-                }}
-              >
-                <div>{componentFromKey(mainSectionKey)}</div>
-              </motion.div>
-
-              {mainSectionKey > 1 && (
+            <motion.div>
+              <AnimatePresence exitBeforeEnter>
                 <motion.div
                   layout
-                  key={"buttonholder"}
-                  className={`${styles.buttonHolder}, ${""}`}
-                  initial={{ translateY: 50, opacity: 0 }}
+                  key={mainSectionKey}
+                  initial={{ translateY: 30, opacity: 0 }}
                   animate={{
                     translateY: 0,
                     opacity: 1,
-                    transition: { duration: 0.35, delay: 0.35 },
+                    transition: {
+                      duration: 0.35,
+                      delay: 0.05,
+                    },
                   }}
-                  exit={{ translateY: -5, opacity: 0 }}
+                  exit={{
+                    translateY: -10,
+                    opacity: 0,
+                    transition: {
+                      duration: 0.35,
+                      delay: mainSectionKey > 1 ? 0.35 : 0,
+                    },
+                  }}
                   transition={{
                     duration: 0.35,
-                    // delay: mainSectionKey > 1 ? 0.15 : 0,
                   }}
                 >
-                  <button
-                    onClick={() => {
-                      showResults ? resetInput() : gotoResults();
-                    }}
-                    className={showResults ? styles.secondary : styles.primary}
-                  >
-                    {showResults ? "Change Input" : "View Results"}
-                  </button>
+                  <div>{componentFromKey(mainSectionKey)}</div>
                 </motion.div>
-              )}
-            </AnimatePresence>
-            {/* </motion.div> */}
+
+                {mainSectionKey > 1 && (
+                  <motion.div
+                    layout
+                    key={"buttonholder"}
+                    className={`${styles.buttonHolder}, ${""}`}
+                    initial={{ translateY: 50, opacity: 0 }}
+                    animate={{
+                      translateY: 0,
+                      opacity: 1,
+                      transition: { duration: 0.35, delay: 0.35 },
+                    }}
+                    exit={{ translateY: -5, opacity: 0 }}
+                    transition={{
+                      duration: 0.35,
+                      // delay: mainSectionKey > 1 ? 0.15 : 0,
+                    }}
+                  >
+                    <button
+                      onClick={() => {
+                        showResults ? resetInput() : gotoResults();
+                      }}
+                      className={
+                        showResults ? styles.secondary : styles.primary
+                      }
+                    >
+                      {showResults ? "Change Input" : "View Results"}
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </LayoutGroup>
         </motion.div>
       </motion.div>
