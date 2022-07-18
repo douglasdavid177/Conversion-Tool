@@ -34,14 +34,15 @@ export default function Home() {
                 <h5>Welcome to...</h5>
                 <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
               </div>
-              <TestComp>
+              {/* <TestComp>
                 <h3>maybe thisll show</h3>
-              </TestComp>
+              </TestComp> */}
             </motion.div>
 
             {/* <motion.div> */}
             <AnimatePresence exitBeforeEnter>
               <motion.div
+                layout
                 key={mainSectionKey}
                 initial={{ translateY: 30, opacity: 0 }}
                 animate={{
@@ -69,6 +70,7 @@ export default function Home() {
 
               {mainSectionKey > 1 && (
                 <motion.div
+                  layout
                   key={"buttonholder"}
                   className={`${styles.buttonHolder}, ${""}`}
                   initial={{ translateY: 50, opacity: 0 }}
