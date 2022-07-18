@@ -71,7 +71,7 @@ export default function Home() {
                 {mainSectionKey > 1 && (
                   <motion.div
                     layout
-                    key={mainSectionKey > 1}
+                    key={"buttonholder"}
                     className={`${styles.buttonHolder}, ${""}`}
                     initial={{ translateY: 50, opacity: 0 }}
                     animate={{

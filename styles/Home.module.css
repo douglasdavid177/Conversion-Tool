@@ -16,15 +16,15 @@
   /* with bottom margin on button, this is not needed as total height is already more than 90vh on most normal deveices */
 }
 .hamburgerHolder {
-  position: absolute;
+  position: fixed;
   top: 1.5rem;
   right: 1.5rem;
   width: 2rem;
   /* bottom: 0; */
 }
 button.hamburger {
-  position: sticky;
-  top: 1rem;
+  /* position: sticky;
+  top: 1rem; */
 
   width: 2rem;
   aspect-ratio: 1;
