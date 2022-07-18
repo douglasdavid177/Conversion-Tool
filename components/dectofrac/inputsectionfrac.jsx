@@ -101,15 +101,15 @@ const InputSection = ({
   }
   function countDecimalPlacesString(value) {
     const str = value.toString().split(".")[1];
-    if (!str) return;
+    if (!str) return 2;
     const numString = str.replace(/\D/g, "");
     const result = str ? str.length : 0;
     console.log("decimal places in string: " + result);
-    if (result > 0 && result < 15) {
+    if (result > 0 && result < 16) {
       return result;
     }
 
-    return 0;
+    return 2;
   }
   function reacquireFocus(e) {
     console.log("e:");
