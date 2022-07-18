@@ -58,7 +58,7 @@ export default function Home() {
                     opacity: 0,
                     transition: {
                       duration: 0.35,
-                      delay: mainSectionKey > 1 ? 0.2 : 0,
+                      delay: mainSectionKey > 1 ? 0.35 : 0,
                     },
                   }}
                   transition={{
@@ -76,7 +76,7 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.35, delay: 0.2 },
+                      transition: { duration: 0.35, delay: 0.35 },
                     }}
                     exit={{ translateY: -5, opacity: 0 }}
                     transition={{
