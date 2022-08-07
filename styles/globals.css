@@ -47,5 +47,5 @@ a {
   box-sizing: border-box;
 }
 .debugging {
-  border: 3px solid red;
+  outline: 3px solid red;
 }

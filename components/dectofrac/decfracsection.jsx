@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import InputSection from "./inputsectionfrac";
 import ResultsSection from "./resultssectionfrac";
-import styles from "../../styles/Home.module.css";
+import styles from "../../styles/mainsection.module.css";
 
 const DecToFracSection = (props) => {
   const [decVal, setDecVal] = useState("");
@@ -32,8 +32,6 @@ const DecToFracSection = (props) => {
     den = Math.abs(den);
     if (den == 0 || isNaN(dec) || isNaN(den)) {
       props.setAttemptCalculate(false);
-      if (triggerWarning) {
-      }
       setTriggerWarning(true);
       props.setShowResults(false);
       return;
@@ -68,35 +66,43 @@ const DecToFracSection = (props) => {
     props.setShowResults(true);
   };
   return (
-    <AnimatePresence exitBeforeEnter>
-      <motion.div
-        key={props.showResults ? "results" : "input"}
-        initial={{ translateY: 20, opacity: 0 }}
-        animate={{ translateY: 0, opacity: 1 }}
-        exit={{ translateY: -20, opacity: 0 }}
-        transition={{ duration: 0.35 }}
+    <motion.div>
+      <AnimatePresence
+        exitBeforeEnter
+        onExitComplete={() => {
+          props.setDummyVar(!props.dummyVar);
+        }}
       >
-        {props.showResults ? (
-          <ResultsSection
-            dec={decVal}
-            den={denVal}
-            resultsVal={resultsVal}
-            resultsSndVal={resultsSndVal}
-            decimalPlaces={decimalPlaces}
-          />
-        ) : (
-          <InputSection
-            dec={decVal}
-            den={denVal}
-            setDecFunc={setDecVal}
-            setDenFunc={setDenVal}
-            triggerW={triggerWarning}
-            setTriggerFunc={setTriggerWarning}
-            setDecPlacesFunc={setDecimalPlaces}
-          />
-        )}
-      </motion.div>
-    </AnimatePresence>
+        <motion.div
+          // layout
+          key={props.showResults ? "results" : "input"}
+          initial={{ translateY: 20, opacity: 0 }}
+          animate={{ translateY: 0, opacity: 1 }}
+          exit={{ translateY: -20, opacity: 0 }}
+          transition={{ duration: 0.35 }}
+        >
+          {props.showResults ? (
+            <ResultsSection
+              dec={decVal}
+              den={denVal}
+              resultsVal={resultsVal}
+              resultsSndVal={resultsSndVal}
+              decimalPlaces={decimalPlaces}
+            />
+          ) : (
+            <InputSection
+              dec={decVal}
+              den={denVal}
+              setDecFunc={setDecVal}
+              setDenFunc={setDenVal}
+              triggerW={triggerWarning}
+              setTriggerFunc={setTriggerWarning}
+              setDecPlacesFunc={setDecimalPlaces}
+            />
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </motion.div>
   );
 };
 export default DecToFracSection;

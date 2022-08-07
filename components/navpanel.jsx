@@ -7,7 +7,6 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   const badge = useRef();
   useEffect(() => {
     cancelAnim();
-    console.log("effect used");
   }, [isOpen]);
   return (
     <AnimatePresence>
@@ -50,7 +49,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
                 label={"Decimal to Fraction Converter"}
                 sectionKey={2}
               />
-              <MenuItem label={"Unit Conversion"} sectionKey={-1} />
+              <MenuItem label={"Unit Conversion"} sectionKey={3} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
             </MiniMenuSection>
 

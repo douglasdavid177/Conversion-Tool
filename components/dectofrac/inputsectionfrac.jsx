@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../../styles/Home.module.css";
+import styles from "../../styles/mainsection.module.css";
 
 const InputSection = ({
   dec,
@@ -13,7 +13,7 @@ const InputSection = ({
   return (
     <div
       //className={styles.inputSection}
-      className={`${styles.inputSection} ${styles.mainSection}`}
+      className={`${styles.decFracInput} ${styles.inputSection} ${styles.mainSection}`}
     >
       <h4
         className={triggerW ? styles.warning : {}}
@@ -25,7 +25,7 @@ const InputSection = ({
         fraction you want it converted to.
       </h4>
       <form className={styles.inputFields} key="myform">
-        <label>
+        <label className={styles.small}>
           <h3>Decimal value</h3>
 
           <input
@@ -37,7 +37,7 @@ const InputSection = ({
             onFocus={reacquireFocus}
           />
         </label>
-        <label>
+        <label className={styles.small}>
           <h3>Fraction denominator</h3>
           <input
             type="text"

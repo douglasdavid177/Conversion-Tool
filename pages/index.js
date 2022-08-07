@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
-import {
-  motion,
-  AnimatePresence,
-  AnimateSharedLayout,
-  LayoutGroup,
-} from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
 import HomeSection from "../components/homesection";
 import AboutSection from "../components/aboutsection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
+import UnitConversionSection from "../components/unitconversion/unitconversionsection";
 import NavPanel from "../components/navpanel";
 
 export default function Home() {
@@ -17,14 +13,31 @@ export default function Home() {
   const [showResults, setShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [navPanelOpen, setNavPanelOpen] = useState(false);
-  const compRef = useRef();
+  const [dummyVar, setDummyVar] = useState(false);
+  const containerRef = useRef();
+  const mainSectionRef = useRef();
+
+  useEffect(() => {
+    // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+
+    containerRef.current.scrollTo({
+      top:
+        containerRef.current.scrollTop > 0 ? 0 : containerRef.current.scrollTop,
+      left: 0,
+      behavior: "smooth",
+    });
+    console.log("scroll pos:");
+    console.log(containerRef.current.scrollTop);
+
+    resetInput();
+  }, [mainSectionKey]);
 
   return (
     <div>
-      <motion.div className={`${styles.container}`} ref={compRef}>
-        <motion.div className={styles.content}>
+      <motion.div className={`${styles.container}`}>
+        <motion.div className={styles.content} ref={containerRef}>
           <LayoutGroup>
-            <motion.div key={"header"} layout>
+            <motion.div key="header" layoutId="header">
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -34,16 +47,17 @@ export default function Home() {
                 <h5>Welcome to...</h5>
                 <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
               </div>
-              {/* <TestComp>
-                <h3>maybe thisll show</h3>
-              </TestComp> */}
             </motion.div>
-
-            <motion.div>
-              <AnimatePresence exitBeforeEnter>
+            <motion.div className="debuggin">
+              <AnimatePresence
+                exitBeforeEnter
+                onExitComplete={() => {
+                  setDummyVar(!dummyVar);
+                }}
+              >
                 <motion.div
-                  layout
                   key={mainSectionKey}
+                  ref={mainSectionRef}
                   initial={{ translateY: 30, opacity: 0 }}
                   animate={{
                     translateY: 0,
@@ -58,7 +72,7 @@ export default function Home() {
                     opacity: 0,
                     transition: {
                       duration: 0.35,
-                      delay: mainSectionKey > 1 ? 0.35 : 0,
+                      delay: 0.0,
                     },
                   }}
                   transition={{
@@ -67,34 +81,43 @@ export default function Home() {
                 >
                   <div>{componentFromKey(mainSectionKey)}</div>
                 </motion.div>
+              </AnimatePresence>
 
+              <AnimatePresence>
                 {mainSectionKey > 1 && (
                   <motion.div
-                    layout
-                    key={"buttonholder"}
-                    className={`${styles.buttonHolder}, ${""}`}
+                    // layoutId="buttonHolderr"
+                    key="buttonholder"
                     initial={{ translateY: 50, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.35, delay: 0.35 },
+                      transition: { duration: 0.55, delay: 0.4 },
                     }}
-                    exit={{ translateY: -5, opacity: 0 }}
+                    exit={{
+                      translateY: -10,
+                      opacity: 0,
+                      transition: { duration: 0.35, delay: 0.0 },
+                    }}
                     transition={{
                       duration: 0.35,
-                      // delay: mainSectionKey > 1 ? 0.15 : 0,
                     }}
                   >
-                    <button
-                      onClick={() => {
-                        showResults ? resetInput() : gotoResults();
-                      }}
-                      className={
-                        showResults ? styles.secondary : styles.primary
-                      }
+                    <motion.div
+                      layoutId="buttonHolder"
+                      className={`${styles.buttonHolder}, ${"debuggin"}`}
                     >
-                      {showResults ? "Change Input" : "View Results"}
-                    </button>
+                      <motion.button
+                        onClick={() => {
+                          showResults ? resetInput() : gotoResults();
+                        }}
+                        className={
+                          showResults ? styles.secondary : styles.primary
+                        }
+                      >
+                        {showResults ? "Change Input" : "View Results"}
+                      </motion.button>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -102,6 +125,7 @@ export default function Home() {
           </LayoutGroup>
         </motion.div>
       </motion.div>
+
       <div className={styles.hamburgerHolder}>
         <button
           className={styles.hamburger}
@@ -122,6 +146,9 @@ export default function Home() {
     </div>
   );
 
+  function getKey() {
+    return mainSectionKey;
+  }
   function TestComp(props) {
     return <div></div>;
   }
@@ -152,6 +179,19 @@ export default function Home() {
             setShowResults={setShowResults}
             attemptCalculate={attemptCalculate}
             setAttemptCalculate={setAttemptCalculate}
+            setDummyVar={setDummyVar}
+            dummyVar={dummyVar}
+          />
+        );
+      case 3:
+        return (
+          <UnitConversionSection
+            showResults={showResults}
+            setShowResults={setShowResults}
+            attemptCalculate={attemptCalculate}
+            setAttemptCalculate={setAttemptCalculate}
+            setDummyVar={setDummyVar}
+            dummyVar={dummyVar}
           />
         );
       default:
@@ -171,7 +211,7 @@ export default function Home() {
   }
   function fixHeight() {
     const winheight = window.innerHeight;
-    const compHeight = compRef.current.clientHeight;
+    const compHeight = containerRef.current.clientHeight;
     console.log("comp height: ");
     console.log(compHeight);
     console.log("win height: ");
