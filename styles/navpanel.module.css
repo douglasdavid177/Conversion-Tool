@@ -12,7 +12,9 @@
 }
 .panelBG {
   background-color: rgb(28 28 28 /0.7);
+  background-color: rgb(255 255 255 /0.05);
   backdrop-filter: blur(0.8rem);
+  background-color: #202020;
   position: fixed;
   right: 0;
   top: 0;

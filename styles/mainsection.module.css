@@ -125,8 +125,7 @@
 
 .inputFields select option {
   background: none;
-  background-color: #191919;
-  backdrop-filter: blur(0.8rem);
+  background-color: #202020;
   font-size: 1rem;
 }
 .resultsSection {
