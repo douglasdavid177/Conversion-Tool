@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "../../styles/mainsection.module.css";
+const convert = require("convert-units");
 
 const InputSection = ({
   startNum,
@@ -13,6 +14,11 @@ const InputSection = ({
   setTriggerFunc,
   setDecPlacesFunc,
 }) => {
+  useEffect(() => {
+    console.log("howdy...");
+    console.log(convert(1).from("lb").to("kg"));
+    console.log(convert().possibilities());
+  });
   return (
     <motion.div className={`${styles.inputSection} ${styles.mainSection}`}>
       <h4
@@ -41,11 +47,18 @@ const InputSection = ({
 
         <label className={styles.noHighlight}>
           <h3>Given unit</h3>
-          <select>
+          <select className={styles.limitWidth}>
             <option value="default">Select unit</option>
-            <option value="cm">Centimeter (cm)</option>
-            <option value="in">Inches</option>
-            <option value="ft">Feet</option>
+            {/* <option value="cm">Centimeters (cm) or something like that</option> */}
+            {convert()
+              .possibilities()
+              .map((unit, ind) => {
+                return (
+                  <option value={unit} key={unit}>
+                    {convert().describe(unit).plural} ({unit})
+                  </option>
+                );
+              })}
           </select>
         </label>
 
@@ -53,9 +66,16 @@ const InputSection = ({
           <h3>Desired unit</h3>
           <select>
             <option value="default">Select unit</option>
-            <option value="cm">Centimeters</option>
-            <option value="in">Inches</option>
-            <option value="ft">Feet</option>
+            <option value="auto">Auto (chooses best unit)</option>
+            {convert()
+              .possibilities()
+              .map((unit, ind) => {
+                return (
+                  <option value={unit} key={unit}>
+                    {convert().describe(unit).plural} ({unit})
+                  </option>
+                );
+              })}
           </select>
         </label>
       </form>

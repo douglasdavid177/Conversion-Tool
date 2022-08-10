@@ -119,14 +119,23 @@
   padding-left: 2px;
   padding-right: 4px;
   padding-bottom: 4px;
-  min-width: 10rem;
+  /* min-width: 10rem; */
   transition: font-weight 0.35s ease;
 }
 
 .inputFields select option {
   background: none;
   background-color: #202020;
+  background-color: #191919;
   font-size: 1rem;
+}
+.inputFields select option:checked {
+  font-weight: bold;
+  text-shadow: 2px 2px 2px black;
+}
+
+select.limitWidth {
+  max-width: 12rem;
 }
 .resultsSection {
   margin-bottom: 0rem;
