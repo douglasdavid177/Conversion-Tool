@@ -47,40 +47,61 @@ const InputSection = ({
 
         <label className={styles.noHighlight}>
           <h3>Given unit</h3>
-          <select className={styles.limitWidth}>
+          <select
+            className={styles.limitWidth}
+            onChange={handleStartUSelectChange}
+            value={startU}
+          >
             <option value="default">Select unit</option>
-            {/* <option value="cm">Centimeters (cm) or something like that</option> */}
-            {convert()
-              .possibilities()
-              .map((unit, ind) => {
-                return (
-                  <option value={unit} key={unit}>
-                    {convert().describe(unit).plural} ({unit})
-                  </option>
-                );
-              })}
+
+            {getCurrentPossibilities(true).map((unit, ind) => {
+              return (
+                <option value={unit} key={unit}>
+                  {getOptionLabelString(unit, startU)}
+                </option>
+              );
+            })}
           </select>
         </label>
 
         <label className={`${styles.fullWidth} ${styles.noHighlight}`}>
           <h3>Desired unit</h3>
-          <select>
+          <select onChange={handleEndUSelectChange} value={endU}>
             <option value="default">Select unit</option>
             <option value="auto">Auto (chooses best unit)</option>
-            {convert()
-              .possibilities()
-              .map((unit, ind) => {
-                return (
-                  <option value={unit} key={unit}>
-                    {convert().describe(unit).plural} ({unit})
-                  </option>
-                );
-              })}
+            {getCurrentPossibilities(false).map((unit, ind) => {
+              return (
+                <option value={unit} key={unit}>
+                  {getOptionLabelString(unit, endU)}
+                </option>
+              );
+            })}
           </select>
         </label>
       </form>
     </motion.div>
   );
+
+  function getCurrentPossibilities(isStartUnit) {
+    if (isStartUnit) {
+      if (endU == null || endU == "default" || endU == "auto") {
+        return convert().possibilities();
+      } else {
+        return convert().from(endU).possibilities();
+      }
+    } else {
+      if (startU == null || startU == "default") {
+        return convert().possibilities();
+      } else {
+        return convert().from(startU).possibilities();
+      }
+    }
+  }
+  function getOptionLabelString(unit, currentSelected) {
+    return unit == currentSelected
+      ? unit + " (" + convert().describe(unit).plural.toLowerCase() + ")"
+      : convert().describe(unit).plural + " (" + unit + ")";
+  }
   function handleInputDec(e) {
     e.persist();
     setStartNumFunc(e.target.value);
@@ -112,6 +133,25 @@ const InputSection = ({
     }
 
     return 2;
+  }
+
+  function handleStartUSelectChange(e) {
+    const justSelected = e.target.value;
+    if (justSelected === "default") {
+      setStartUFunc("default");
+      setEndUFunc("default");
+    } else {
+      setStartUFunc(justSelected);
+    }
+  }
+  function handleEndUSelectChange(e) {
+    const justSelected = e.target.value;
+    if (justSelected === "default") {
+      setEndUFunc("default");
+      setStartUFunc("default");
+    } else {
+      setEndUFunc(justSelected);
+    }
   }
 };
 export default InputSection;

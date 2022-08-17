@@ -44,8 +44,9 @@ export default function Home() {
                   alt="An SVG of a construction worker checking a clipboard"
                   className={styles.heroimg}
                 />
-                <h5>Welcome to...</h5>
-                <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1>
+                <h5>Welcome to the...</h5>
+                {/* <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1> */}
+                <h1>Ultimate Number Conversion Multi-Tool!</h1>
               </div>
             </motion.div>
             <motion.div className="debuggin">
