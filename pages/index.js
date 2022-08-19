@@ -8,36 +8,37 @@ import UnitConversionSection from "../components/unitconversion/unitconversionse
 import NavPanel from "../components/navpanel";
 
 export default function Home() {
-  const [targetMainSectionKey, setTargetMainSectionKey] = useState(0);
+  const [actualMainSectionKey, setActualMainSectionKey] = useState(0);
   const [mainSectionKey, setMainSectionKey] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [navPanelOpen, setNavPanelOpen] = useState(false);
   const [dummyVar, setDummyVar] = useState(false);
   const containerRef = useRef();
-  const mainSectionRef = useRef();
 
   useEffect(() => {
     // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-
-    containerRef.current.scrollTo({
-      top:
-        containerRef.current.scrollTop > 0 ? 0 : containerRef.current.scrollTop,
-      left: 0,
-      behavior: "smooth",
-    });
-    console.log("scroll pos:");
-    console.log(containerRef.current.scrollTop);
-
-    resetInput();
+    checkScroll();
+    // scrollUpSlightly();
+    scrollToTop();
   }, [mainSectionKey]);
+
+  useEffect(() => {
+    resetInput(false);
+  }, [actualMainSectionKey]);
 
   return (
     <div>
       <motion.div className={`${styles.container}`}>
-        <motion.div className={styles.content} ref={containerRef}>
+        <motion.div
+          className={styles.content}
+          ref={containerRef}
+          onScroll={checkScroll}
+        >
           <LayoutGroup>
-            <motion.div key="header" layoutId="header">
+            <motion.div
+              layoutId={actualMainSectionKey == mainSectionKey ? "header" : ""}
+            >
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -49,6 +50,7 @@ export default function Home() {
                 <h1>Ultimate Number Conversion Multi-Tool!</h1>
               </div>
             </motion.div>
+            {/* <motion.div layoutId="headerMark">beep</motion.div> */}
             <motion.div className="debuggin">
               <AnimatePresence
                 exitBeforeEnter
@@ -57,8 +59,7 @@ export default function Home() {
                 }}
               >
                 <motion.div
-                  key={mainSectionKey}
-                  ref={mainSectionRef}
+                  key={actualMainSectionKey}
                   initial={{ translateY: 30, opacity: 0 }}
                   animate={{
                     translateY: 0,
@@ -73,19 +74,21 @@ export default function Home() {
                     opacity: 0,
                     transition: {
                       duration: 0.35,
-                      delay: 0.0,
+                      delay: 0.05,
                     },
                   }}
                   transition={{
                     duration: 0.35,
                   }}
                 >
-                  <div>{componentFromKey(mainSectionKey)}</div>
+                  <motion.div>
+                    {componentFromKey(actualMainSectionKey)}
+                  </motion.div>
                 </motion.div>
               </AnimatePresence>
 
               <AnimatePresence>
-                {mainSectionKey > 1 && (
+                {actualMainSectionKey > 1 && (
                   <motion.div
                     // layoutId="buttonHolderr"
                     key="buttonholder"
@@ -93,12 +96,12 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.55, delay: 0.4 },
+                      transition: { duration: 0.55, delay: 0.45 },
                     }}
                     exit={{
                       translateY: -10,
                       opacity: 0,
-                      transition: { duration: 0.35, delay: 0.0 },
+                      transition: { duration: 0.35, delay: 0.05 },
                     }}
                     transition={{
                       duration: 0.35,
@@ -108,7 +111,7 @@ export default function Home() {
                       layoutId="buttonHolder"
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                     >
-                      <motion.button
+                      <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
                         }}
@@ -117,7 +120,7 @@ export default function Home() {
                         }
                       >
                         {showResults ? "Change Input" : "View Results"}
-                      </motion.button>
+                      </button>
                     </motion.div>
                   </motion.div>
                 )}
@@ -147,6 +150,31 @@ export default function Home() {
     </div>
   );
 
+  function checkScroll() {
+    if (containerRef.current.scrollTop < 2) {
+      void containerRef.current.offsetHeight;
+      setDummyVar(!dummyVar);
+      setTimeout(() => {
+        setActualMainSectionKey(mainSectionKey);
+      }, 15);
+    }
+  }
+  function scrollUpSlightly() {
+    containerRef.current.scrollBy({
+      top: -1,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function scrollToTop() {
+    containerRef.current.scrollTo({
+      top:
+        // containerRef.current.scrollTop > 0 ? 0 : containerRef.current.scrollTop,
+        0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
   function getKey() {
     return mainSectionKey;
   }
@@ -154,18 +182,18 @@ export default function Home() {
     return <div></div>;
   }
 
-  function ActionButton(props) {
-    return (
-      <button
-        onClick={() => {
-          showResults ? resetInput() : gotoResults();
-        }}
-        className={showResults ? styles.secondary : styles.primary}
-      >
-        {showResults ? "Change Input" : "View Results"}
-      </button>
-    );
-  }
+  // function ActionButton(props) {
+  //   return (
+  //     <button
+  //       onClick={() => {
+  //         showResults ? resetInput() : gotoResults();
+  //       }}
+  //       className={showResults ? styles.secondary : styles.primary}
+  //     >
+  //       {showResults ? "Change Input" : "View Results"}
+  //     </button>
+  //   );
+  // }
   function componentFromKey(key) {
     switch (key) {
       case 0:
@@ -205,10 +233,14 @@ export default function Home() {
     //calculate(inputVal1, inputVal2);
     //setShowResults(true);
     setAttemptCalculate(true);
+    scrollUpSlightly();
   }
-  function resetInput() {
+  function resetInput(scrollSlightly = true) {
     setShowResults(false);
     setAttemptCalculate(false);
+    if (scrollSlightly) {
+      scrollUpSlightly();
+    }
   }
   function fixHeight() {
     const winheight = window.innerHeight;

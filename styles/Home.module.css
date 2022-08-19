@@ -99,7 +99,7 @@ button.hamburger img {
 .header h5 {
   text-align: center;
   text-align: var(--text-alignment);
-  margin-bottom: -1.25rem;
+  margin-bottom: -0.75rem;
 }
 .header h4 {
   text-align: center;
@@ -120,6 +120,7 @@ button.hamburger img {
   text-decoration-thickness: 5px;
   text-align: var(--text-alignment);
   position: relative;
+  font-size: 1.75rem;
 }
 .header h1::after {
   content: "App built by David Douglas";

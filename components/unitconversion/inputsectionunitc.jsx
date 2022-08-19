@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import convert from "convert-units";
 import styles from "../../styles/mainsection.module.css";
-const convert = require("convert-units");
 
 const InputSection = ({
   startNum,
@@ -15,9 +15,10 @@ const InputSection = ({
   setDecPlacesFunc,
 }) => {
   useEffect(() => {
-    console.log("howdy...");
-    console.log(convert(1).from("lb").to("kg"));
-    console.log(convert().possibilities());
+    // console.log("howdy...");
+    // console.log(convert(1).from("lb").to("kg"));
+    // console.log(convert().possibilities());
+    // console.log(convert().describe("in3/min"));
   });
   return (
     <motion.div className={`${styles.inputSection} ${styles.mainSection}`}>
@@ -98,9 +99,11 @@ const InputSection = ({
     }
   }
   function getOptionLabelString(unit, currentSelected) {
+    const plural = convert().describe(unit).plural;
+    if (unit == "cm2") plural = "Square Centimeters";
     return unit == currentSelected
-      ? unit + " (" + convert().describe(unit).plural.toLowerCase() + ")"
-      : convert().describe(unit).plural + " (" + unit + ")";
+      ? unit + " (" + plural.toLowerCase() + ")"
+      : plural + " (" + unit + ")";
   }
   function handleInputDec(e) {
     e.persist();

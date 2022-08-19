@@ -12,13 +12,13 @@ const DecToFracSection = (props) => {
   const [resultsSndVal, setResultsSndVal] = useState(-1);
   const [triggerWarning, setTriggerWarning] = useState(false);
 
-  useEffect(
-    () => () => {
-      props.setAttemptCalculate(false);
-      props.setShowResults(false);
-    },
-    []
-  );
+  // useEffect(
+  //   () => () => {
+  //     props.setAttemptCalculate(false);
+  //     props.setShowResults(false);
+  //   },
+  //   []
+  // );
 
   useEffect(() => {
     if (props.attemptCalculate) {
@@ -27,7 +27,7 @@ const DecToFracSection = (props) => {
   }, [props.attemptCalculate]);
 
   const calculate = (dec, den) => {
-    if (!props.attemptCalculate) return;
+    // if (!props.attemptCalculate) return;
     dec = Math.abs(dec);
     den = Math.abs(den);
     if (den == 0 || isNaN(dec) || isNaN(den)) {
@@ -41,8 +41,6 @@ const DecToFracSection = (props) => {
     for (n = 0; n <= den; n++) {
       fractionsArray[n] = n / den;
     }
-    console.log("fractions: ");
-    console.log(fractionsArray);
     const leftOverDec = dec - Math.floor(dec);
     const fractionsArrayCopy = [...fractionsArray];
     const fractionsArrayCopy2 = [...fractionsArray];
@@ -70,7 +68,7 @@ const DecToFracSection = (props) => {
       <AnimatePresence
         exitBeforeEnter
         onExitComplete={() => {
-          props.setDummyVar(!props.dummyVar);
+          // props.setDummyVar(!props.dummyVar);
         }}
       >
         <motion.div
@@ -78,6 +76,10 @@ const DecToFracSection = (props) => {
           key={props.showResults ? "results" : "input"}
           initial={{ translateY: 20, opacity: 0 }}
           animate={{ translateY: 0, opacity: 1 }}
+          // onAnimationComplete={(definition) => {
+          //   console.log("Completed animating", definition);
+          //   // props.setDummyVar(!props.dummyVar);
+          // }}
           exit={{ translateY: -20, opacity: 0 }}
           transition={{ duration: 0.35 }}
         >

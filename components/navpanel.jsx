@@ -50,6 +50,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
                 sectionKey={2}
               />
               <MenuItem label={"Unit Conversion"} sectionKey={3} />
+              <MenuItem label={"Currency Exchange"} sectionKey={-1} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
             </MiniMenuSection>
 
