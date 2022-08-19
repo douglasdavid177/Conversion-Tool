@@ -25,7 +25,6 @@ const InputSection = ({
           This is the decimal to fraction conversion tool.
         </span>
         <br />
-        <br />
         Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
       </h4>

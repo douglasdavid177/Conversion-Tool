@@ -32,7 +32,6 @@ const InputSection = ({
           This is the unit conversion tool.
         </span>
         <br />
-        <br />
         Enter your starting measurement value and its unit type, then select
         your desired unit type.
       </h4>
