@@ -37,8 +37,9 @@
 }
 
 span.inputSectionLabel {
-  color: white;
-  font-weight: bold;
+  /* color: white;
+  font-weight: bold; */
+  color: hsl(0, 0%, 50%);
 }
 
 .inputSection h5 {
