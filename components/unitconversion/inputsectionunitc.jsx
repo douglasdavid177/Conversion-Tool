@@ -28,9 +28,15 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        <span className={styles.inputSectionLabel}>
-          This is the unit conversion tool.
+        <span className={styles.inputSectionIntro}>
+          {" "}
+          <h5>Tool Selected: </h5>
         </span>
+        {/* <br /> */}
+        <span className={styles.inputSectionLabel}>
+          Unit Conversion for Measurements
+        </span>
+        <br />
         <br />
         Enter your starting measurement value and its unit type, then select
         your desired unit type.

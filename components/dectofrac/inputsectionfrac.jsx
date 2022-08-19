@@ -21,9 +21,15 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        <span className={styles.inputSectionLabel}>
-          This is the decimal to fraction conversion tool.
+        <span className={styles.inputSectionIntro}>
+          {" "}
+          <h5>Tool selected: </h5>
         </span>
+        {/* <br /> */}
+        <span className={styles.inputSectionLabel}>
+          Decimal to Fraction Converter
+        </span>
+        <br />
         <br />
         Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
