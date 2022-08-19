@@ -18,17 +18,17 @@ export default function Home() {
 
   useEffect(() => {
     // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    // checkScroll();
-    scrollToTop();
+    checkScroll();
+
     void containerRef.current.offsetHeight;
+    scrollToTop();
     // scrollDownSlightly();
     setDummyVar(!dummyVar);
-    if (containerRef.current.scrollTop < 2) {
-    }
-    setActualMainSectionKey(mainSectionKey);
+    //setActualMainSectionKey(mainSectionKey);
   }, [mainSectionKey]);
 
   useEffect(() => {
+    void containerRef.current.offsetHeight;
     resetInput(false);
   }, [actualMainSectionKey]);
 
@@ -43,7 +43,7 @@ export default function Home() {
           // layoutScroll
         >
           <LayoutGroup>
-            <motion.div layoutId="header">
+            <motion.div>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -56,43 +56,43 @@ export default function Home() {
               </div>
             </motion.div>
             {/* <motion.div layoutId="headerMark">beep</motion.div> */}
-            <motion.div className="debuggin">
-              <AnimatePresence
-                exitBeforeEnter
-                onExitComplete={() => {
-                  setDummyVar(!dummyVar);
+
+            <AnimatePresence
+              exitBeforeEnter
+              onExitComplete={() => {
+                setDummyVar(!dummyVar);
+              }}
+            >
+              <motion.div
+                // layout
+                key={actualMainSectionKey}
+                initial={{ translateY: 30, opacity: 0 }}
+                animate={{
+                  translateY: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.35,
+                    delay: 0.05,
+                  },
+                }}
+                exit={{
+                  translateY: -10,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.35,
+                    delay: 0.15,
+                  },
+                }}
+                transition={{
+                  duration: 0.35,
                 }}
               >
-                <motion.div
-                  // layout
-                  key={actualMainSectionKey}
-                  initial={{ translateY: 30, opacity: 0 }}
-                  animate={{
-                    translateY: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.35,
-                      delay: 0.05,
-                    },
-                  }}
-                  exit={{
-                    translateY: -10,
-                    opacity: 0,
-                    transition: {
-                      duration: 0.35,
-                      delay: 0.15,
-                    },
-                  }}
-                  transition={{
-                    duration: 0.35,
-                  }}
-                >
-                  <motion.div>
-                    {componentFromKey(actualMainSectionKey)}
-                  </motion.div>
+                <motion.div>
+                  {componentFromKey(actualMainSectionKey)}
                 </motion.div>
-              </AnimatePresence>
-
+              </motion.div>
+            </AnimatePresence>
+            <motion.div layout className="debuggin">
               <AnimatePresence>
                 {actualMainSectionKey > 1 && (
                   <motion.div

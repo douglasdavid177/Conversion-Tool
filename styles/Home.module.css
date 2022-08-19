@@ -167,7 +167,7 @@ button.hamburger img {
   color: white;
   border: 3.5px solid white;
   margin-bottom: 2.5rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   border-radius: var(--button-border-radius);
   padding: 0.5rem;
   overflow: hidden;
