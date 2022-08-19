@@ -20,7 +20,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  width: min(60vw, 25rem);
+  width: min(72.5vw, 25rem);
   z-index: 10;
 
   /* transition: transform 0.5s cubic-bezier(0, 1.14, 0.77, 0.99);
@@ -74,7 +74,7 @@
   padding: 0;
   margin-bottom: 1.2rem;
   margin: 0.7rem 0rem;
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   line-height: 1.45;
 }
 .panel .menuSection h5.sectionHeading {

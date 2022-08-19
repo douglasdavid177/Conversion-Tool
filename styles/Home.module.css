@@ -91,6 +91,7 @@ button.hamburger img {
   color: hsl(0, 0%, 50%);
 
   margin-bottom: 0;
+  font-size: 1.125rem;
   transition: ease-in-out, color 0.25s;
 }
 .content h2 {

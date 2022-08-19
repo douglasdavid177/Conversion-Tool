@@ -69,7 +69,8 @@
   color: white;
   text-align: center;
 
-  font-size: 1.2rem;
+  font-size: 1.125rem;
+
   padding-left: 1px;
   padding-right: 1px;
   padding-bottom: 3px;
@@ -108,7 +109,7 @@
   width: max(12rem, 70%);
 }
 .inputFields select {
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   margin-top: 0.5rem;
   background: rgb(255 255 255 / 0);
   height: 2rem;
@@ -135,7 +136,7 @@
 }
 
 select.limitWidth {
-  max-width: 12rem;
+  max-width: 11rem;
 }
 .resultsSection {
   margin-bottom: 0rem;
