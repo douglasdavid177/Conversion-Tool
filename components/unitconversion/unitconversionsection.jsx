@@ -11,13 +11,11 @@ const UnitConversionSection = (props) => {
   const [startNumVal, setStartNumVal] = useState("");
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1);
-  const [resultsSndVal, setResultsSndVal] = useState(-1);
-  const [resultsThrdVal, setResultsThrdVal] = useState(-1);
   const [triggerWarning, setTriggerWarning] = useState(false);
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      console.log(convert().measures());
+      //console.log(convert().measures());
       let num = startNumVal;
       let start = startUnit;
       let end = endUnit;
@@ -46,7 +44,7 @@ const UnitConversionSection = (props) => {
       <AnimatePresence
         exitBeforeEnter
         onExitComplete={() => {
-          // props.setDummyVar(!props.dummyVar);
+          props.setDummyVar(!props.dummyVar);
         }}
       >
         <motion.div

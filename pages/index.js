@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  LayoutGroup,
+  m,
+  useScrollElement,
+} from "framer-motion";
 import HomeSection from "../components/homesection";
 import AboutSection from "../components/aboutsection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
@@ -11,39 +17,55 @@ export default function Home() {
   const [actualMainSectionKey, setActualMainSectionKey] = useState(0);
   const [mainSectionKey, setMainSectionKey] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [actuallyShowResults, setActuallyShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [navPanelOpen, setNavPanelOpen] = useState(false);
   const [dummyVar, setDummyVar] = useState(false);
   const containerRef = useRef();
+  // const scrollY = useScrollElement(containerRef);
 
   useEffect(() => {
     // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     checkScroll();
 
-    void containerRef.current.offsetHeight;
+    // void containerRef.current.offsetHeight;
+
+    // console.log("scroll top framer: ");
+    // console.log(scrollY.scrollYProgress);
     scrollToTop();
     // scrollDownSlightly();
+    // scrollUpSlightly();
     setDummyVar(!dummyVar);
-    //setActualMainSectionKey(mainSectionKey);
+    setActualMainSectionKey(mainSectionKey);
   }, [mainSectionKey]);
 
   useEffect(() => {
     void containerRef.current.offsetHeight;
     resetInput(false);
   }, [actualMainSectionKey]);
+  let layoutVal = true;
+  if (containerRef.current) {
+    if (containerRef.current.scrollTop < 2) layoutVal = false;
+  }
+
+  useEffect(() => {
+    scrollToTop();
+    checkScroll();
+    // setActuallyShowResults(showResults);
+  }, [showResults]);
 
   return (
     <div>
-      <motion.div className={`${styles.container}`}>
-        <motion.div
+      <div className={`${styles.container}`}>
+        <div
           className={styles.content}
           ref={containerRef}
           onScroll={checkScroll}
-          layout
+          // layout
           // layoutScroll
         >
           <LayoutGroup>
-            <motion.div>
+            <motion.div layout>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -56,42 +78,43 @@ export default function Home() {
               </div>
             </motion.div>
             {/* <motion.div layoutId="headerMark">beep</motion.div> */}
-
-            <AnimatePresence
-              exitBeforeEnter
-              onExitComplete={() => {
-                setDummyVar(!dummyVar);
-              }}
-            >
-              <motion.div
-                // layout
-                key={actualMainSectionKey}
-                initial={{ translateY: 30, opacity: 0 }}
-                animate={{
-                  translateY: 0,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.35,
-                    delay: 0.05,
-                  },
-                }}
-                exit={{
-                  translateY: -10,
-                  opacity: 0,
-                  transition: {
-                    duration: 0.35,
-                    delay: 0.15,
-                  },
-                }}
-                transition={{
-                  duration: 0.35,
+            <motion.div>
+              <AnimatePresence
+                exitBeforeEnter
+                onExitComplete={() => {
+                  setDummyVar(!dummyVar);
                 }}
               >
-                <motion.div>
+                <motion.div
+                  // layout
+                  key={actualMainSectionKey}
+                  initial={{ translateY: 30, opacity: 0 }}
+                  animate={{
+                    translateY: 0,
+                    opacity: 1,
+                    transition: {
+                      duration: 0.35,
+                      delay: 0.05,
+                    },
+                  }}
+                  exit={{
+                    translateY: -10,
+                    opacity: 0,
+                    transition: {
+                      duration: 0.35,
+                      delay: 0.15,
+                    },
+                  }}
+                  transition={{
+                    duration: 0.35,
+                  }}
+                >
+                  {/* <motion.div layout="position"> */}
                   {componentFromKey(actualMainSectionKey)}
+                  {/* </motion.div> */}
                 </motion.div>
-              </motion.div>
-            </AnimatePresence>
+              </AnimatePresence>
+            </motion.div>
             <motion.div layout className="debuggin">
               <AnimatePresence>
                 {actualMainSectionKey > 1 && (
@@ -103,7 +126,7 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.55, delay: 0.75 },
+                      transition: { duration: 0.55, delay: 0.65 },
                     }}
                     exit={{
                       translateY: -10,
@@ -115,8 +138,8 @@ export default function Home() {
                     }}
                   >
                     <motion.div
-                      // layout
-                      layoutId="buttonHolder"
+                      layout
+                      // layoutId="buttonHolder"
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                     >
                       <button
@@ -135,8 +158,8 @@ export default function Home() {
               </AnimatePresence>
             </motion.div>
           </LayoutGroup>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       <div className={styles.hamburgerHolder}>
         <button
@@ -162,9 +185,9 @@ export default function Home() {
     if (containerRef.current.scrollTop < 2) {
       void containerRef.current.offsetHeight;
       setDummyVar(!dummyVar);
-      setTimeout(() => {
-        setActualMainSectionKey(mainSectionKey);
-      }, 15);
+
+      setActualMainSectionKey(mainSectionKey);
+      setActuallyShowResults(showResults);
     }
   }
   function scrollUpSlightly() {
@@ -219,7 +242,7 @@ export default function Home() {
       case 2:
         return (
           <DecToFracSection
-            showResults={showResults}
+            showResults={actuallyShowResults}
             setShowResults={setShowResults}
             attemptCalculate={attemptCalculate}
             setAttemptCalculate={setAttemptCalculate}
@@ -230,7 +253,7 @@ export default function Home() {
       case 3:
         return (
           <UnitConversionSection
-            showResults={showResults}
+            showResults={actuallyShowResults}
             setShowResults={setShowResults}
             attemptCalculate={attemptCalculate}
             setAttemptCalculate={setAttemptCalculate}

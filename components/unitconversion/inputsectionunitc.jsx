@@ -21,7 +21,7 @@ const InputSection = ({
     // console.log(convert().describe("in3/min"));
   });
   return (
-    <motion.div className={`${styles.inputSection} ${styles.mainSection}`}>
+    <div className={`${styles.inputSection} ${styles.mainSection}`}>
       <h4
         className={triggerW ? styles.warning : {}}
         onAnimationEnd={() => {
@@ -80,7 +80,7 @@ const InputSection = ({
           </select>
         </label>
       </form>
-    </motion.div>
+    </div>
   );
 
   function getCurrentPossibilities(isStartUnit) {

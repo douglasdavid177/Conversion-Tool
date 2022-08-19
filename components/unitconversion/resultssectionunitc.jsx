@@ -19,7 +19,7 @@ const ResultsSection = ({ startNum, startU, endU, decPlaces, result }) => {
 
   const sameSystem = startSystem == endSystem;
   return (
-    <motion.div className={`${styles.resultsSection} ${styles.mainSection}`}>
+    <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
         {+parseFloat(result).toFixed(decPlaces + 3)} {endU}
@@ -48,7 +48,7 @@ const ResultsSection = ({ startNum, startU, endU, decPlaces, result }) => {
       </h3>
 
       <br />
-    </motion.div>
+    </div>
   );
   function getPlural(unit) {
     const plural = convert().describe(unit).plural;
