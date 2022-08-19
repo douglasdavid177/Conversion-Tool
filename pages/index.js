@@ -19,8 +19,12 @@ export default function Home() {
   useEffect(() => {
     // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     // checkScroll();
-    // scrollToTop();
-    scrollUpSlightly();
+    scrollToTop();
+    void containerRef.current.offsetHeight;
+    // scrollDownSlightly();
+    setDummyVar(!dummyVar);
+    if (containerRef.current.scrollTop < 2) {
+    }
     setActualMainSectionKey(mainSectionKey);
   }, [mainSectionKey]);
 
@@ -35,11 +39,11 @@ export default function Home() {
           className={styles.content}
           ref={containerRef}
           onScroll={checkScroll}
+          layout
+          // layoutScroll
         >
           <LayoutGroup>
-            <motion.div
-              layoutId={actualMainSectionKey == mainSectionKey ? "header" : ""}
-            >
+            <motion.div layoutId="header">
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -60,6 +64,7 @@ export default function Home() {
                 }}
               >
                 <motion.div
+                  // layout
                   key={actualMainSectionKey}
                   initial={{ translateY: 30, opacity: 0 }}
                   animate={{
@@ -75,7 +80,7 @@ export default function Home() {
                     opacity: 0,
                     transition: {
                       duration: 0.35,
-                      delay: 0.05,
+                      delay: 0.15,
                     },
                   }}
                   transition={{
@@ -92,23 +97,25 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     // layoutId="buttonHolderr"
+
                     key="buttonholder"
                     initial={{ translateY: 50, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.55, delay: 0.45 },
+                      transition: { duration: 0.55, delay: 0.75 },
                     }}
                     exit={{
                       translateY: -10,
                       opacity: 0,
-                      transition: { duration: 0.35, delay: 0.05 },
+                      transition: { duration: 0.35, delay: 0.15 },
                     }}
                     transition={{
                       duration: 0.35,
                     }}
                   >
                     <motion.div
+                      // layout
                       layoutId="buttonHolder"
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                     >
@@ -163,6 +170,13 @@ export default function Home() {
   function scrollUpSlightly() {
     containerRef.current.scrollBy({
       top: -1,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function scrollDownSlightly() {
+    containerRef.current.scrollBy({
+      top: 1,
       left: 0,
       behavior: "smooth",
     });
