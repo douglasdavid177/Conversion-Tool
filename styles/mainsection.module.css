@@ -29,11 +29,16 @@
   flex-direction: column;
   justify-content: space-around;
   padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   /* margin-top: 0.75rem; */
 }
 .decFracInput {
   margin-top: 0.75rem;
+}
+
+span.inputSectionLabel {
+  color: white;
+  font-weight: bold;
 }
 
 .inputSection h5 {
@@ -139,7 +144,7 @@ select.limitWidth {
   max-width: 11rem;
 }
 .resultsSection {
-  margin-bottom: 0rem;
+  margin-bottom: -0.5rem;
 }
 
 .resultsSection h3 {

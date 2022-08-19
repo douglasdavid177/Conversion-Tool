@@ -20,33 +20,32 @@ export default function Home() {
   const [actuallyShowResults, setActuallyShowResults] = useState(false);
   const [attemptCalculate, setAttemptCalculate] = useState(false);
   const [navPanelOpen, setNavPanelOpen] = useState(false);
+  const [showHeading, setShowHeading] = useState(true);
   const [dummyVar, setDummyVar] = useState(false);
   const containerRef = useRef();
   // const scrollY = useScrollElement(containerRef);
 
   useEffect(() => {
     // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    scrollToTop();
     checkScroll();
 
     // void containerRef.current.offsetHeight;
 
     // console.log("scroll top framer: ");
     // console.log(scrollY.scrollYProgress);
-    scrollToTop();
+
     // scrollDownSlightly();
     // scrollUpSlightly();
     setDummyVar(!dummyVar);
-    setActualMainSectionKey(mainSectionKey);
+    // setActualMainSectionKey(mainSectionKey);
   }, [mainSectionKey]);
 
   useEffect(() => {
-    void containerRef.current.offsetHeight;
+    // void containerRef.current.offsetHeight;
+    // setShowHeading(false);
     resetInput(false);
   }, [actualMainSectionKey]);
-  let layoutVal = true;
-  if (containerRef.current) {
-    if (containerRef.current.scrollTop < 2) layoutVal = false;
-  }
 
   useEffect(() => {
     scrollToTop();
@@ -65,16 +64,42 @@ export default function Home() {
           // layoutScroll
         >
           <LayoutGroup>
-            <motion.div layout>
+            <motion.div>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
                   alt="An SVG of a construction worker checking a clipboard"
                   className={styles.heroimg}
                 />
-                <h5>Welcome to the...</h5>
-                {/* <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1> */}
-                <h1>Ultimate Number Conversion Multi-Tool!</h1>
+                <AnimatePresence>
+                  {actualMainSectionKey < 2 && showHeading && (
+                    <motion.div
+                      key={"headertext"}
+                      initial={{ translateY: 30, opacity: 0 }}
+                      animate={{
+                        translateY: 0,
+                        opacity: 1,
+                        transition: {
+                          duration: 0.35,
+                          delay: 0.05,
+                        },
+                      }}
+                      exit={{
+                        translateY: -10,
+                        opacity: 0,
+                        transition: {
+                          duration: 0.35,
+                          delay: 0.15,
+                        },
+                      }}
+                    >
+                      {" "}
+                      <h5>Welcome to the...</h5>
+                      {/* <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1> */}
+                      <h1>Ultimate Number Conversion Multi-Tool!</h1>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
             {/* <motion.div layoutId="headerMark">beep</motion.div> */}
@@ -116,7 +141,13 @@ export default function Home() {
               </AnimatePresence>
             </motion.div>
             <motion.div layout className="debuggin">
-              <AnimatePresence>
+              <AnimatePresence
+                onExitComplete={() => {
+                  console.log("hey!");
+
+                  setShowHeading(true);
+                }}
+              >
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     // layoutId="buttonHolderr"
@@ -186,7 +217,9 @@ export default function Home() {
       void containerRef.current.offsetHeight;
       setDummyVar(!dummyVar);
 
+      if (actualMainSectionKey > 1) setShowHeading(false);
       setActualMainSectionKey(mainSectionKey);
+
       setActuallyShowResults(showResults);
     }
   }

@@ -21,6 +21,11 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
+        <span className={styles.inputSectionLabel}>
+          This is the decimal to fraction conversion tool.
+        </span>
+        <br />
+        <br />
         Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
       </h4>

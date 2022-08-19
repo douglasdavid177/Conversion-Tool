@@ -46,8 +46,6 @@ const ResultsSection = ({ startNum, startU, endU, decPlaces, result }) => {
             } belong to the
           ${startSystem} system while ${endUPlural.toLowerCase()} belong to the ${endSystem} system.`}
       </h3>
-
-      <br />
     </div>
   );
   function getPlural(unit) {
