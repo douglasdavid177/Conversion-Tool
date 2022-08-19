@@ -17,7 +17,7 @@ const UnitConversionSection = (props) => {
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      console.log(convert().describe("cm2"));
+      console.log(convert().measures());
       let num = startNumVal;
       let start = startUnit;
       let end = endUnit;

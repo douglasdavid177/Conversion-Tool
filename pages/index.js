@@ -18,9 +18,10 @@ export default function Home() {
 
   useEffect(() => {
     // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    checkScroll();
-    // scrollUpSlightly();
-    scrollToTop();
+    // checkScroll();
+    // scrollToTop();
+    scrollUpSlightly();
+    setActualMainSectionKey(mainSectionKey);
   }, [mainSectionKey]);
 
   useEffect(() => {
