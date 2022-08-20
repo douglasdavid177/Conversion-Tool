@@ -24,7 +24,7 @@ export default function Home() {
   }, [mainSectionKey]);
 
   useEffect(() => {
-    resetInput(false);
+    resetInput();
   }, [actualMainSectionKey]);
 
   useEffect(() => {
@@ -175,36 +175,6 @@ export default function Home() {
     </div>
   );
 
-  function checkScroll() {
-    if (containerRef.current.scrollTop < 2) {
-      // void containerRef.current.offsetHeight;
-      if (actualMainSectionKey > 1) setShowHeading(false);
-      setActualMainSectionKey(mainSectionKey);
-      setActuallyShowResults(showResults);
-    }
-  }
-  function scrollUpSlightly() {
-    containerRef.current.scrollBy({
-      top: -1,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-  function scrollDownSlightly() {
-    containerRef.current.scrollBy({
-      top: 1,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-  function scrollToTop() {
-    containerRef.current.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-
   function componentFromKey(key) {
     switch (key) {
       case 0:
@@ -241,15 +211,43 @@ export default function Home() {
     }
   }
 
+  function checkScroll() {
+    if (containerRef.current.scrollTop < 2) {
+      if (actualMainSectionKey > 1) setShowHeading(false);
+      setActualMainSectionKey(mainSectionKey);
+      setActuallyShowResults(showResults);
+    }
+  }
+  function scrollUpSlightly() {
+    containerRef.current.scrollBy({
+      top: -1,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function scrollDownSlightly() {
+    containerRef.current.scrollBy({
+      top: 1,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function scrollToTop() {
+    containerRef.current.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+
   function gotoResults() {
     setAttemptCalculate(true);
-    scrollUpSlightly();
   }
-  function resetInput(scrollSlightly = true) {
+  function resetInput(scrollSlightly = false) {
     setShowResults(false);
     setAttemptCalculate(false);
     if (scrollSlightly) {
-      scrollUpSlightly();
+      // scrollUpSlightly();
     }
   }
   function smoothScrollTo(targetRef) {
