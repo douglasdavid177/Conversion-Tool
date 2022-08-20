@@ -41,7 +41,7 @@ export default function Home() {
           onScroll={checkScroll}
         >
           <LayoutGroup>
-            <motion.div>
+            <div>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -78,8 +78,8 @@ export default function Home() {
                   )}
                 </AnimatePresence>
               </div>
-            </motion.div>
-            <motion.div>
+            </div>
+            <div>
               <AnimatePresence exitBeforeEnter>
                 <motion.div
                   key={actualMainSectionKey}
@@ -107,8 +107,8 @@ export default function Home() {
                   {componentFromKey(actualMainSectionKey)}
                 </motion.div>
               </AnimatePresence>
-            </motion.div>
-            <motion.div className="debuggin">
+            </div>
+            <div className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
                   setShowHeading(true);
@@ -150,7 +150,7 @@ export default function Home() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </LayoutGroup>
         </div>
       </div>
