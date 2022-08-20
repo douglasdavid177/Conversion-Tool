@@ -117,11 +117,11 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     key="buttonholder"
-                    initial={{ translateY: 50, opacity: 0 }}
+                    initial={{ translateY: 60, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.575, delay: 0.7 },
+                      transition: { duration: 0.65, delay: 0.6 },
                     }}
                     exit={{
                       translateY: -10,
@@ -212,7 +212,10 @@ export default function Home() {
   }
 
   function checkScroll() {
-    if (containerRef.current.scrollTop < 2) {
+    if (
+      containerRef.current.scrollTop < 2 &&
+      actualMainSectionKey != mainSectionKey
+    ) {
       if (actualMainSectionKey > 1) setShowHeading(false);
       setActualMainSectionKey(mainSectionKey);
       setActuallyShowResults(showResults);
