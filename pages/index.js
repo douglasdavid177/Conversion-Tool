@@ -108,7 +108,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </motion.div>
-            <motion.div layout className="debuggin">
+            <motion.div className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
                   setShowHeading(true);
