@@ -9,12 +9,13 @@
   align-items: flex-start;
   /* This is to make layout changes work smootly for some reason */
   position: fixed;
-  height: 100%;
-  /*  
-  overflow-y: auto;
-  overflow: overlay; */
+  /* height: 100%; */
+  /* top: 0;
+  bottom: 0;
+
   left: 0;
-  right: 0;
+  right: 0; */
+  inset: 0;
   /* with bottom margin on button, this is not needed as total height is already more than 90vh on most normal deveices */
 }
 .hamburgerHolder {
@@ -64,7 +65,7 @@ button.hamburger img {
   /* This is unnecessary because the parent stretches it anyway */
 
   overflow-y: auto;
-  overflow: overlay;
+  scrollbar-gutter: stable;
 }
 
 .content > * {

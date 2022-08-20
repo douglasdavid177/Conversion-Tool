@@ -23,16 +23,10 @@ body {
   overflow: auto;
   scroll-behavior: smooth;
 }
-
-body::-webkit-scrollbar {
-  display: none;
+html {
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
 body {
   background-color: #121212;
   color: white;

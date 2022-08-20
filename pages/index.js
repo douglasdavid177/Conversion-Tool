@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
 import HomeSection from "../components/homesection";
@@ -257,7 +257,7 @@ export default function Home() {
   }
   function fixHeight() {
     const winheight = window.innerHeight;
-    const compHeight = containerRef.current.clientHeight;
+    const compHeight = window.clientHeight;
     console.log("comp height: ");
     console.log(compHeight);
     console.log("win height: ");
