@@ -77,7 +77,7 @@ const DecToFracSection = (props) => {
             scrollTargetRef.current.scrollIntoView({
               behavior: "smooth",
             });
-          }, 375);
+          }, 450);
         }}
       >
         <motion.div
