@@ -212,13 +212,16 @@ export default function Home() {
   }
 
   function checkScroll() {
-    if (
-      containerRef.current.scrollTop < 2 &&
-      actualMainSectionKey != mainSectionKey
-    ) {
-      if (actualMainSectionKey > 1) setShowHeading(false);
-      setActualMainSectionKey(mainSectionKey);
-      setActuallyShowResults(showResults);
+    const diffKey = actualMainSectionKey != mainSectionKey;
+    const diffShowRes = actuallyShowResults != showResults;
+    if (containerRef.current.scrollTop < 2 && (diffKey || diffShowRes)) {
+      if (diffKey) {
+        if (actualMainSectionKey > 1) setShowHeading(false);
+        setActualMainSectionKey(mainSectionKey);
+      }
+      if (diffShowRes) {
+        setActuallyShowResults(showResults);
+      }
     }
   }
   function scrollUpSlightly() {
