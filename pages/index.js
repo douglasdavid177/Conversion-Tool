@@ -53,6 +53,8 @@ export default function Home() {
     // setActuallyShowResults(showResults);
   }, [showResults]);
 
+  useEffect(() => {}, [actuallyShowResults]);
+
   return (
     <div>
       <div className={`${styles.container}`}>
@@ -281,6 +283,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
+            containerRef={containerRef}
           />
         );
       case 3:

@@ -30,7 +30,7 @@ const InputSection = ({
       >
         <span className={styles.inputSectionIntro}>
           {" "}
-          <h5>Tool Selected: </h5>
+          <h5>Selected tool: </h5>
         </span>
         {/* <br /> */}
         <span className={styles.inputSectionLabel}>

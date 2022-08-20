@@ -1,6 +1,6 @@
 import convert from "convert-units";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputSection from "./inputsectionunitc";
 import ResultsSection from "./resultssectionunitc";
 
@@ -12,6 +12,7 @@ const UnitConversionSection = (props) => {
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1);
   const [triggerWarning, setTriggerWarning] = useState(false);
+  const scrollTargetRef = useRef(null);
 
   useEffect(() => {
     if (props.attemptCalculate) {
@@ -40,11 +41,17 @@ const UnitConversionSection = (props) => {
   }, [props.showResults]);
 
   return (
-    <motion.div>
+    <motion.div ref={scrollTargetRef}>
       <AnimatePresence
         exitBeforeEnter
         onExitComplete={() => {
-          props.setDummyVar(!props.dummyVar);
+          //props.setDummyVar(!props.dummyVar);
+
+          setTimeout(() => {
+            scrollTargetRef.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }, 375);
         }}
       >
         <motion.div

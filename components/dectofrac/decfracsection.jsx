@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputSection from "./inputsectionfrac";
 import ResultsSection from "./resultssectionfrac";
 import styles from "../../styles/mainsection.module.css";
@@ -11,6 +11,8 @@ const DecToFracSection = (props) => {
   const [resultsVal, setResultsVal] = useState(-1);
   const [resultsSndVal, setResultsSndVal] = useState(-1);
   const [triggerWarning, setTriggerWarning] = useState(false);
+  const [timeoutVar, setTimeoutVar] = useState(null);
+  const scrollTargetRef = useRef();
 
   // useEffect(
   //   () => () => {
@@ -64,11 +66,18 @@ const DecToFracSection = (props) => {
     props.setShowResults(true);
   };
   return (
-    <motion.div>
+    <motion.div ref={scrollTargetRef}>
       <AnimatePresence
         exitBeforeEnter
         onExitComplete={() => {
           // props.setDummyVar(!props.dummyVar);
+          // if (timeoutVar != null) clearTimeout(timeoutVar);
+
+          setTimeout(() => {
+            scrollTargetRef.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }, 375);
         }}
       >
         <motion.div
