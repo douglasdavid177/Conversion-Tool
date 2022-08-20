@@ -14,12 +14,6 @@ const InputSection = ({
   setTriggerFunc,
   setDecPlacesFunc,
 }) => {
-  useEffect(() => {
-    // console.log("howdy...");
-    // console.log(convert(1).from("lb").to("kg"));
-    // console.log(convert().possibilities());
-    // console.log(convert().describe("in3/min"));
-  });
   return (
     <div className={`${styles.inputSection} ${styles.mainSection}`}>
       <h4
@@ -28,16 +22,6 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        <span className={styles.inputSectionIntro}>
-          {" "}
-          <h5>Selected tool: </h5>
-        </span>
-        {/* <br /> */}
-        <span className={styles.inputSectionLabel}>
-          Unit Conversion for Measurements
-        </span>
-        <br />
-        <br />
         Enter your starting measurement value and its unit type, then select
         your desired unit type.
       </h4>
@@ -64,7 +48,6 @@ const InputSection = ({
             value={startU}
           >
             <option value="default">Select unit</option>
-
             {getCurrentPossibilities(true).map((unit, ind) => {
               return (
                 <option value={unit} key={unit}>
@@ -118,15 +101,12 @@ const InputSection = ({
   function handleInputDec(e) {
     e.persist();
     setStartNumFunc(e.target.value);
-    //countDecimalPlacesString(e.target.value);
   }
   function validateInputDec() {
     let result = startNum;
     const decplaces = countDecimalPlacesString(result);
     result = parseFloat(result);
     result = Math.abs(result);
-
-    // const decplaces = countDecimalPlacesFloat(result); // Not needed and doesn't account for trailing zeros
 
     if (isNaN(result)) {
       setStartNumFunc(0);
@@ -140,7 +120,6 @@ const InputSection = ({
     if (!str) return 2;
     const numString = str.replace(/\D/g, "");
     const result = str ? str.length : 0;
-    // console.log("decimal places in string: " + result);
     if (result > 0 && result < 16) {
       return result;
     }

@@ -5,9 +5,13 @@ import convert from "convert-units";
 import styles from "../../styles/mainsection.module.css";
 
 const ResultsSection = ({ startNum, startU, endU, decPlaces, result }) => {
+  let tempStartNum = startNum;
+  tempStartNum = 1;
+  let tempResult = convert(tempStartNum).from(startU).to(endU);
+
   const sameUnit = startU == endU;
-  let startUStyle = result > startNum ? styles.higher : styles.lower;
-  const endUStyle = result < startNum ? styles.higher : styles.lower;
+  let startUStyle = tempResult > tempStartNum ? styles.higher : styles.lower;
+  const endUStyle = tempResult < tempStartNum ? styles.higher : styles.lower;
   const startUnitWordDynamic =
     startNum == 1 ? getSingular(startU) : getPlural(startU);
   const endUnitWordDynamic = result == 1 ? getSingular(endU) : getPlural(endU);

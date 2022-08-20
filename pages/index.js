@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
-import {
-  motion,
-  AnimatePresence,
-  LayoutGroup,
-  m,
-  useScrollElement,
-} from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
 import HomeSection from "../components/homesection";
 import AboutSection from "../components/aboutsection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
@@ -23,37 +17,20 @@ export default function Home() {
   const [showHeading, setShowHeading] = useState(true);
   const [dummyVar, setDummyVar] = useState(false);
   const containerRef = useRef();
-  // const scrollY = useScrollElement(containerRef);
 
   useEffect(() => {
-    // containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     scrollToTop();
     checkScroll();
-
-    // void containerRef.current.offsetHeight;
-
-    // console.log("scroll top framer: ");
-    // console.log(scrollY.scrollYProgress);
-
-    // scrollDownSlightly();
-    // scrollUpSlightly();
-    setDummyVar(!dummyVar);
-    // setActualMainSectionKey(mainSectionKey);
   }, [mainSectionKey]);
 
   useEffect(() => {
-    // void containerRef.current.offsetHeight;
-    // setShowHeading(false);
     resetInput(false);
   }, [actualMainSectionKey]);
 
   useEffect(() => {
     scrollToTop();
     checkScroll();
-    // setActuallyShowResults(showResults);
   }, [showResults]);
-
-  useEffect(() => {}, [actuallyShowResults]);
 
   return (
     <div>
@@ -62,8 +39,6 @@ export default function Home() {
           className={styles.content}
           ref={containerRef}
           onScroll={checkScroll}
-          // layout
-          // layoutScroll
         >
           <LayoutGroup>
             <motion.div>
@@ -104,16 +79,9 @@ export default function Home() {
                 </AnimatePresence>
               </div>
             </motion.div>
-            {/* <motion.div layoutId="headerMark">beep</motion.div> */}
             <motion.div>
-              <AnimatePresence
-                exitBeforeEnter
-                onExitComplete={() => {
-                  setDummyVar(!dummyVar);
-                }}
-              >
+              <AnimatePresence exitBeforeEnter>
                 <motion.div
-                  // layout
                   key={actualMainSectionKey}
                   initial={{ translateY: 30, opacity: 0 }}
                   animate={{
@@ -136,24 +104,18 @@ export default function Home() {
                     duration: 0.35,
                   }}
                 >
-                  {/* <motion.div layout="position"> */}
                   {componentFromKey(actualMainSectionKey)}
-                  {/* </motion.div> */}
                 </motion.div>
               </AnimatePresence>
             </motion.div>
             <motion.div layout className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
-                  console.log("hey!");
-
                   setShowHeading(true);
                 }}
               >
                 {actualMainSectionKey > 1 && (
                   <motion.div
-                    // layoutId="buttonHolderr"
-
                     key="buttonholder"
                     initial={{ translateY: 50, opacity: 0 }}
                     animate={{
@@ -172,7 +134,6 @@ export default function Home() {
                   >
                     <motion.div
                       layout
-                      // layoutId="buttonHolder"
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                     >
                       <button
@@ -216,12 +177,9 @@ export default function Home() {
 
   function checkScroll() {
     if (containerRef.current.scrollTop < 2) {
-      void containerRef.current.offsetHeight;
-      setDummyVar(!dummyVar);
-
+      // void containerRef.current.offsetHeight;
       if (actualMainSectionKey > 1) setShowHeading(false);
       setActualMainSectionKey(mainSectionKey);
-
       setActuallyShowResults(showResults);
     }
   }
@@ -241,32 +199,12 @@ export default function Home() {
   }
   function scrollToTop() {
     containerRef.current.scrollTo({
-      top:
-        // containerRef.current.scrollTop > 0 ? 0 : containerRef.current.scrollTop,
-        0,
+      top: 0,
       left: 0,
       behavior: "smooth",
     });
   }
-  function getKey() {
-    return mainSectionKey;
-  }
-  function TestComp(props) {
-    return <div></div>;
-  }
 
-  // function ActionButton(props) {
-  //   return (
-  //     <button
-  //       onClick={() => {
-  //         showResults ? resetInput() : gotoResults();
-  //       }}
-  //       className={showResults ? styles.secondary : styles.primary}
-  //     >
-  //       {showResults ? "Change Input" : "View Results"}
-  //     </button>
-  //   );
-  // }
   function componentFromKey(key) {
     switch (key) {
       case 0:
@@ -283,7 +221,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
-            containerRef={containerRef}
+            smoothScrollTo={smoothScrollTo}
           />
         );
       case 3:
@@ -295,6 +233,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
+            smoothScrollTo={smoothScrollTo}
           />
         );
       default:
@@ -303,9 +242,6 @@ export default function Home() {
   }
 
   function gotoResults() {
-    //console.log(showResults);
-    //calculate(inputVal1, inputVal2);
-    //setShowResults(true);
     setAttemptCalculate(true);
     scrollUpSlightly();
   }
@@ -315,6 +251,11 @@ export default function Home() {
     if (scrollSlightly) {
       scrollUpSlightly();
     }
+  }
+  function smoothScrollTo(targetRef) {
+    targetRef.current.scrollIntoView({
+      behavior: "smooth",
+    });
   }
   function fixHeight() {
     const winheight = window.innerHeight;

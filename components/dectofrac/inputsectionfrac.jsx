@@ -12,7 +12,6 @@ const InputSection = ({
 }) => {
   return (
     <div
-      //className={styles.inputSection}
       className={`${styles.decFracInput} ${styles.inputSection} ${styles.mainSection}`}
     >
       <h4
@@ -21,23 +20,12 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        <span className={styles.inputSectionIntro}>
-          {" "}
-          <h5>Selected tool: </h5>
-        </span>
-        {/* <br /> */}
-        <span className={styles.inputSectionLabel}>
-          Decimal to Fraction Converter
-        </span>
-        <br />
-        <br />
         Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
       </h4>
       <form className={styles.inputFields} key="myform">
         <label className={styles.small}>
           <h3>Decimal value</h3>
-
           <input
             type="text"
             value={isNaN(Number(dec)) && dec != "." ? "" : dec}
@@ -47,6 +35,7 @@ const InputSection = ({
             onFocus={reacquireFocus}
           />
         </label>
+
         <label className={styles.small}>
           <h3>Fraction denominator</h3>
           <input
@@ -64,17 +53,14 @@ const InputSection = ({
   function handleInputDec(e) {
     e.persist();
     setDecFunc(e.target.value);
-    //countDecimalPlacesString(e.target.value);
   }
   function validateInputDec() {
     let result = dec;
     const decplaces = countDecimalPlacesString(result);
     result = parseFloat(result);
     result = Math.abs(result);
-
-    // const decplaces = countDecimalPlacesFloat(result); // Not needed and doesn't account for trailing zeros
-
     const leftOverDecimal = result - Math.floor(result);
+
     if (isNaN(leftOverDecimal)) {
       setDecFunc(0);
     } else {

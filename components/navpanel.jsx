@@ -32,7 +32,6 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
             e.stopPropagation();
           }}
           key={"panel"}
-          //initial={{ x: "200%" }}
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "100%" }}
@@ -42,7 +41,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
             <h5>Menu</h5>
             <hr align="right" />
 
-            <MiniMenuSection label={"All"}>
+            <MenuSection label={"All"}>
               <MenuItem label={"Home"} sectionKey={0} />
               <MenuItem label={"About"} sectionKey={1} />
               <MenuItem
@@ -52,7 +51,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
               <MenuItem label={"Unit Conversion"} sectionKey={3} />
               <MenuItem label={"Currency Exchange"} sectionKey={-1} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
-            </MiniMenuSection>
+            </MenuSection>
 
             <WarningBadge />
 
@@ -68,6 +67,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
     </AnimatePresence>
   );
   function MenuItem(props) {
+    const disabled = props.sectionKey == -1;
     return (
       <li>
         <button
@@ -79,8 +79,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
             setSectionKey(props.sectionKey);
             setIsOpen(false);
           }}
-          // disabled={props.sectionKey == -1}
-          className={`${props.sectionKey == -1 ? styles.disabledButton : ""} ${
+          className={`${disabled ? styles.disabledButton : ""} ${
             props.sectionKey == currentSectionKey ? styles.currentMenuItem : ""
           }`}
         >
@@ -91,26 +90,6 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
     );
   }
 
-  function MiniMenuItem(props) {
-    return (
-      <li>
-        <button
-          onClick={() => {
-            if (props.sectionKey == -1) {
-              ResetAnim();
-            }
-            setSectionKey(props.sectionKey);
-            setIsOpen(false);
-          }}
-          // disabled={props.sectionKey == -1}
-          className={props.sectionKey == -1 ? styles.disabledButton : ""}
-        >
-          <h4>{props.label}</h4>
-        </button>
-        {/* <div className={styles.bulletPoint}></div> */}
-      </li>
-    );
-  }
   function WarningBadge() {
     return (
       <div className={styles.comingSoonWarning}>
@@ -128,15 +107,6 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   }
 
   function MenuSection(props) {
-    return (
-      <div className={styles.menuSection}>
-        <h5 className={styles.sectionHeading}>{props.label}</h5>
-        <hr align="right" />
-        <ul>{props.children}</ul>
-      </div>
-    );
-  }
-  function MiniMenuSection(props) {
     return (
       <div className={styles.menuSection}>
         {/* <h5>{props.label}</h5> */}

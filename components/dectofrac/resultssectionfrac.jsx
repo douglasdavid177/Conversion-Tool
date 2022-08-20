@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../../styles/mainsection.module.css";
 
 const ResultsSection = ({

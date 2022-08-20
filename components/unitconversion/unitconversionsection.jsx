@@ -3,20 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import InputSection from "./inputsectionunitc";
 import ResultsSection from "./resultssectionunitc";
+import styles from "../../styles/mainsection.module.css";
 
 const UnitConversionSection = (props) => {
   const [startUnit, setStartUnit] = useState("default");
   const [endUnit, setEndUnit] = useState("default");
   const [endUnitAuto, setEndUnitAuto] = useState(false);
-  const [startNumVal, setStartNumVal] = useState("");
+  const [startNumVal, setStartNumVal] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1);
   const [triggerWarning, setTriggerWarning] = useState(false);
-  const scrollTargetRef = useRef(null);
+  const mainSectionRef = useRef(null);
+  const subSectionRef = useRef(null);
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      //console.log(convert().measures());
       let num = startNumVal;
       let start = startUnit;
       let end = endUnit;
@@ -25,6 +26,10 @@ const UnitConversionSection = (props) => {
         setTriggerWarning(true);
         props.setAttemptCalculate(false);
         props.setShowResults(false);
+        // Scroll to red instructions
+        if (subSectionRef.current) {
+          props.smoothScrollTo(subSectionRef);
+        }
         return;
       }
       calculate(num, start, end);
@@ -41,16 +46,22 @@ const UnitConversionSection = (props) => {
   }, [props.showResults]);
 
   return (
-    <motion.div ref={scrollTargetRef}>
+    <motion.div ref={mainSectionRef}>
+      <span className={styles.mainSectionLabelIntro}>
+        <h5>Selected tool: </h5>
+      </span>
+
+      <span className={styles.mainSectionLabel}>
+        <h4>Unit Conversion for Measurements</h4>
+      </span>
+
+      <div ref={subSectionRef}> </div>
       <AnimatePresence
         exitBeforeEnter
         onExitComplete={() => {
-          //props.setDummyVar(!props.dummyVar);
-
+          const target = props.showResults ? subSectionRef : mainSectionRef;
           setTimeout(() => {
-            scrollTargetRef.current.scrollIntoView({
-              behavior: "smooth",
-            });
+            props.smoothScrollTo(target);
           }, 450);
         }}
       >
@@ -58,10 +69,6 @@ const UnitConversionSection = (props) => {
           key={props.showResults ? "results" : "input"}
           initial={{ translateY: 20, opacity: 0 }}
           animate={{ translateY: 0, opacity: 1 }}
-          // onAnimationComplete={(definition) => {
-          //   console.log("Completed animating", definition);
-          //   // props.setDummyVar(!props.dummyVar);
-          // }}
           exit={{ translateY: -20, opacity: 0 }}
           transition={{ duration: 0.35 }}
         >
@@ -101,7 +108,6 @@ const UnitConversionSection = (props) => {
     } else {
       resultV = convert(val).from(startU).to(endU);
     }
-    // resultV = convert(val).from(startU).to(endU);
 
     setResultsVal(resultV);
     console.log("attempted actual conversion: ");
