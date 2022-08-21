@@ -22,7 +22,7 @@ const DecToFracSection = (props) => {
   }, [props.attemptCalculate]);
 
   return (
-    <motion.div ref={mainSectionRef}>
+    <div ref={mainSectionRef}>
       <span className={styles.mainSectionLabelIntro}>
         <h5>Selected tool: </h5>
       </span>
@@ -69,7 +69,7 @@ const DecToFracSection = (props) => {
           )}
         </motion.div>
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 
   function calculate(dec, den) {
