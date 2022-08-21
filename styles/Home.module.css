@@ -3,7 +3,9 @@
   justify-content: center;
   align-items: flex-start;
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
   /* Main container is entire viewport, 
   with content as scroll container inside it with heavy padding */
 }
