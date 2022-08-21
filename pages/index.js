@@ -99,7 +99,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <div className="debuggin">
+            <motion.div layout className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
                   setShowHeading(true);
@@ -122,10 +122,7 @@ export default function Home() {
                       duration: 0.35,
                     }}
                   >
-                    <motion.div
-                      layout
-                      className={`${styles.buttonHolder}, ${"debuggin"}`}
-                    >
+                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
                       <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
@@ -136,11 +133,11 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </LayoutGroup>
         </div>
       </div>
