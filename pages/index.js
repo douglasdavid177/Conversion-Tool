@@ -122,21 +122,20 @@ export default function Home() {
                       duration: 0.35,
                     }}
                   >
-                    <motion.div
-                      layout
-                      className={`${styles.buttonHolder}, ${"debuggin"}`}
-                    >
-                      <button
-                        onClick={() => {
-                          showResults ? resetInput() : gotoResults();
-                        }}
-                        className={
-                          showResults ? styles.secondary : styles.primary
-                        }
-                      >
-                        {showResults ? "Change Input" : "View Results"}
-                      </button>
-                    </motion.div>
+                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
+                      <motion.div layout>
+                        <button
+                          onClick={() => {
+                            showResults ? resetInput() : gotoResults();
+                          }}
+                          className={
+                            showResults ? styles.secondary : styles.primary
+                          }
+                        >
+                          {showResults ? "Change Input" : "View Results"}
+                        </button>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
