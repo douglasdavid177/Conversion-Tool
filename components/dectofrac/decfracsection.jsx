@@ -31,44 +31,45 @@ const DecToFracSection = (props) => {
         <h4>Decimal to Fraction Converter</h4>
       </span>
 
-      <div ref={subSectionRef}> </div>
-      <AnimatePresence
-        exitBeforeEnter
-        onExitComplete={() => {
-          const target = props.showResults ? subSectionRef : mainSectionRef;
-          setTimeout(() => {
-            props.smoothScrollTo(target);
-          }, 450);
-        }}
-      >
-        <motion.div
-          key={props.showResults ? "results" : "input"}
-          initial={{ translateY: 20, opacity: 0 }}
-          animate={{ translateY: 0, opacity: 1 }}
-          exit={{ translateY: -20, opacity: 0 }}
-          transition={{ duration: 0.35 }}
+      <div ref={subSectionRef}>
+        <AnimatePresence
+          exitBeforeEnter
+          onExitComplete={() => {
+            const target = props.showResults ? subSectionRef : mainSectionRef;
+            setTimeout(() => {
+              props.smoothScrollTo(target);
+            }, 450);
+          }}
         >
-          {props.showResults ? (
-            <ResultsSection
-              dec={decVal}
-              den={denVal}
-              resultsVal={resultsVal}
-              resultsSndVal={resultsSndVal}
-              decimalPlaces={decimalPlaces}
-            />
-          ) : (
-            <InputSection
-              dec={decVal}
-              den={denVal}
-              setDecFunc={setDecVal}
-              setDenFunc={setDenVal}
-              triggerW={triggerWarning}
-              setTriggerFunc={setTriggerWarning}
-              setDecPlacesFunc={setDecimalPlaces}
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
+          <motion.div
+            key={props.showResults ? "results" : "input"}
+            initial={{ translateY: 20, opacity: 0 }}
+            animate={{ translateY: 0, opacity: 1 }}
+            exit={{ translateY: -20, opacity: 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            {props.showResults ? (
+              <ResultsSection
+                dec={decVal}
+                den={denVal}
+                resultsVal={resultsVal}
+                resultsSndVal={resultsSndVal}
+                decimalPlaces={decimalPlaces}
+              />
+            ) : (
+              <InputSection
+                dec={decVal}
+                den={denVal}
+                setDecFunc={setDecVal}
+                setDenFunc={setDenVal}
+                triggerW={triggerWarning}
+                setTriggerFunc={setTriggerWarning}
+                setDecPlacesFunc={setDecimalPlaces}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 
