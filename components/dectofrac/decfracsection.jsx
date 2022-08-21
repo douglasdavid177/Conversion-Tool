@@ -41,8 +41,11 @@ const DecToFracSection = (props) => {
         <AnimatePresence
           exitBeforeEnter
           onExitComplete={() => {
+            props.setDummyVar(!props.dummyVar);
+            void mainSectionRef.current.offsetHeight;
             const target = props.showResults ? subSectionRef : mainSectionRef;
             setTimeout(() => {
+              props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
             }, 450);
           }}

@@ -99,7 +99,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <motion.div layout className="debuggin">
+            <div className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
                   setShowHeading(true);
@@ -140,7 +140,7 @@ export default function Home() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </LayoutGroup>
         </div>
       </div>
