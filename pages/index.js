@@ -130,7 +130,7 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.65, delay: 0.6 },
+                      transition: { duration: 1.25 },
                     }}
                     exit={{
                       translateY: -10,
