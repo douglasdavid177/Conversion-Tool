@@ -240,6 +240,7 @@ export default function Home() {
     });
   }
   function scrollToTop() {
+    void containerRef.current.offsetTop;
     containerRef.current.scrollTo({
       top: 0,
       left: 0,
