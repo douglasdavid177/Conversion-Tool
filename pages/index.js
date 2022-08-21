@@ -258,7 +258,6 @@ export default function Home() {
   }
   function smoothScrollTo(targetRef) {
     void containerRef.current.offsetTop;
-
     targetRef.current.scrollIntoView({
       behavior: "smooth",
     });
