@@ -125,7 +125,11 @@ export default function Home() {
                     <motion.div
                       layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
-                      transition={{ duration: 0.7, ease: [0, 1.1, 0.92, 1] }}
+                      // transition={{ duration: 0.7, ease: [0, 1.1, 0.92, 1] }}
+                      transition={{
+                        duration: 0.7,
+                        ease: [0.26, -0.01, 0, 1],
+                      }}
                     >
                       <button
                         onClick={() => {
