@@ -56,18 +56,21 @@ export default function Home() {
                       animate={{
                         translateY: 0,
                         opacity: 1,
-                        transition: {
-                          duration: 0.35,
-                          delay: 0.05,
-                        },
+                        // transition: {
+                        //   duration: 0.35,
+                        //   delay: 0.05,
+                        // },
                       }}
                       exit={{
                         translateY: -10,
                         opacity: 0,
-                        transition: {
-                          duration: 0.35,
-                          delay: 0.15,
-                        },
+                        // transition: {
+                        //   duration: 0.35,
+                        //   delay: 0.15,
+                        // },
+                      }}
+                      transition={{
+                        duration: 0.35,
                       }}
                     >
                       {" "}
@@ -87,18 +90,18 @@ export default function Home() {
                   animate={{
                     translateY: 0,
                     opacity: 1,
-                    transition: {
-                      duration: 0.35,
-                      delay: 0.05,
-                    },
+                    // transition: {
+                    //   duration: 0.35,
+                    //   delay: 0.05,
+                    // },
                   }}
                   exit={{
                     translateY: -10,
                     opacity: 0,
-                    transition: {
-                      duration: 0.35,
-                      delay: 0.15,
-                    },
+                    // transition: {
+                    //   duration: 0.35,
+                    //   delay: 0.15,
+                    // },
                   }}
                   transition={{
                     duration: 0.35,
@@ -110,9 +113,9 @@ export default function Home() {
             </div>
             <motion.div
               layout
-              transition={{
-                layout: { duration: 0.35, delay: 0.15 },
-              }}
+              // transition={{
+              //   layout: { duration: 0.35, delay: 0.05 },
+              // }}
               className="debuggin"
             >
               <AnimatePresence
@@ -132,15 +135,13 @@ export default function Home() {
                     exit={{
                       translateY: -10,
                       opacity: 0,
-                      transition: { duration: 0.35, delay: 0.15 },
+                      // transition: { duration: 0.35, delay: 0.15 },
                     }}
                     transition={{
                       duration: 0.35,
                     }}
                   >
-                    <motion.div
-                      className={`${styles.buttonHolder}, ${"debuggin"}`}
-                    >
+                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
                       <motion.button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
@@ -151,7 +152,7 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </motion.button>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
