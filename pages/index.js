@@ -108,11 +108,11 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     key="buttonholder"
-                    initial={{ translateY: 30, opacity: 0 }}
+                    initial={{ opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 1.15 },
+                      transition: { duration: 0.75, delay: 0.25 },
                     }}
                     exit={{
                       translateY: -10,
