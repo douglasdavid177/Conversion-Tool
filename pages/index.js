@@ -108,7 +108,13 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <motion.div layout className="debuggin">
+            <motion.div
+              layout
+              transition={{
+                layout: { duration: 0.35, delay: 0.15 },
+              }}
+              className="debuggin"
+            >
               <AnimatePresence
                 onExitComplete={() => {
                   setShowHeading(true);
@@ -132,7 +138,9 @@ export default function Home() {
                       duration: 0.35,
                     }}
                   >
-                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
+                    <motion.div
+                      className={`${styles.buttonHolder}, ${"debuggin"}`}
+                    >
                       <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
@@ -143,7 +151,7 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -209,7 +217,7 @@ export default function Home() {
   }
 
   function checkScroll() {
-    void containerRef.current.offsetTop;
+    // void containerRef.current.offsetTop;
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
