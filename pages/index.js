@@ -48,7 +48,12 @@ export default function Home() {
                   alt="An SVG of a construction worker checking a clipboard"
                   className={styles.heroimg}
                 />
-                <AnimatePresence>
+                <AnimatePresence
+                  onExitComplete={() => {
+                    setDummyVar(!dummyVar);
+                    void containerRef.current.offsetTop;
+                  }}
+                >
                   {actualMainSectionKey < 2 && showHeading && (
                     <motion.div
                       key={"headertext"}
@@ -65,7 +70,6 @@ export default function Home() {
                         duration: 0.35,
                       }}
                     >
-                      {" "}
                       <h5>Welcome to the...</h5>
                       {/* <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1> */}
                       <h1>Ultimate Number Conversion Multi-Tool!</h1>
