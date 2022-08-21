@@ -56,18 +56,10 @@ export default function Home() {
                       animate={{
                         translateY: 0,
                         opacity: 1,
-                        // transition: {
-                        //   duration: 0.35,
-                        //   delay: 0.05,
-                        // },
                       }}
                       exit={{
                         translateY: -10,
                         opacity: 0,
-                        // transition: {
-                        //   duration: 0.35,
-                        //   delay: 0.15,
-                        // },
                       }}
                       transition={{
                         duration: 0.35,
@@ -90,18 +82,10 @@ export default function Home() {
                   animate={{
                     translateY: 0,
                     opacity: 1,
-                    // transition: {
-                    //   duration: 0.35,
-                    //   delay: 0.05,
-                    // },
                   }}
                   exit={{
                     translateY: -10,
                     opacity: 0,
-                    // transition: {
-                    //   duration: 0.35,
-                    //   delay: 0.15,
-                    // },
                   }}
                   transition={{
                     duration: 0.35,
@@ -111,13 +95,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <motion.div
-              layout
-              // transition={{
-              //   layout: { duration: 0.35, delay: 0.05 },
-              // }}
-              className="debuggin"
-            >
+            <motion.div layout className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
                   setShowHeading(true);
@@ -130,12 +108,11 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 1.25 },
+                      transition: { duration: 1.05 },
                     }}
                     exit={{
                       translateY: -10,
                       opacity: 0,
-                      // transition: { duration: 0.35, delay: 0.15 },
                     }}
                     transition={{
                       duration: 0.35,
@@ -218,7 +195,6 @@ export default function Home() {
   }
 
   function checkScroll() {
-    // void containerRef.current.offsetTop;
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
