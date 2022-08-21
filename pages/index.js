@@ -212,6 +212,7 @@ export default function Home() {
   }
 
   function checkScroll() {
+    void containerRef.current.offsetTop;
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
