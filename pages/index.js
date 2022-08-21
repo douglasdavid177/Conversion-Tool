@@ -141,7 +141,7 @@ export default function Home() {
                     <motion.div
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                     >
-                      <button
+                      <motion.button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
                         }}
@@ -150,7 +150,7 @@ export default function Home() {
                         }
                       >
                         {showResults ? "Change Input" : "View Results"}
-                      </button>
+                      </motion.button>
                     </motion.div>
                   </motion.div>
                 )}
