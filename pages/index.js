@@ -122,7 +122,10 @@ export default function Home() {
                       duration: 0.35,
                     }}
                   >
-                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
+                    <motion.div
+                      layout
+                      className={`${styles.buttonHolder}, ${"debuggin"}`}
+                    >
                       <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
@@ -133,7 +136,7 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
