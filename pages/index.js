@@ -214,7 +214,7 @@ export default function Home() {
   function checkScroll() {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
-    if (containerRef.current.scrollTop < 2 && (diffKey || diffShowRes)) {
+    if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
       if (diffKey) {
         if (actualMainSectionKey > 1) setShowHeading(false);
         setActualMainSectionKey(mainSectionKey);
@@ -257,6 +257,8 @@ export default function Home() {
     }
   }
   function smoothScrollTo(targetRef) {
+    void containerRef.current.offsetTop;
+
     targetRef.current.scrollIntoView({
       behavior: "smooth",
     });
