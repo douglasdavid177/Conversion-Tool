@@ -47,13 +47,19 @@ const UnitConversionSection = (props) => {
 
   return (
     <div ref={mainSectionRef}>
-      <span className={styles.mainSectionLabelIntro}>
-        <h5>Selected tool: </h5>
-      </span>
+      <motion.div
+        initial={{ translateY: 20, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
+        transition={{ duration: 0.35 }}
+      >
+        <span className={styles.mainSectionLabelIntro}>
+          <h5>Selected tool: </h5>
+        </span>
 
-      <span className={styles.mainSectionLabel}>
-        <h4>Unit Conversion for Measurements</h4>
-      </span>
+        <span className={styles.mainSectionLabel}>
+          <h4>Unit Conversion for Measurements</h4>
+        </span>
+      </motion.div>
 
       <div ref={subSectionRef}>
         <AnimatePresence
