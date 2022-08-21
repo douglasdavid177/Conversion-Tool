@@ -19,6 +19,3 @@
 .container button:active {
   filter: brightness(65%);
 }
-
-.container button:active::after {
-}

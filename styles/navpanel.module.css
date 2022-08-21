@@ -11,10 +11,8 @@
   z-index: -1;
 }
 .panelBG {
-  background-color: rgb(28 28 28 /0.7);
-  background-color: rgb(255 255 255 /0.05);
-  backdrop-filter: blur(0.8rem);
-  background-color: #202020;
+  /*The visible background of the navpanel that moves*/
+
   background-color: #191919;
   position: fixed;
   right: 0;
@@ -22,28 +20,20 @@
   bottom: 0;
   width: min(72.5vw, 25rem);
   z-index: 10;
-
-  /* transition: transform 0.5s cubic-bezier(0, 1.14, 0.77, 0.99);
-  transition: transform 0.7s cubic-bezier(0, 1.14, 0.75, 0.98);
-  transform: translateX(-200%); */
 }
 .panel {
+  /*This element is a scrollable flexbox container held inside the panelpg, the actually holds the content*/
+
   height: 100%;
   width: 100%;
   text-align: right;
-  /* padding-left: 3rem;
-  padding-right: 1.5rem;
-  padding-top: 5rem;
-  padding: 1.5rem 1.5rem 1.5rem 3rem; */
   padding: 1.65rem 1rem 2rem 1rem;
-
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   position: relative;
-  /* height: 100%;
-  justify-content: stretch; */
   overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 .panel button {
   border: none;
@@ -51,16 +41,9 @@
   background: none;
   color: white;
   cursor: pointer;
-  margin-right: 0;
-  padding-right: 0;
   margin: 0;
   padding: 0;
   text-align: right;
-  /* text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-color: var(--turquoise);
-  text-decoration-thickness: 3px; */
-  /* color: var(--turquoise); */
   flex-grow: 1;
 }
 
@@ -70,10 +53,7 @@
 }
 
 .panel .menuSection h3 {
-  margin: 0;
   padding: 0;
-  margin-bottom: 1.2rem;
-  margin: 0.7rem 0rem;
   margin: 0.5rem 0rem;
   font-size: 1.125rem;
   line-height: 1.45;
@@ -89,10 +69,6 @@
   color: hsl(0, 0%, 50%);
 }
 .panel .homeLink {
-  /* text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-color: var(--turquoise);
-  text-decoration-thickness: 3px; */
   color: var(--turquoise);
 }
 
@@ -100,7 +76,6 @@
 .panel h2 {
   margin: 0;
   color: hsl(0, 0%, 50%);
-  /* margin-bottom: 2rem; */
 }
 
 .panel h4 {
@@ -110,16 +85,13 @@
 .panel hr {
   width: 85%;
   margin-bottom: 0.5rem;
-
   color: hsl(0, 0%, 50%);
   background: hsl(0, 0%, 50%);
   border: 1px solid hsl(0, 0%, 50%);
-
   height: 0.2rem;
 }
 .panel .menuSection hr {
   width: min(25%, 2.5rem);
-  /* visibility: hidden; */
   display: none;
 }
 
@@ -161,20 +133,16 @@ hr.miniline {
 
 .panel .messageContainer {
   text-align: left;
-  /* margin-left: -1.5rem; Because of increased left padding on panel */
   color: hsl(0, 0%, 50%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   padding: 0.5rem;
-  /* margin-bottom: 1rem; */
 }
 
 .comingSoonWarning {
   display: flex;
-  /* margin-left: -1.5rem; Doesnt work for some reason */
-  /* transform: translateX(1.2rem); */
   align-items: flex-end;
   text-align: center;
   justify-content: center;
