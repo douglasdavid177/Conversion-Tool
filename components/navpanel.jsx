@@ -35,7 +35,9 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "100%" }}
-          transition={{ duration: 0.7, ease: [0, 1.14, 0.75, 0.98] }}
+          // transition={{ duration: 0.7, ease: [0, 1.14, 0.75, 0.98] }}
+          // transition={{ duration: 0.5, ease: [0, 0.87, 0.92, 1] }}
+          transition={{ duration: 0.5, ease: [0, 1.1, 0.92, 1] }}
         >
           <div className={styles.panel}>
             <h5>Menu</h5>
