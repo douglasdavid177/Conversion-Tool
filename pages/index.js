@@ -125,6 +125,7 @@ export default function Home() {
                     <motion.div
                       layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
+                      transition={{ duration: 1, ease: [0, 1.1, 0.92, 1] }}
                     >
                       <button
                         onClick={() => {
