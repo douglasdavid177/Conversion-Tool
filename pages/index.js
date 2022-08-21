@@ -123,18 +123,16 @@ export default function Home() {
                     }}
                   >
                     <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
-                      <motion.div layout>
-                        <button
-                          onClick={() => {
-                            showResults ? resetInput() : gotoResults();
-                          }}
-                          className={
-                            showResults ? styles.secondary : styles.primary
-                          }
-                        >
-                          {showResults ? "Change Input" : "View Results"}
-                        </button>
-                      </motion.div>
+                      <button
+                        onClick={() => {
+                          showResults ? resetInput() : gotoResults();
+                        }}
+                        className={
+                          showResults ? styles.secondary : styles.primary
+                        }
+                      >
+                        {showResults ? "Change Input" : "View Results"}
+                      </button>
                     </div>
                   </motion.div>
                 )}
