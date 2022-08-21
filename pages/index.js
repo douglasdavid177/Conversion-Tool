@@ -112,7 +112,7 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 1.05 },
+                      transition: { duration: 0.65, delay: 0.4 },
                     }}
                     exit={{
                       translateY: -10,
