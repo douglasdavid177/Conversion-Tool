@@ -108,11 +108,11 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     key="buttonholder"
-                    initial={{ translateY: 60, opacity: 0 }}
+                    initial={{ translateY: 30, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.45, delay: 0.4 },
+                      transition: { duration: 1.05 },
                     }}
                     exit={{
                       translateY: -10,
@@ -122,8 +122,11 @@ export default function Home() {
                       duration: 0.35,
                     }}
                   >
-                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
-                      <motion.button
+                    <motion.div
+                      layout
+                      className={`${styles.buttonHolder}, ${"debuggin"}`}
+                    >
+                      <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
                         }}
@@ -132,8 +135,8 @@ export default function Home() {
                         }
                       >
                         {showResults ? "Change Input" : "View Results"}
-                      </motion.button>
-                    </div>
+                      </button>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
