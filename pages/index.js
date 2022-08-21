@@ -112,7 +112,7 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.75, delay: 0.25 },
+                      transition: { duration: 0.7, delay: 0.2 },
                     }}
                     exit={{
                       translateY: -10,
@@ -128,7 +128,7 @@ export default function Home() {
                       // transition={{ duration: 0.7, ease: [0, 1.1, 0.92, 1] }}
                       transition={{
                         duration: 0.7,
-                        ease: [0.26, -0.01, 0, 1],
+                        ease: [0.26, 0, 0, 1],
                       }}
                     >
                       <button
