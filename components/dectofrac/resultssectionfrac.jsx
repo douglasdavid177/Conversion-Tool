@@ -29,9 +29,8 @@ const ResultsSection = ({
         It&apos;s decimal value is{" "}
         <span className={firstStyle}>
           {(resultsVal / den).toFixed(decimalPlaces)}
-          {", "}
         </span>
-        while the desired value was{" "}
+        , while the desired value was{" "}
         <span className={styles.correct}>
           {parseFloat(dec).toFixed(decimalPlaces)}
         </span>
