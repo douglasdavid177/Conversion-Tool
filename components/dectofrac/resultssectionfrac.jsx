@@ -20,16 +20,21 @@ const ResultsSection = ({
         {addCommas(resultsVal)} / {addCommas(den)}
       </h1>
       <h3 className={styles.description}>
+        <span className={firstStyle}>
+          {" "}
+          {addCommas(resultsVal)}/{addCommas(den)}{" "}
+        </span>{" "}
         is the closest fraction to the desired decimal. It&apos;s decimal value
         is{" "}
         <span className={firstStyle}>
-          {(resultsVal / den).toFixed(decimalPlaces)}{" "}
+          {(resultsVal / den).toFixed(decimalPlaces)}
+          {", "}
         </span>
         while the desired value was{" "}
         <span className={styles.correct}>
           {parseFloat(dec).toFixed(decimalPlaces)}
         </span>
-        .The second closest fraction was{" "}
+        . The second closest fraction was{" "}
         <span className={secondStyle}>
           {addCommas(resultsSndVal)}/{addCommas(den)}
         </span>{" "}
