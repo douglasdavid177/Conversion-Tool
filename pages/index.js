@@ -108,11 +108,12 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     key="buttonholder"
-                    initial={{ opacity: 0 }}
+                    initial={{ translateY: 60, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      transition: { duration: 0.7, delay: 0.2 },
+                      // transition: { duration: 0.7, delay: 0.2 },
+                      transition: { duration: 0.35, delay: 0.705 },
                     }}
                     exit={{
                       translateY: -10,
@@ -126,10 +127,10 @@ export default function Home() {
                       layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                       // transition={{ duration: 0.7, ease: [0, 1.1, 0.92, 1] }}
-                      transition={{
-                        duration: 0.625,
-                        ease: [0.26, 0, 0, 1],
-                      }}
+                      // transition={{
+                      //   duration: 0.625,
+                      //   ease: [0.26, 0, 0, 1],
+                      // }}
                     >
                       <button
                         onClick={() => {
