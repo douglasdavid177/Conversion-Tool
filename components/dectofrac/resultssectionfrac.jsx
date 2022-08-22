@@ -7,15 +7,17 @@ const ResultsSection = ({
   resultsVal,
   resultsSndVal,
   decimalPlaces,
+  addCommas,
 }) => {
   let firstStyle = resultsVal / den > dec ? styles.higher : styles.lower;
   firstStyle = resultsVal / den == dec ? styles.correct : firstStyle;
   const secondStyle = resultsSndVal / den > dec ? styles.higher : styles.lower;
+
   return (
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
-        {resultsVal}/{den}
+        {addCommas(resultsVal)} / {addCommas(den)}
       </h1>
       <h3 className={styles.description}>
         is the closest fraction to the desired decimal. It&apos;s decimal value
@@ -29,7 +31,7 @@ const ResultsSection = ({
         </span>
         .{" "}
         <span className={secondStyle}>
-          {resultsSndVal}/{den}
+          {addCommas(resultsSndVal)} / {addCommas(den)}
         </span>{" "}
         was the second closest, with a decimal value of{" "}
         <span className={secondStyle}>

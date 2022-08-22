@@ -65,6 +65,7 @@ const DecToFracSection = (props) => {
                 resultsVal={resultsVal}
                 resultsSndVal={resultsSndVal}
                 decimalPlaces={decimalPlaces}
+                addCommas={props.addCommas}
               />
             ) : (
               <InputSection

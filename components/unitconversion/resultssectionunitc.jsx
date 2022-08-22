@@ -4,7 +4,14 @@ import convert from "convert-units";
 
 import styles from "../../styles/mainsection.module.css";
 
-const ResultsSection = ({ startNum, startU, endU, decPlaces, result }) => {
+const ResultsSection = ({
+  startNum,
+  startU,
+  endU,
+  decPlaces,
+  result,
+  addCommas,
+}) => {
   let tempStartNum = startNum;
   tempStartNum = 1;
   let tempResult = convert(tempStartNum).from(startU).to(endU);
@@ -26,18 +33,18 @@ const ResultsSection = ({ startNum, startU, endU, decPlaces, result }) => {
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
-        {+parseFloat(result).toFixed(decPlaces + 3)} {endU}
+        {addCommas(+parseFloat(result).toFixed(decPlaces + 2))} {endU}
       </h1>
       <h3 className={styles.description}>
         <span className={styles.correct}>
-          {+parseFloat(startNum).toFixed(decPlaces)}
+          {addCommas(+parseFloat(startNum).toFixed(decPlaces))}
         </span>{" "}
         {startU} (
         <span className={sameUnit ? styles.correct : startUStyle}>
           {startUnitWordDynamic}
         </span>
-        ) is equivalent to <span className={styles.correct}>{result}</span>{" "}
-        {endU} (
+        ) is equivalent to{" "}
+        <span className={styles.correct}>{addCommas(result)}</span> {endU} (
         <span className={sameUnit ? styles.correct : endUStyle}>
           {endUnitWordDynamic}
         </span>

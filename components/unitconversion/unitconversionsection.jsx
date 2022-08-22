@@ -90,6 +90,7 @@ const UnitConversionSection = (props) => {
                 endU={endUnit}
                 decPlaces={decimalPlaces}
                 result={resultsVal}
+                addCommas={props.addCommas}
               />
             ) : (
               <InputSection

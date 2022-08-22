@@ -187,6 +187,7 @@ export default function Home() {
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
             smoothScrollTo={smoothScrollTo}
+            addCommas={addCommasToNumber}
           />
         );
       case 3:
@@ -199,6 +200,7 @@ export default function Home() {
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
             smoothScrollTo={smoothScrollTo}
+            addCommas={addCommasToNumber}
           />
         );
       default:
@@ -257,6 +259,12 @@ export default function Home() {
     targetRef.current.scrollIntoView({
       behavior: "smooth",
     });
+  }
+
+  function addCommasToNumber(num) {
+    let parts = num.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
   }
   function fixHeight() {
     const winheight = window.innerHeight;
