@@ -212,6 +212,8 @@ export default function Home() {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
+      void containerRef.current.offsetHeight;
+      setDummyVar(!dummyVar);
       if (diffKey) {
         if (actualMainSectionKey > 1) setShowHeading(false);
         setActualMainSectionKey(mainSectionKey);
