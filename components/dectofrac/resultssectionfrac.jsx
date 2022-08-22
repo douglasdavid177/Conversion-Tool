@@ -29,11 +29,11 @@ const ResultsSection = ({
         <span className={styles.correct}>
           {parseFloat(dec).toFixed(decimalPlaces)}
         </span>
-        .{" "}
+        .The second closest fraction was{" "}
         <span className={secondStyle}>
-          {addCommas(resultsSndVal)} / {addCommas(den)}
+          {addCommas(resultsSndVal)}/{addCommas(den)}
         </span>{" "}
-        was the second closest, with a decimal value of{" "}
+        with a decimal value of{" "}
         <span className={secondStyle}>
           {(resultsSndVal / den).toFixed(decimalPlaces)}
         </span>
