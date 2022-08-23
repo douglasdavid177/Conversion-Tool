@@ -115,7 +115,7 @@ export default function Home() {
                       // transition: { duration: 0.7, delay: 0.2 },
                       // transition: { duration: 0.3, delay: 0.71 },
                       transition: {
-                        duration: 0.375,
+                        duration: 0.4,
                         delay: 0.71,
                         ease: [0, 0, 0.25, 1],
                         // ease: "easeOut",
