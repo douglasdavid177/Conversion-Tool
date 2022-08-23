@@ -115,9 +115,9 @@ export default function Home() {
                       // transition: { duration: 0.7, delay: 0.2 },
                       // transition: { duration: 0.3, delay: 0.71 },
                       transition: {
-                        duration: 0.55,
+                        duration: 0.575,
                         delay: 0.71,
-                        ease: [0.06, 0, 0, 1],
+                        ease: [0.05, 0, 0, 1],
                       },
                     }}
                     exit={{
@@ -131,7 +131,10 @@ export default function Home() {
                     <motion.div
                       layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
-                      transition={{ duration: 0.3475, ease: "easeOut" }}
+                      transition={{
+                        duration: 0.3475,
+                        ease: [0.4, 0, 0.4, 1],
+                      }}
                       // transition={{ duration: 0.7, ease: [0, 1.1, 0.92, 1] }}
                       // transition={{
                       //   duration: 0.625,
