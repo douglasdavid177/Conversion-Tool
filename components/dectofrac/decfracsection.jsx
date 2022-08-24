@@ -24,7 +24,7 @@ const DecToFracSection = (props) => {
     <div ref={mainSectionRef}>
       {/*This is where app scrolls to when switching from results to input*/}
 
-      <motion.div
+      <div
         layout
         initial={{ translateY: 20, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
@@ -37,7 +37,7 @@ const DecToFracSection = (props) => {
         <span className={styles.mainSectionLabel}>
           <h4>Decimal to Fraction Converter</h4>
         </span>
-      </motion.div>
+      </div>
 
       <div ref={subSectionRef}>
         {/*This is where the app scrolls to when switching from input to results*/}
