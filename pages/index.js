@@ -8,22 +8,25 @@ import UnitConversionSection from "../components/unitconversion/unitconversionse
 import NavPanel from "../components/navpanel";
 
 export default function Home() {
-  const [actualMainSectionKey, setActualMainSectionKey] = useState(0);
-  const [mainSectionKey, setMainSectionKey] = useState(0);
-  const [showResults, setShowResults] = useState(false);
-  const [actuallyShowResults, setActuallyShowResults] = useState(false);
-  const [attemptCalculate, setAttemptCalculate] = useState(false);
-  const [navPanelOpen, setNavPanelOpen] = useState(false);
-  const [showHeading, setShowHeading] = useState(true);
-  const [dummyVar, setDummyVar] = useState(false);
+  const [mainSectionKey, setMainSectionKey] = useState(0); // Triggers page scrolling to top before setting 'actual' state
+  const [actualMainSectionKey, setActualMainSectionKey] = useState(0); // The id of the active page because the app uses state-based routing
+  const [showResults, setShowResults] = useState(false); // Triggers page scrolling to top before setting 'actual' state
+  const [actuallyShowResults, setActuallyShowResults] = useState(false); // controls Whether input or result of a particular tool is shown
+  const [attemptCalculate, setAttemptCalculate] = useState(false); // Triggers the active tool to run its calculate function
+  const [navPanelOpen, setNavPanelOpen] = useState(false); // Controls whether navigation panel is open or not
+  const [showHeading, setShowHeading] = useState(true); // Controls whether app title is shown or not
+  const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const containerRef = useRef();
 
   useEffect(() => {
+    // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
+    // will set actual main section key to match the desired key, causing animatepresence to display a different section
     scrollToTop();
     checkScroll();
   }, [mainSectionKey]);
 
   useEffect(() => {
+    // When sections actually chnage, Make sure tools are loaded in on their input page and are loaded in fresh, clean and with no remembered values
     resetInput();
   }, [actualMainSectionKey]);
 
@@ -48,6 +51,7 @@ export default function Home() {
                   alt="An SVG of a construction worker checking a clipboard"
                   className={styles.heroimg}
                 />
+                {/*the app title and subheading will only display on the 'home' and 'about' pages*/}
                 <AnimatePresence
                   onExitComplete={() => {
                     setDummyVar(!dummyVar);
@@ -70,14 +74,16 @@ export default function Home() {
                         duration: 0.35,
                       }}
                     >
-                      <h5>Welcome to the...</h5>
-                      {/* <h1>Lucas&apos;s Numerical Conversion Multi-Tool!</h1> */}
-                      <h1>Ultimate Number Conversion Multi-Tool!</h1>
+                      <h5>Welcome to...</h5>
+                      <h1>Lucas&apos;s Number Conversion Multi-Tool!</h1>
+                      {/* <h1>Ultimate Number Conversion Multi-Tool!</h1> */}
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             </div>
+
+            {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
             <div>
               <AnimatePresence exitBeforeEnter>
                 <motion.div
@@ -102,6 +108,7 @@ export default function Home() {
             <div className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
+                  // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
                   setShowHeading(true);
                 }}
               >
@@ -112,13 +119,10 @@ export default function Home() {
                     animate={{
                       translateY: 0,
                       opacity: 1,
-                      // transition: { duration: 0.7, delay: 0.2 },
-                      // transition: { duration: 0.3, delay: 0.71 },
                       transition: {
                         duration: 0.4,
                         delay: 0.71,
                         ease: [0, 0, 0.25, 1],
-                        // ease: "easeOut",
                       },
                     }}
                     exit={{
@@ -136,11 +140,6 @@ export default function Home() {
                         duration: 0.3475,
                         ease: [0.2, 0, 0.3, 1],
                       }}
-                      // transition={{ duration: 0.7, ease: [0, 1.1, 0.92, 1] }}
-                      // transition={{
-                      //   duration: 0.625,
-                      //   ease: [0.26, 0, 0, 1],
-                      // }}
                     >
                       <button
                         onClick={() => {
@@ -165,7 +164,6 @@ export default function Home() {
         <button
           className={styles.hamburger}
           onClick={() => {
-            console.log("clicked burg...");
             setNavPanelOpen(!navPanelOpen);
           }}
         >
@@ -219,12 +217,14 @@ export default function Home() {
     }
   }
 
+  // Runs automatically every time content scroll container detects change in scroll position
   function checkScroll() {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
+
+    // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
+    // then update actual to match desired
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
-      void containerRef.current.offsetHeight;
-      setDummyVar(!dummyVar);
       if (diffKey) {
         if (actualMainSectionKey > 1) setShowHeading(false);
         setActualMainSectionKey(mainSectionKey);
@@ -260,36 +260,23 @@ export default function Home() {
   function gotoResults() {
     setAttemptCalculate(true);
   }
-  function resetInput(scrollSlightly = false) {
+  function resetInput() {
     setShowResults(false);
     setAttemptCalculate(false);
-    if (scrollSlightly) {
-      // scrollUpSlightly();
-    }
   }
   function smoothScrollTo(targetRef) {
+    // Attempt trigger rerender to ensure no layout transitions are stuck
     void containerRef.current.offsetTop;
+    setDummyVar(!dummyVar);
     targetRef.current.scrollIntoView({
       behavior: "smooth",
     });
   }
 
   function addCommasToNumber(num) {
+    // Regex that looks for triplets of digits adds commas after them
     let parts = num.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
-  }
-  function fixHeight() {
-    const winheight = window.innerHeight;
-    const compHeight = window.clientHeight;
-    console.log("comp height: ");
-    console.log(compHeight);
-    console.log("win height: ");
-    console.log(winheight);
-    if (compHeight < winheight) {
-      setUseFixedLayout(true);
-    } else {
-      setUseFixedLayout(false);
-    }
   }
 }

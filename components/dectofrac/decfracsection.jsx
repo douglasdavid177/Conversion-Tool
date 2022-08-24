@@ -8,10 +8,9 @@ const DecToFracSection = (props) => {
   const [decVal, setDecVal] = useState(NaN);
   const [denVal, setDenVal] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
-  const [resultsVal, setResultsVal] = useState(-1);
-  const [resultsSndVal, setResultsSndVal] = useState(-1);
-  const [triggerWarning, setTriggerWarning] = useState(false);
-  const [timeoutVar, setTimeoutVar] = useState(null);
+  const [resultsVal, setResultsVal] = useState(-1); // The numerator
+  const [resultsSndVal, setResultsSndVal] = useState(-1); // The second closest numerator
+  const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
   const mainSectionRef = useRef(null);
   const subSectionRef = useRef(null);
 
@@ -23,6 +22,8 @@ const DecToFracSection = (props) => {
 
   return (
     <div ref={mainSectionRef}>
+      {/*This is where app scrolls to when switching from results to input*/}
+
       <motion.div
         layout
         initial={{ translateY: 20, opacity: 0 }}
@@ -39,16 +40,20 @@ const DecToFracSection = (props) => {
       </motion.div>
 
       <div ref={subSectionRef}>
+        {/*This is where the app scrolls to when switching from input to results*/}
+
+        {/*This component represents multiple different divs (one at a time) based on the current key. They are the input and results screens*/}
         <AnimatePresence
           exitBeforeEnter
           onExitComplete={() => {
-            props.setDummyVar(!props.dummyVar);
-            void mainSectionRef.current.offsetHeight;
+            {
+              /*Scroll back down to the part of the main section that we requested to view when pressing action button, 
+              but wait until after any layout changes are done */
+            }
             const target = props.showResults ? subSectionRef : mainSectionRef;
             setTimeout(() => {
-              props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
-            }, 450);
+            }, 400);
           }}
         >
           <motion.div

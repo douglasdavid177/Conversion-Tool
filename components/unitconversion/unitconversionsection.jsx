@@ -8,11 +8,11 @@ import styles from "../../styles/mainsection.module.css";
 const UnitConversionSection = (props) => {
   const [startUnit, setStartUnit] = useState("default");
   const [endUnit, setEndUnit] = useState("default");
-  const [endUnitAuto, setEndUnitAuto] = useState(false);
+  const [endUnitAuto, setEndUnitAuto] = useState(false); // True if 'auto' is selected for end unit , false othereise
   const [startNumVal, setStartNumVal] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
-  const [resultsVal, setResultsVal] = useState(-1);
-  const [triggerWarning, setTriggerWarning] = useState(false);
+  const [resultsVal, setResultsVal] = useState(-1); // The converted value
+  const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
   const mainSectionRef = useRef(null);
   const subSectionRef = useRef(null);
 
@@ -47,6 +47,8 @@ const UnitConversionSection = (props) => {
 
   return (
     <div ref={mainSectionRef}>
+      {/*This is where app scrolls to when switching from results to input*/}
+
       <motion.div
         layout
         initial={{ translateY: 20, opacity: 0 }}
@@ -63,17 +65,21 @@ const UnitConversionSection = (props) => {
       </motion.div>
 
       <div ref={subSectionRef}>
+        {/*This is where the app scrolls to when switching from input to results*/}
+
+        {/*This component represents multiple different divs (one at a time) based on the current key. They are the input and results screens*/}
         <AnimatePresence
           exitBeforeEnter
           onExitComplete={() => {
-            props.setDummyVar(!props.dummyVar);
-            void mainSectionRef.current.offsetHeight;
-
+            {
+              /*Scroll back down to the part of the main section that we requested to view when pressing action button, 
+              but wait until after any layout changes are done */
+            }
             const target = props.showResults ? subSectionRef : mainSectionRef;
             setTimeout(() => {
               props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
-            }, 450);
+            }, 400);
           }}
         >
           <motion.div

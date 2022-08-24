@@ -31,6 +31,11 @@ const InputSection = ({
       >
         <label>
           <h3>Given value</h3>
+          {/*This input field tries to display the state variable (a string) but will display nothing unless the value is either 
+          a valid number or a decimal point.
+          The value is then immediately set to that same state variable again therefore resetting its value to an empty string 
+          when the number becomes invalid. 
+          This ensures the user can't enter anything but a valid number while still keeping the variable type a string*/}
           <input
             type="text"
             value={isNaN(Number(startNum)) && startNum != "." ? "" : startNum}
@@ -40,6 +45,7 @@ const InputSection = ({
           />
         </label>
 
+        {/*Since clicking the heding doesn't open the select (and can't), don't highlight it despite default behavior*/}
         <label className={styles.noHighlight}>
           <h3>Given unit</h3>
           <select
@@ -93,7 +99,11 @@ const InputSection = ({
   }
   function getOptionLabelString(unit, currentSelected) {
     const plural = convert().describe(unit).plural;
+    //Corrects bug in api that incorrectly displays cm2 as Centimeters by default
     if (unit == "cm2") plural = "Square Centimeters";
+
+    // When a unit type is selected, change it's text to display the abbreviated unit first
+    // so the most important and necessary information is always on screen first in case space is limited
     return unit == currentSelected
       ? unit + " (" + plural.toLowerCase() + ")"
       : plural + " (" + unit + ")";
@@ -104,8 +114,10 @@ const InputSection = ({
   }
   function validateInputDec() {
     let result = startNum;
+    // Count decimal places in string value entered so that the user can choose the decimal precision by adding trailing zeros if they desire
     const decplaces = countDecimalPlacesString(result);
     result = parseFloat(result);
+    // Negative values don't make sense, just make them positive
     result = Math.abs(result);
 
     if (isNaN(result)) {
@@ -118,7 +130,6 @@ const InputSection = ({
   function countDecimalPlacesString(value) {
     const str = value.toString().split(".")[1];
     if (!str) return 2;
-    const numString = str.replace(/\D/g, "");
     const result = str ? str.length : 0;
     if (result > 0 && result < 16) {
       return result;
@@ -129,6 +140,7 @@ const InputSection = ({
 
   function handleStartUSelectChange(e) {
     const justSelected = e.target.value;
+    // If select (default) is manually selected, reset both select inputs so that all possibilities become available
     if (justSelected === "default") {
       setStartUFunc("default");
       setEndUFunc("default");

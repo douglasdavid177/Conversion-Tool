@@ -59,6 +59,8 @@ const ResultsSection = ({
       </h3>
     </div>
   );
+
+  // The following two functions merely correct a bug in the api that incorrectly displays cm2 as Centimeters
   function getPlural(unit) {
     const plural = convert().describe(unit).plural;
     if (unit == "cm2") plural = "Square Centimeters";
@@ -69,6 +71,9 @@ const ResultsSection = ({
     if (unit == "cm2") singular = "Square Centimeter";
     return singular;
   }
+
+  // This function gets the measure type of a unit, and then converts the result from a camelcase string
+  // into a more presentable string of seperate lowercase words
   function getMeasure(unit) {
     let syst = convert()
       .describe(unit)

@@ -4,13 +4,17 @@ import styles from "../styles/navpanel.module.css";
 
 const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   const [comingSoonWarning, setComingSoonWarning] = useState(false);
+  const [dummyVar, setDummyVar] = useState(false);
   const badge = useRef();
+
+  // This prevents the nav panel opening with the warning badge visible
   useEffect(() => {
     cancelAnim();
   }, [isOpen]);
   return (
     <AnimatePresence>
       {isOpen && (
+        // Dark tinted transparent overlay covers entire viewport and allows a user to close the nav panel by clicking anywhere outside it
         <motion.div
           className={styles.background}
           key={"bg"}
@@ -29,15 +33,15 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
         <motion.div
           className={styles.panelBG}
           onClick={(e) => {
+            // Without this, clicking anywhere inside the nav panel would also register on the overlay behind it,
+            // therefore closing the nav panel prematurely
             e.stopPropagation();
           }}
           key={"panel"}
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "100%" }}
-          // transition={{ duration: 0.7, ease: [0, 1.14, 0.75, 0.98] }}
-          // transition={{ duration: 0.5, ease: [0, 0.87, 0.92, 1] }}
-          transition={{ duration: 0.5, ease: [0, 1.1, 0.92, 1] }}
+          transition={{ duration: 0.7, ease: [0.3, 1, 0.4, 1] }}
         >
           <div className={styles.panel}>
             <h5>Menu</h5>
@@ -75,12 +79,14 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
         <button
           onClick={() => {
             if (props.sectionKey == -1) {
+              // Trigger warning badge animation
               ResetAnim();
               return;
             }
             setSectionKey(props.sectionKey);
             setIsOpen(false);
           }}
+          // Make label text gray if disabled, green if it's the active section, or white otherwise
           className={`${disabled ? styles.disabledButton : ""} ${
             props.sectionKey == currentSectionKey ? styles.currentMenuItem : ""
           }`}
@@ -97,6 +103,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
       <div className={styles.comingSoonWarning}>
         <h5
           ref={badge}
+          // Apply css class with animation if variable is true, and then remove that class when the animation is complete
           className={comingSoonWarning ? styles.setWarning : ""}
           onAnimationEnd={() => {
             setComingSoonWarning(false);
@@ -121,7 +128,6 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
     cancelAnim();
     setTimeout(() => {
       setComingSoonWarning(true);
-      void badge.current.offsetWidth;
     }, 10);
   }
   function cancelAnim() {
@@ -130,11 +136,10 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
     }
     setComingSoonWarning(false);
     badge.current.classList.remove(".setWarning");
-    void badge.current.offsetWidth;
-    badge.current.style.animation = "none";
-    void badge.current.offsetWidth;
     badge.current.style.animation = "";
+    // Attempt to trigger a rerender
     void badge.current.offsetWidth;
+    setDummyVar(!dummyVar);
   }
 };
 
