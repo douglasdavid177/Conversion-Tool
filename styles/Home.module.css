@@ -49,7 +49,7 @@ button.hamburger img {
   overflow-y: auto;
   scrollbar-gutter: stable;
 
-  /*Main content container has heavy padding due to media queries*/
+  /*Main content container has heavy padding added to it in media queries*/
   /*Scrolls, with scrollbar not affecting layout*/
 }
 
