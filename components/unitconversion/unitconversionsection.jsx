@@ -75,7 +75,7 @@ const UnitConversionSection = (props) => {
             setTimeout(() => {
               props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
-            }, 400);
+            }, 420);
           }}
         >
           <motion.div

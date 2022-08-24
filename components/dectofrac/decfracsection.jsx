@@ -24,12 +24,7 @@ const DecToFracSection = (props) => {
     <div ref={mainSectionRef}>
       {/*This is where app scrolls to when switching from results to input*/}
 
-      <div
-        layout
-        initial={{ translateY: 20, opacity: 0 }}
-        animate={{ translateY: 0, opacity: 1 }}
-        transition={{ duration: 0.35 }}
-      >
+      <div>
         <span className={styles.mainSectionLabelIntro}>
           <h5>Selected tool: </h5>
         </span>
@@ -54,7 +49,7 @@ const DecToFracSection = (props) => {
             const target = props.showResults ? subSectionRef : mainSectionRef;
             setTimeout(() => {
               props.smoothScrollTo(target);
-            }, 400);
+            }, 420);
           }}
         >
           <motion.div
