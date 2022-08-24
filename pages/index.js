@@ -120,7 +120,7 @@ export default function Home() {
                       translateY: 0,
                       opacity: 1,
                       transition: {
-                        duration: 0.45,
+                        duration: 0.55,
                         delay: 0.71,
                         ease: [0.0, 0.0, 0, 1],
                       },
