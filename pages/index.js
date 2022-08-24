@@ -72,6 +72,7 @@ export default function Home() {
                       }}
                       transition={{
                         duration: 0.35,
+                        delay: 0.05,
                       }}
                     >
                       <h5>Welcome to...</h5>
@@ -99,6 +100,7 @@ export default function Home() {
                   }}
                   transition={{
                     duration: 0.35,
+                    delay: 0.05,
                   }}
                 >
                   {componentFromKey(actualMainSectionKey)}
@@ -115,13 +117,13 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     key="buttonholder"
-                    initial={{ translateY: 60, opacity: 0 }}
+                    initial={{ translateY: 50, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
                       transition: {
                         duration: 0.55,
-                        delay: 0.71,
+                        delay: 0.825,
                         ease: [0.0, 0.0, 0, 1],
                       },
                     }}
@@ -131,6 +133,7 @@ export default function Home() {
                     }}
                     transition={{
                       duration: 0.35,
+                      delay: 0.05,
                     }}
                   >
                     <motion.div
