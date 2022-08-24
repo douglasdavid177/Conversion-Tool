@@ -102,7 +102,7 @@ const InputSection = ({
     //Corrects bug in api that incorrectly displays cm2 as Centimeters by default
     if (unit == "cm2") plural = "Square Centimeters";
 
-    // When a unit type is selected, change it's text to display the abbreviated unit first
+    // When a unit type is selected, change its text to display the abbreviated unit first
     // so the most important and necessary information is always on screen first in case space is limited
     return unit == currentSelected
       ? unit + " (" + plural.toLowerCase() + ")"

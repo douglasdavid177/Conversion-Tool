@@ -75,7 +75,7 @@ const InputSection = ({
     if (isNaN(leftOverDecimal)) {
       setDecFunc(0);
     } else {
-      // Set the state variable to the number equivalent of it's string
+      // Set the state variable to the number equivalent of its string
       setDecFunc(
         Number(leftOverDecimal).toFixed(decplaces > 2 ? decplaces : 2)
       );
