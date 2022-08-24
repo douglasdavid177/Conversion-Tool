@@ -228,13 +228,18 @@ export default function Home() {
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
-      if (diffKey) {
-        if (actualMainSectionKey > 1) setShowHeading(false);
-        setActualMainSectionKey(mainSectionKey);
-      }
-      if (diffShowRes) {
-        setActuallyShowResults(showResults);
-      }
+      setTimeout(() => {
+        if (diffKey) {
+          if (actualMainSectionKey > 1) setShowHeading(false);
+          setActualMainSectionKey(mainSectionKey);
+        }
+        if (diffShowRes) {
+          setActuallyShowResults(showResults);
+        }
+        // Attempt trigger rerender
+        void containerRef.current.offsetHeight;
+        setDummyVar(!dummyVar);
+      }, 20);
     }
   }
   function scrollUpSlightly() {
