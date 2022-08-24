@@ -44,6 +44,7 @@ const DecToFracSection = (props) => {
 
         {/*This component represents multiple different divs (one at a time) based on the current key. They are the input and results screens*/}
         <AnimatePresence
+          initial={false}
           exitBeforeEnter
           onExitComplete={() => {
             {
