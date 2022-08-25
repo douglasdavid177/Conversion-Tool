@@ -142,11 +142,11 @@ export default function Home() {
                     }}
                   >
                     <motion.div
-                      layout
+                      // layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
-                      transition={{
-                        duration: 0.4,
-                      }}
+                      // transition={{
+                      //   duration: 0.4,
+                      // }}
                     >
                       <button
                         onClick={() => {
