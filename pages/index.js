@@ -16,6 +16,7 @@ export default function Home() {
   const [navPanelOpen, setNavPanelOpen] = useState(false); // Controls whether navigation panel is open or not
   const [showHeading, setShowHeading] = useState(true); // Controls whether app title is shown or not
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
+  const [buttonHasLayout, setbuttonHasLayout] = useState(false);
   const containerRef = useRef();
 
   useEffect(() => {
@@ -112,7 +113,13 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <div className="debuggin">
+            <motion.div
+              layout
+              transition={{
+                duration: 0.4,
+              }}
+              className="debuggin"
+            >
               <AnimatePresence
                 onExitComplete={() => {
                   // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
@@ -141,7 +148,7 @@ export default function Home() {
                       delay: 0.05,
                     }}
                   >
-                    <motion.div
+                    <div
                       // layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                       // transition={{
@@ -158,11 +165,11 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </LayoutGroup>
         </div>
       </div>
@@ -231,6 +238,7 @@ export default function Home() {
 
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
+    // The delay gives time to add the layout property back to the buttonholder
     if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
       setTimeout(() => {
         if (diffKey) {
