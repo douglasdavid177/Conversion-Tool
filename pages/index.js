@@ -52,12 +52,7 @@ export default function Home() {
                   className={styles.heroimg}
                 />
                 {/*the app title and subheading will only display on the 'home' and 'about' pages*/}
-                <AnimatePresence
-                  onExitComplete={() => {
-                    // setDummyVar(!dummyVar);
-                    // void containerRef.current.offsetTop;
-                  }}
-                >
+                <AnimatePresence>
                   {actualMainSectionKey < 2 && showHeading && (
                     <motion.div
                       key={"headertext"}
@@ -86,12 +81,7 @@ export default function Home() {
 
             {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
             <motion.div>
-              <AnimatePresence
-                exitBeforeEnter
-                onExitComplete={() => {
-                  //setDummyVar(!dummyVar);
-                }}
-              >
+              <AnimatePresence exitBeforeEnter>
                 <motion.div
                   key={actualMainSectionKey}
                   initial={{ translateY: 50, opacity: 0 }}
