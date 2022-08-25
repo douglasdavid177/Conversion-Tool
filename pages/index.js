@@ -102,13 +102,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <motion.div
-              layout
-              transition={{
-                duration: 0.4,
-              }}
-              className="debuggin"
-            >
+            <div className="debuggin">
               <AnimatePresence
                 onExitComplete={() => {
                   // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
@@ -137,7 +131,13 @@ export default function Home() {
                       delay: 0.05,
                     }}
                   >
-                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
+                    <motion.div
+                      className={`${styles.buttonHolder}, ${"debuggin"}`}
+                      layout
+                      transition={{
+                        duration: 0.4,
+                      }}
+                    >
                       <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
@@ -148,11 +148,11 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </LayoutGroup>
         </div>
       </div>
