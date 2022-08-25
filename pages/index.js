@@ -61,13 +61,13 @@ export default function Home() {
                   {actualMainSectionKey < 2 && showHeading && (
                     <motion.div
                       key={"headertext"}
-                      initial={{ translateY: 30, opacity: 0 }}
+                      initial={{ translateY: 50, opacity: 0 }}
                       animate={{
                         translateY: 0,
                         opacity: 1,
                       }}
                       exit={{
-                        translateY: -10,
+                        translateY: -30,
                         opacity: 0,
                       }}
                       transition={{
@@ -89,13 +89,13 @@ export default function Home() {
               <AnimatePresence exitBeforeEnter>
                 <motion.div
                   key={actualMainSectionKey}
-                  initial={{ translateY: 30, opacity: 0 }}
+                  initial={{ translateY: 50, opacity: 0 }}
                   animate={{
                     translateY: 0,
                     opacity: 1,
                   }}
                   exit={{
-                    translateY: -10,
+                    translateY: -30,
                     opacity: 0,
                   }}
                   transition={{
@@ -117,18 +117,18 @@ export default function Home() {
                 {actualMainSectionKey > 1 && (
                   <motion.div
                     key="buttonholder"
-                    initial={{ translateY: 50, opacity: 0 }}
+                    initial={{ translateY: 55, opacity: 0 }}
                     animate={{
                       translateY: 0,
                       opacity: 1,
                       transition: {
-                        duration: 0.55,
+                        duration: 0.75,
                         delay: 0.825,
                         ease: [0.0, 0.0, 0, 1],
                       },
                     }}
                     exit={{
-                      translateY: -10,
+                      translateY: -30,
                       opacity: 0,
                     }}
                     transition={{
