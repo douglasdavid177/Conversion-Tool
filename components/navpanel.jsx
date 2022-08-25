@@ -44,7 +44,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
           transition={{ duration: 0.7, ease: [0.3, 1, 0.4, 1] }}
         >
           <div className={styles.panel}>
-            <MenuSection label={"All"}>
+            <MenuSection label={"Menu"}>
               <MenuItem label={"Home"} sectionKey={0} />
               <MenuItem label={"About"} sectionKey={1} />
               <MenuItem

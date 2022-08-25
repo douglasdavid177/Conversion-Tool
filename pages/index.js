@@ -89,7 +89,7 @@ export default function Home() {
               <AnimatePresence
                 exitBeforeEnter
                 onExitComplete={() => {
-                  setDummyVar(!dummyVar);
+                  //setDummyVar(!dummyVar);
                 }}
               >
                 <motion.div
