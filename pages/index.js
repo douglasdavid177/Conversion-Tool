@@ -16,7 +16,6 @@ export default function Home() {
   const [navPanelOpen, setNavPanelOpen] = useState(false); // Controls whether navigation panel is open or not
   const [showHeading, setShowHeading] = useState(true); // Controls whether app title is shown or not
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
-  const [buttonHasLayout, setbuttonHasLayout] = useState(false);
   const containerRef = useRef();
 
   useEffect(() => {
@@ -45,7 +44,7 @@ export default function Home() {
           onScroll={checkScroll}
         >
           <LayoutGroup>
-            <div>
+            <motion.div>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -83,10 +82,10 @@ export default function Home() {
                   )}
                 </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
 
             {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
-            <div>
+            <motion.div>
               <AnimatePresence
                 exitBeforeEnter
                 onExitComplete={() => {
@@ -112,7 +111,7 @@ export default function Home() {
                   {componentFromKey(actualMainSectionKey)}
                 </motion.div>
               </AnimatePresence>
-            </div>
+            </motion.div>
             <motion.div
               layout
               transition={{
@@ -148,13 +147,7 @@ export default function Home() {
                       delay: 0.05,
                     }}
                   >
-                    <div
-                      // layout
-                      className={`${styles.buttonHolder}, ${"debuggin"}`}
-                      // transition={{
-                      //   duration: 0.4,
-                      // }}
-                    >
+                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
                       <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
