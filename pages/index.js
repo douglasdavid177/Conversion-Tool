@@ -44,7 +44,7 @@ export default function Home() {
           onScroll={checkScroll}
         >
           <LayoutGroup>
-            <motion.div>
+            <div>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -77,10 +77,10 @@ export default function Home() {
                   )}
                 </AnimatePresence>
               </div>
-            </motion.div>
+            </div>
 
             {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
-            <motion.div>
+            <div>
               <AnimatePresence exitBeforeEnter>
                 <motion.div
                   key={actualMainSectionKey}
@@ -101,7 +101,7 @@ export default function Home() {
                   {componentFromKey(actualMainSectionKey)}
                 </motion.div>
               </AnimatePresence>
-            </motion.div>
+            </div>
             <motion.div
               layout
               transition={{
