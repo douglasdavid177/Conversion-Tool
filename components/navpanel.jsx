@@ -44,9 +44,6 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
           transition={{ duration: 0.7, ease: [0.3, 1, 0.4, 1] }}
         >
           <div className={styles.panel}>
-            <h5>Menu</h5>
-            <hr align="right" />
-
             <MenuSection label={"All"}>
               <MenuItem label={"Home"} sectionKey={0} />
               <MenuItem label={"About"} sectionKey={1} />
@@ -118,8 +115,8 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
   function MenuSection(props) {
     return (
       <div className={styles.menuSection}>
-        {/* <h5>{props.label}</h5> */}
-        <hr align="right" className={styles.miniline} />
+        <h5>{props.label}</h5>
+        <hr align="right" />
         <ul>{props.children}</ul>
       </div>
     );

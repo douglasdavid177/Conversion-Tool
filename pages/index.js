@@ -146,7 +146,6 @@ export default function Home() {
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                       transition={{
                         duration: 0.4,
-                        // ease: [0.2, 0, 0.3, 1],
                       }}
                     >
                       <button
@@ -241,9 +240,6 @@ export default function Home() {
         if (diffShowRes) {
           setActuallyShowResults(showResults);
         }
-        // Attempt trigger rerender
-        // void containerRef.current.offsetHeight;
-        // setDummyVar(!dummyVar);
       }, 20);
     }
   }
@@ -262,7 +258,6 @@ export default function Home() {
     });
   }
   function scrollToTop() {
-    // void containerRef.current.offsetTop;
     containerRef.current.scrollTo({
       top: 0,
       left: 0,
