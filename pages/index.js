@@ -86,7 +86,12 @@ export default function Home() {
 
             {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
             <div>
-              <AnimatePresence exitBeforeEnter>
+              <AnimatePresence
+                exitBeforeEnter
+                onExitComplete={() => {
+                  setDummyVar(!dummyVar);
+                }}
+              >
                 <motion.div
                   key={actualMainSectionKey}
                   initial={{ translateY: 50, opacity: 0 }}
@@ -140,8 +145,8 @@ export default function Home() {
                       layout
                       className={`${styles.buttonHolder}, ${"debuggin"}`}
                       transition={{
-                        duration: 0.3475,
-                        ease: [0.2, 0, 0.3, 1],
+                        duration: 0.4,
+                        // ease: [0.2, 0, 0.3, 1],
                       }}
                     >
                       <button
