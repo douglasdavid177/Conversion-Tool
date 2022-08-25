@@ -132,12 +132,13 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
       return;
     }
     if (!comingSoonWarning) return;
-    setComingSoonWarning(false);
+
     badge.current.classList.remove(".setWarning");
     badge.current.style.animation = "";
+    setComingSoonWarning(false);
     // Attempt to trigger a rerender
-    void badge.current.offsetWidth;
-    setDummyVar(!dummyVar);
+    // void badge.current.offsetWidth;
+    // setDummyVar(!dummyVar);
   }
 };
 
