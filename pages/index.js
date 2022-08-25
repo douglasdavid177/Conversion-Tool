@@ -54,8 +54,8 @@ export default function Home() {
                 {/*the app title and subheading will only display on the 'home' and 'about' pages*/}
                 <AnimatePresence
                   onExitComplete={() => {
-                    setDummyVar(!dummyVar);
-                    void containerRef.current.offsetTop;
+                    // setDummyVar(!dummyVar);
+                    // void containerRef.current.offsetTop;
                   }}
                 >
                   {actualMainSectionKey < 2 && showHeading && (
