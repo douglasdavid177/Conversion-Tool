@@ -134,6 +134,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
     if (!badge.current) {
       return;
     }
+    if (!comingSoonWarning) return;
     setComingSoonWarning(false);
     badge.current.classList.remove(".setWarning");
     badge.current.style.animation = "";

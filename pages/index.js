@@ -122,9 +122,9 @@ export default function Home() {
                       translateY: 0,
                       opacity: 1,
                       transition: {
-                        duration: 0.75,
+                        duration: 0.6,
                         delay: 0.825,
-                        ease: [0.0, 0.0, 0, 1],
+                        ease: [0.1, 0.1, 0, 1],
                       },
                     }}
                     exit={{
@@ -237,8 +237,8 @@ export default function Home() {
           setActuallyShowResults(showResults);
         }
         // Attempt trigger rerender
-        void containerRef.current.offsetHeight;
-        setDummyVar(!dummyVar);
+        // void containerRef.current.offsetHeight;
+        // setDummyVar(!dummyVar);
       }, 20);
     }
   }
@@ -257,7 +257,7 @@ export default function Home() {
     });
   }
   function scrollToTop() {
-    void containerRef.current.offsetTop;
+    // void containerRef.current.offsetTop;
     containerRef.current.scrollTo({
       top: 0,
       left: 0,
