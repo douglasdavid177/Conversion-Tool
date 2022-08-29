@@ -44,7 +44,7 @@ export default function Home() {
           onScroll={checkScroll}
         >
           <LayoutGroup>
-            <div>
+            <motion.div>
               <div className={styles.header}>
                 <img
                   src="/workersvg-turquoise.svg"
@@ -77,10 +77,10 @@ export default function Home() {
                   )}
                 </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
 
             {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
-            <div>
+            <motion.div>
               <AnimatePresence exitBeforeEnter>
                 <motion.div
                   key={actualMainSectionKey}
@@ -101,8 +101,14 @@ export default function Home() {
                   {componentFromKey(actualMainSectionKey)}
                 </motion.div>
               </AnimatePresence>
-            </div>
-            <div className="debuggin">
+            </motion.div>
+            <motion.div
+              className="debuggin"
+              layout
+              transition={{
+                duration: 0.4,
+              }}
+            >
               <AnimatePresence
                 onExitComplete={() => {
                   // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
@@ -131,13 +137,7 @@ export default function Home() {
                       delay: 0.05,
                     }}
                   >
-                    <motion.div
-                      className={`${styles.buttonHolder}, ${"debuggin"}`}
-                      layout
-                      transition={{
-                        duration: 0.4,
-                      }}
-                    >
+                    <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
                       <button
                         onClick={() => {
                           showResults ? resetInput() : gotoResults();
@@ -148,11 +148,11 @@ export default function Home() {
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </LayoutGroup>
         </div>
       </div>

@@ -47,6 +47,7 @@ button.hamburger img {
   position: fixed;
   inset: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-gutter: stable;
 
   /*Main content container has heavy padding added to it in media queries*/
