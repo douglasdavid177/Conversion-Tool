@@ -102,6 +102,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </motion.div>
+
             <motion.div
               className="debuggin"
               layout
