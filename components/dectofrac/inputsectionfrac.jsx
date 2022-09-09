@@ -16,7 +16,7 @@ const InputSection = ({
     >
       {/*This heading has an animation attached that fades from red back to grey, 
       and is triggered by the triggerW prop when action button is pressed without input*/}
-      <h4
+      <p
         className={triggerW ? styles.warning : {}}
         onAnimationEnd={() => {
           setTriggerFunc(false);
@@ -24,7 +24,7 @@ const InputSection = ({
       >
         Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
-      </h4>
+      </p>
       <form className={styles.inputFields} key="myform">
         <label className={styles.small}>
           <h3>Decimal value</h3>

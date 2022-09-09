@@ -27,13 +27,14 @@ const ResultsSection = ({
   const endUPlural = getPlural(endU);
   const startSystem = convert().describe(startU).system;
   const endSystem = convert().describe(endU).system;
-
   const sameSystem = startSystem == endSystem;
+
+  const decPlacesInheading = startNum > result ? decPlaces + 2 : decPlaces;
   return (
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
-        {addCommas(+parseFloat(result).toFixed(decPlaces + 2))} {endU}
+        {addCommas(+parseFloat(result).toFixed(decPlacesInheading))} {endU}
       </h1>
       <h3 className={styles.description}>
         <span className={styles.correct}>

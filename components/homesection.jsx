@@ -4,11 +4,12 @@ import styles from "../styles/homesection.module.css";
 const HomeSection = ({ setOpenNav }) => {
   return (
     <div className={styles.container}>
-      <h4>
+      <p>
         This app is a collection of small numerical mini-tools and calculators
         for various purposes. To use this app, start by selecting a mini-tool
-        from the list of available options. Have a splendid day! :D
-      </h4>
+        from the list of available options. {/* <br /> */}
+        Have a splendid day! :D
+      </p>
       <h3>
         <button
           className={styles.chooseToolButton}

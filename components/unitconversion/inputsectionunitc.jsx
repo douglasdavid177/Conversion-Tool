@@ -16,7 +16,7 @@ const InputSection = ({
 }) => {
   return (
     <div className={`${styles.inputSection} ${styles.mainSection}`}>
-      <h4
+      <p
         className={triggerW ? styles.warning : {}}
         onAnimationEnd={() => {
           setTriggerFunc(false);
@@ -24,60 +24,64 @@ const InputSection = ({
       >
         Enter your starting measurement value and its unit type, then select
         your desired unit type.
-      </h4>
+      </p>
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
         key="myform"
       >
-        <label>
-          <h3>Given value</h3>
-          {/*This input field tries to display the state variable (a string) but will display nothing unless the value is either 
+        <div className={styles.formRow}>
+          <label>
+            <h3>Given value</h3>
+            {/*This input field tries to display the state variable (a string) but will display nothing unless the value is either 
           a valid number or a decimal point.
           The value is then immediately set to that same state variable again therefore resetting its value to an empty string 
           when the number becomes invalid. 
           This ensures the user can't enter anything but a valid number while still keeping the variable type a string*/}
-          <input
-            type="text"
-            value={isNaN(Number(startNum)) && startNum != "." ? "" : startNum}
-            inputMode="decimal"
-            onChange={handleInputDec}
-            onBlur={validateInputDec}
-          />
-        </label>
+            <input
+              type="text"
+              value={isNaN(Number(startNum)) && startNum != "." ? "" : startNum}
+              inputMode="decimal"
+              onChange={handleInputDec}
+              onBlur={validateInputDec}
+            />
+          </label>
 
-        {/*Since clicking the heding doesn't open the select (and can't), don't highlight it despite default behavior*/}
-        <label className={styles.noHighlight}>
-          <h3>Given unit</h3>
-          <select
-            className={styles.limitWidth}
-            onChange={handleStartUSelectChange}
-            value={startU}
-          >
-            <option value="default">Select unit</option>
-            {getCurrentPossibilities(true).map((unit, ind) => {
-              return (
-                <option value={unit} key={unit}>
-                  {getOptionLabelString(unit, startU)}
-                </option>
-              );
-            })}
-          </select>
-        </label>
+          {/*Since clicking the heding doesn't open the select (and can't), don't highlight it despite default behavior*/}
+          <label className={styles.noHighlight}>
+            <h3>Given unit</h3>
+            <select
+              className={styles.limitWidth}
+              onChange={handleStartUSelectChange}
+              value={startU}
+            >
+              <option value="default">Select unit</option>
+              {getCurrentPossibilities(true).map((unit, ind) => {
+                return (
+                  <option value={unit} key={unit}>
+                    {getOptionLabelString(unit, startU)}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+        </div>
 
-        <label className={`${styles.fullWidth} ${styles.noHighlight}`}>
-          <h3>Desired unit</h3>
-          <select onChange={handleEndUSelectChange} value={endU}>
-            <option value="default">Select unit</option>
-            <option value="auto">Auto (chooses best unit)</option>
-            {getCurrentPossibilities(false).map((unit, ind) => {
-              return (
-                <option value={unit} key={unit}>
-                  {getOptionLabelString(unit, endU)}
-                </option>
-              );
-            })}
-          </select>
-        </label>
+        <div className={styles.formRow}>
+          <label className={`${styles.fullWidth} ${styles.noHighlight}`}>
+            <h3>Desired unit</h3>
+            <select onChange={handleEndUSelectChange} value={endU}>
+              <option value="default">Select unit</option>
+              <option value="auto">Auto (chooses best unit)</option>
+              {getCurrentPossibilities(false).map((unit, ind) => {
+                return (
+                  <option value={unit} key={unit}>
+                    {getOptionLabelString(unit, endU)}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+        </div>
       </form>
     </div>
   );

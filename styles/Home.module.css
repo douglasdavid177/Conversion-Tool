@@ -66,6 +66,10 @@ button.hamburger img {
   justify-content: center;
   margin-bottom: 0.5rem;
 }
+.content p {
+  color: grey;
+  margin: 1.3rem 0;
+}
 
 .content h5 {
   color: hsl(0, 0%, 50%);

@@ -37,14 +37,23 @@ span.mainSectionLabelIntro h5 {
 .inputSection h5 {
   align-self: var(--flexchildren-alignment);
 }
-.inputSection h4 {
+.inputSection p {
   margin-top: 0;
 }
 .wrapChildren {
   flex-wrap: wrap;
 }
+
 .inputFields {
   display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  align-items: center;
+}
+.formRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   justify-content: space-evenly;
   text-align: center;
   align-items: center;

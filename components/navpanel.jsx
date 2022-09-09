@@ -59,10 +59,10 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
             <WarningBadge />
 
             <div className={styles.messageContainer}>
-              <h4>
+              <p>
                 {`
               Many tools in this list are in development and will be ready to blow you away in the near future! ;) Check back soon to experience new tools and increased functionality. `}
-              </h4>
+              </p>
             </div>
           </div>
         </motion.div>
