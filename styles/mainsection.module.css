@@ -38,7 +38,7 @@ span.mainSectionLabelIntro h5 {
   align-self: var(--flexchildren-alignment);
 }
 .inputSection p {
-  margin-top: 0;
+  margin-top: 0.5rem;
 }
 .wrapChildren {
   flex-wrap: wrap;

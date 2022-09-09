@@ -8,6 +8,7 @@ const AboutSection = ({ setOpenNav }) => {
   return (
     <div className={styles.aboutSection}>
       <p>
+        <br />
         {`
         This app is a single page web application (SPA), written in JavaScript and built with the NextJS framework. It uses
         ReactJS for frontend architecture, controlling state management, data
