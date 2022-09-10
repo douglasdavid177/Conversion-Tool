@@ -85,7 +85,7 @@ span.mainSectionLabelIntro h5 {
 }
 
 .inputFields label input {
-  width: 5.5rem;
+  width: 5rem;
 }
 .inputFields label.small input {
   width: 4rem;
@@ -98,7 +98,7 @@ span.mainSectionLabelIntro h5 {
 .inputFields label input:focus {
   font-weight: bold;
   border-bottom: 6px solid white;
-  width: 6.5rem;
+  width: 6rem;
 }
 .inputFields label.small input:focus {
   width: 5rem;
