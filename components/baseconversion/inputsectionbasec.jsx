@@ -24,8 +24,8 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        Enter the value you want converted, the base it's written in, and the
-        base you want it converted to.
+        Enter the value you want converted, the base it&apos;s written in, and
+        the base you want it converted to.
       </p>
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
