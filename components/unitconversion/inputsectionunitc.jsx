@@ -66,7 +66,7 @@ const InputSection = ({
           </label>
         </div>
 
-        <div className={styles.formRow}>
+        <div className={styles.formRow} style={{ marginTop: "0.25rem" }}>
           <label className={`${styles.fullWidth} ${styles.noHighlight}`}>
             <h3>Desired unit</h3>
             <select onChange={handleEndUSelectChange} value={endU}>

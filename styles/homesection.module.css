@@ -1,3 +1,6 @@
+.container p {
+  /* font-weight: bold; */
+}
 .container button.chooseToolButton {
   border: none;
   background: transparent;

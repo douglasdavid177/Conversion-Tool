@@ -5,6 +5,7 @@ import HomeSection from "../components/homesection";
 import AboutSection from "../components/aboutsection";
 import DecToFracSection from "../components/dectofrac/decfracsection";
 import UnitConversionSection from "../components/unitconversion/unitconversionsection";
+import BaseConversionSection from "../components/baseconversion/baseconversionsection";
 import NavPanel from "../components/navpanel";
 
 export default function Home() {
@@ -197,7 +198,22 @@ export default function Home() {
             addCommas={addCommasToNumber}
           />
         );
+
       case 3:
+        return (
+          <BaseConversionSection
+            showResults={actuallyShowResults}
+            setShowResults={setShowResults}
+            attemptCalculate={attemptCalculate}
+            setAttemptCalculate={setAttemptCalculate}
+            setDummyVar={setDummyVar}
+            dummyVar={dummyVar}
+            smoothScrollTo={smoothScrollTo}
+            addCommas={addCommasToNumber}
+          />
+        );
+
+      case 4:
         return (
           <UnitConversionSection
             showResults={actuallyShowResults}

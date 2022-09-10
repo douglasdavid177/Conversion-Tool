@@ -50,8 +50,9 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
               <MenuItem
                 label={"Decimal to Fraction Converter"}
                 sectionKey={2}
-              />
-              <MenuItem label={"Unit Conversion"} sectionKey={3} />
+              />{" "}
+              <MenuItem label={"Base Conversion"} sectionKey={3} />
+              <MenuItem label={"Unit Conversion"} sectionKey={4} />
               <MenuItem label={"Currency Exchange"} sectionKey={-1} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
             </MenuSection>

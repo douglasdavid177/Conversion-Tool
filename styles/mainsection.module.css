@@ -57,6 +57,7 @@ span.mainSectionLabelIntro h5 {
   justify-content: space-evenly;
   text-align: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .inputFields label {
   display: flex;
@@ -84,19 +85,27 @@ span.mainSectionLabelIntro h5 {
 }
 
 .inputFields label input {
-  width: 5rem;
+  width: 5.5rem;
 }
 .inputFields label.small input {
-  width: 3.95rem;
+  width: 4rem;
   margin-top: 0.75rem;
+}
+.inputFields label.large input {
+  width: 60%;
+  width: max(70%, 6.5rem);
 }
 .inputFields label input:focus {
   font-weight: bold;
   border-bottom: 6px solid white;
-  width: 5.95rem;
+  width: 6.5rem;
 }
 .inputFields label.small input:focus {
   width: 5rem;
+}
+.inputFields label.large input:focus {
+  width: 75%;
+  width: max(77.5%, 7.5rem);
 }
 
 .inputFields label:not(.noHighlight):focus-within h3 {
@@ -106,7 +115,6 @@ span.mainSectionLabelIntro h5 {
 
 .inputFields .fullWidth {
   width: 100%;
-  margin-top: 0.25rem;
 }
 .inputFields .fullWidth select {
   width: max(12rem, 70%);

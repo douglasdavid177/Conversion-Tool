@@ -58,8 +58,8 @@ const InputSection = ({
     </div>
   );
   function handleInputDec(e) {
-    e.persist();
-    setDecFunc(e.target.value);
+    const val = e.target.value;
+    setDecFunc(val);
   }
   function validateInputDec() {
     let result = dec;
