@@ -36,7 +36,7 @@ const InputSection = ({
             <h3>Starting value</h3>
             <input
               type="text"
-              inputMode="decimal"
+              //   inputMode="decimal"
               value={startStr}
               onChange={handleInputStartStr}
               onBlur={validateInputStartStr}
