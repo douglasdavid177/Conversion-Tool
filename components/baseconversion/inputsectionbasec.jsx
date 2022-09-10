@@ -24,8 +24,12 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
+        {/* Enter the value you want converted, the base it&apos;s written in, and
+        the base you want it converted to. Bases higher than 36 are not
+        supported. Only valid conversions will take place. */}
         Enter the value you want converted, the base it&apos;s written in, and
-        the base you want it converted to.
+        the base you want it converted to. Conversions must be possible and
+        bases must not exceed 36.
       </p>
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
@@ -33,7 +37,7 @@ const InputSection = ({
       >
         <div className={styles.formRow}>
           <label className={styles.large}>
-            <h3>Starting value</h3>
+            <h3>Start Number</h3>
             <input
               type="text"
               //   inputMode="decimal"
@@ -55,7 +59,7 @@ const InputSection = ({
           This ensures the user can't enter anything but a valid number while still keeping the variable type a string*/}
             <input
               type="text"
-              value={isNaN(Number(startB)) && startB != "." ? "" : startB}
+              value={isNaN(startB) || startB == 0 ? "" : startB}
               inputMode="decimal"
               onChange={handleInputStartB}
               onBlur={validateInputStartB}
@@ -64,11 +68,11 @@ const InputSection = ({
           </label>
 
           <label className={styles.small}>
-            <h3>End Base</h3>
+            <h3>End base</h3>
             <input
               type="text"
               inputMode="decimal"
-              value={isNaN(endB) ? "" : endB}
+              value={isNaN(endB) || endB == 0 ? "" : endB}
               onChange={handleInputEndB}
               onBlur={validateInputEndB}
               onFocus={reacquireFocus}
@@ -80,14 +84,23 @@ const InputSection = ({
   );
 
   function handleInputStartStr(e) {
-    const val = e.target.value;
+    let val = e.target.value;
+    const regex = /^[a-z0-9]+$/i;
+    if (!regex.test(val)) {
+      val = "";
+    }
+    val = val.toUpperCase();
     setStartStrFunc(val);
   }
 
   function validateInputStartStr() {}
 
   function handleInputStartB(e) {
-    const val = e.target.value;
+    let val = e.target.value;
+    const regex = /^[0-9]+$/i;
+    if (!regex.test(val)) {
+      val = "";
+    }
     setStartBFunc(val);
   }
   function validateInputStartB() {
@@ -98,12 +111,17 @@ const InputSection = ({
     if (isNaN(result)) {
       setStartBFunc(0);
     } else {
+      if (result > 36) result = 36;
       setStartBFunc(result);
     }
   }
   function handleInputEndB(e) {
-    let result = e.target.value;
-    setEndBFunc(result);
+    let val = e.target.value;
+    const regex = /^[0-9]+$/i;
+    if (!regex.test(val)) {
+      val = "";
+    }
+    setEndBFunc(val);
   }
   function validateInputEndB() {
     let result = endB;
@@ -113,6 +131,7 @@ const InputSection = ({
     if (isNaN(result)) {
       setEndBFunc(0);
     } else {
+      if (result > 36) result = 36;
       setEndBFunc(result);
     }
   }

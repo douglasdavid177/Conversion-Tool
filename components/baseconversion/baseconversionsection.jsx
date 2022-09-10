@@ -88,7 +88,7 @@ const BaseConversionSection = (props) => {
   );
 
   function calculate(num, startB, endB) {
-    if (startB == 0 || isNaN(startB) || endB == 0 || isNaN(startB)) {
+    if (startB == 0 || isNaN(startB) || endB == 0 || isNaN(endB)) {
       props.setAttemptCalculate(false);
       setTriggerWarning(true);
       props.setShowResults(false);
@@ -110,7 +110,7 @@ const BaseConversionSection = (props) => {
       }
       return;
     }
-    setStartValString(decResult.toString(startB));
+    setStartValString(decResult.toString(startB).toUpperCase());
     const finalResult = decResult.toString(endB);
     console.log("decR: " + decResult + ", finR: " + finalResult);
     setResultsVal(finalResult);
