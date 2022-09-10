@@ -29,7 +29,7 @@ const InputSection = ({
         supported. Only valid conversions will take place. */}
         Enter the value you want converted, the base it&apos;s written in, and
         the base you want it converted to. Conversions must be possible and
-        bases must not exceed 36.
+        bases cannot exceed 36.
       </p>
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
