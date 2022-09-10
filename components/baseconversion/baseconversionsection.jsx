@@ -111,7 +111,7 @@ const BaseConversionSection = (props) => {
       return;
     }
     setStartValString(decResult.toString(startB).toUpperCase());
-    const finalResult = decResult.toString(endB);
+    const finalResult = decResult.toString(endB).toUpperCase();
     console.log("decR: " + decResult + ", finR: " + finalResult);
     setResultsVal(finalResult);
     //props.setAttemptCalculate(false);
