@@ -9,8 +9,6 @@ const ResultsSection = ({
   decimalPlaces,
   addCommas,
 }) => {
-  const resultsSndVal = -1;
-
   const startBStyle = startB > endB ? styles.higher : styles.lower;
   const endBStyle = endB > startB ? styles.higher : styles.lower;
   const sameBase = startB == endB;
