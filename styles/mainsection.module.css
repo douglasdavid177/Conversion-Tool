@@ -86,7 +86,7 @@ span.mainSectionLabelIntro h5 {
 }
 
 .inputFields label input {
-  width: 5rem;
+  width: 6rem;
 }
 .inputFields label.small input {
   width: 4rem;
@@ -99,7 +99,7 @@ span.mainSectionLabelIntro h5 {
 .inputFields label input:focus {
   font-weight: bold;
   border-bottom: 6px solid white;
-  width: 6rem;
+  width: 7rem;
 }
 .inputFields label.small input:focus {
   width: 5rem;
@@ -146,7 +146,7 @@ span.mainSectionLabelIntro h5 {
 }
 
 select.limitWidth {
-  max-width: 11rem;
+  max-width: 10rem;
 }
 .resultsSection {
   margin-bottom: -0.5rem;
