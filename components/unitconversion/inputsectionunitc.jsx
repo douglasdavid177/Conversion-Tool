@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import convert from "convert-units";
 import styles from "../../styles/mainsection.module.css";
+import { FaChevronDown } from "react-icons/fa";
 
 const InputSection = ({
   startNum,
@@ -37,6 +38,7 @@ const InputSection = ({
           The value is then immediately set to that same state variable again therefore resetting its value to an empty string 
           when the number becomes invalid. 
           This ensures the user can't enter anything but a valid number while still keeping the variable type a string*/}
+
             <input
               type="text"
               value={isNaN(Number(startNum)) && startNum != "." ? "" : startNum}
@@ -49,37 +51,47 @@ const InputSection = ({
           {/*Since clicking the heding doesn't open the select (and can't), don't highlight it despite default behavior*/}
           <label className={styles.noHighlight}>
             <h3>Given unit</h3>
-            <select
-              className={styles.limitWidth}
-              onChange={handleStartUSelectChange}
-              value={startU}
-            >
-              <option value="default">Select unit</option>
-              {getCurrentPossibilities(true).map((unit, ind) => {
-                return (
-                  <option value={unit} key={unit}>
-                    {getOptionLabelString(unit, startU)}
-                  </option>
-                );
-              })}
-            </select>
+            <div className={styles.selectWithArrow}>
+              <select
+                className={styles.limitWidth}
+                onChange={handleStartUSelectChange}
+                value={startU}
+              >
+                <option value="default">Select unit</option>
+                {getCurrentPossibilities(true).map((unit, ind) => {
+                  return (
+                    <option value={unit} key={unit}>
+                      {getOptionLabelString(unit, startU)}
+                    </option>
+                  );
+                })}
+              </select>
+              <div className={styles.arrow}>
+                <FaChevronDown />
+              </div>
+            </div>
           </label>
         </div>
 
         <div className={styles.formRow} style={{ marginTop: "0.25rem" }}>
           <label className={`${styles.fullWidth} ${styles.noHighlight}`}>
             <h3>Desired unit</h3>
-            <select onChange={handleEndUSelectChange} value={endU}>
-              <option value="default">Select unit</option>
-              <option value="auto">Auto (chooses best unit)</option>
-              {getCurrentPossibilities(false).map((unit, ind) => {
-                return (
-                  <option value={unit} key={unit}>
-                    {getOptionLabelString(unit, endU)}
-                  </option>
-                );
-              })}
-            </select>
+            <div className={styles.selectWithArrow}>
+              <select onChange={handleEndUSelectChange} value={endU}>
+                <option value="default">Select unit</option>
+                <option value="auto">Auto (chooses best unit)</option>
+                {getCurrentPossibilities(false).map((unit, ind) => {
+                  return (
+                    <option value={unit} key={unit}>
+                      {getOptionLabelString(unit, endU)}
+                    </option>
+                  );
+                })}
+              </select>
+              <div className={styles.arrow}>
+                <FaChevronDown />
+              </div>
+            </div>
           </label>
         </div>
       </form>
