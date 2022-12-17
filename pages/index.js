@@ -126,7 +126,7 @@ export default function Home() {
                       opacity: 1,
                       transition: {
                         duration: 0.6,
-                        delay: 0.825,
+                        delay: 0.805,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}

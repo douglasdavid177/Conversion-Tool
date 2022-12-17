@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import styles from "../styles/homesection.module.css";
 
 const HomeSection = ({ setOpenNav }) => {
@@ -11,7 +12,19 @@ const HomeSection = ({ setOpenNav }) => {
         from the list of available options. {/* <br /> */}
         Have a splendid day! :D
       </p>
-      <h3>
+      <motion.h3
+        key="choosetoollink"
+        initial={{ translateY: 55, opacity: 0 }}
+        animate={{
+          translateY: 0,
+          opacity: 1,
+          transition: {
+            duration: 0.6,
+            delay: 0.4,
+            ease: [0.1, 0.1, 0, 1],
+          },
+        }}
+      >
         <button
           className={styles.chooseToolButton}
           onClick={() => {
@@ -20,7 +33,7 @@ const HomeSection = ({ setOpenNav }) => {
         >
           Select Mini-Tool
         </button>
-      </h3>
+      </motion.h3>
     </div>
   );
 };
