@@ -137,6 +137,10 @@ hr.miniline {
   padding: 0.5rem;
 }
 
+.panel .messageContainer p {
+  color: gray;
+}
+
 .comingSoonWarning {
   display: flex;
   align-items: flex-end;

@@ -43,10 +43,10 @@ a {
 }
 
 h5,
-h4,
-p {
+h4 {
   color: grey;
 }
 p {
   margin: 1.3rem 0rem;
+  color: #babbbb;
 }
