@@ -9,7 +9,7 @@
     color: var(--grapefruit);
   }
   100% {
-    color: hsl(0, 0%, 50%);
+    color: #bbbbbb;
   }
 }
 
