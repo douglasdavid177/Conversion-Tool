@@ -56,7 +56,7 @@ const ResultsSection = ({
               startUPlural.charAt(0).toUpperCase() +
               startUPlural.toLowerCase().slice(1)
             } belong to the
-          ${startSystem} system while ${endUPlural.toLowerCase()} belong to the ${endSystem} system.`}
+          ${startSystem} system, while ${endUPlural.toLowerCase()} belong to the ${endSystem} system.`}
       </h3>
     </div>
   );
