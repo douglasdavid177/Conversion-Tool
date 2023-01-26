@@ -1,13 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import InputSection from "./inputsectionbasec";
-import ResultsSection from "./resultssectionbasec";
+import InputSection from "./inputsectioncurrency";
+import ResultsSection from "./resultssectioncurrency";
 import styles from "../../styles/mainsection.module.css";
 
-const BaseConversionSection = (props) => {
+const CurrencyExchangeSection = (props) => {
   const [startValString, setStartValString] = useState("");
-  const [startBase, setstartBase] = useState(NaN);
-  const [endBase, setendBase] = useState(NaN);
+  const [fromCType, setFromCType] = useState(NaN);
+  const [toCType, setToCType] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1); // The numerator
   const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
@@ -16,7 +16,7 @@ const BaseConversionSection = (props) => {
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      calculate(startValString, startBase, endBase);
+      calculate(startValString, fromCType, toCType);
     }
   }, [props.attemptCalculate]);
 
@@ -30,7 +30,7 @@ const BaseConversionSection = (props) => {
         </span>
 
         <span className={styles.mainSectionLabel}>
-          <h4>Number Base Conversion</h4>
+          <h4>Currency Exchange</h4>
         </span>
       </div>
 
@@ -61,8 +61,8 @@ const BaseConversionSection = (props) => {
           >
             {props.showResults ? (
               <ResultsSection
-                startB={startBase}
-                endB={endBase}
+                fromC={fromCType}
+                toC={toCType}
                 startStr={startValString}
                 result={resultsVal}
                 decimalPlaces={decimalPlaces}
@@ -70,12 +70,12 @@ const BaseConversionSection = (props) => {
               />
             ) : (
               <InputSection
-                startB={startBase}
-                endB={endBase}
+                fromC={fromCType}
+                toC={toCType}
                 startStr={startValString}
                 setStartStrFunc={setStartValString}
-                setStartBFunc={setstartBase}
-                setEndBFunc={setendBase}
+                setFromCFunc={setFromCType}
+                setToCFunc={setToCType}
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
                 setDecPlacesFunc={setDecimalPlaces}
@@ -87,8 +87,9 @@ const BaseConversionSection = (props) => {
     </div>
   );
 
-  function calculate(num, startB, endB) {
-    if (startB == 0 || isNaN(startB) || endB == 0 || isNaN(endB)) {
+  function calculate(num, fromC, toC) {
+    const val = Number(startValString);
+    if (val == 0 || isNaN(val)) {
       props.setAttemptCalculate(false);
       setTriggerWarning(true);
       props.setShowResults(false);
@@ -99,23 +100,9 @@ const BaseConversionSection = (props) => {
       return;
     }
 
-    const decResult = parseInt(num, startB);
-    if (isNaN(decResult)) {
-      props.setAttemptCalculate(false);
-      setTriggerWarning(true);
-      props.setShowResults(false);
-      // Scroll to red instructions
-      if (subSectionRef.current) {
-        props.smoothScrollTo(subSectionRef);
-      }
-      return;
-    }
-    setStartValString(decResult.toString(startB).toUpperCase());
-    const finalResult = decResult.toString(endB).toUpperCase();
-    console.log("decR: " + decResult + ", finR: " + finalResult);
+    const finalResult = 0;
     setResultsVal(finalResult);
-
-    props.setShowResults(true);
+    //props.setShowResults(true);
   }
 };
-export default BaseConversionSection;
+export default CurrencyExchangeSection;

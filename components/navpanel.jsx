@@ -53,7 +53,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
               />{" "}
               <MenuItem label={"Base Conversion"} sectionKey={3} />
               <MenuItem label={"Unit Conversion"} sectionKey={4} />
-              <MenuItem label={"Currency Exchange"} sectionKey={-1} />
+              <MenuItem label={"Currency Exchange"} sectionKey={5} />
               <MenuItem label={"Tip Calculator"} sectionKey={-1} />
             </MenuSection>
 
@@ -62,7 +62,7 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
             <div className={styles.messageContainer}>
               <p>
                 {`
-              Many tools in this list are in development and will be ready to blow you away in the near future! ;) Check back soon to experience new tools and increased functionality. `}
+              Some tools in this list are in development and will be ready to blow you away in the near future! ;) Check back soon to experience new tools and increased functionality. `}
               </p>
             </div>
           </div>
