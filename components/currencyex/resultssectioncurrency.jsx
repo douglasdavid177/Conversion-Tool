@@ -17,16 +17,20 @@ const ResultsSection = ({
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
-        {result} (base {toC})
+        {result} {toC}
       </h1>
       <h3 className={styles.description}>
-        The value <span className={styles.correct}>{startStr}</span>(
+        The value <span className={styles.correct}>{startStr}</span>
+        {fromC} (
         <span className={sameBase ? styles.correct : fromCStyle}>
-          base {fromC}
+          United States Dollar
         </span>
         ) is equivalent to the value{" "}
-        <span className={styles.correct}>{result}</span>(
-        <span className={sameBase ? styles.correct : toCStyle}>base {toC}</span>
+        <span className={styles.correct}>{result}</span>
+        {toC} (
+        <span className={sameBase ? styles.correct : toCStyle}>
+          United States Dollar
+        </span>
         ).
       </h3>
     </div>

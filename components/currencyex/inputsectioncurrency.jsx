@@ -34,14 +34,17 @@ const InputSection = ({
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
         key="myform"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
       >
         <div className={styles.formRow}>
           <label className={styles.large}>
             <h3>Value</h3>
             <input
               type="text"
-              //   inputMode="decimal"
-              value={startStr}
+              value={isNaN(Number(startStr)) && startStr != "." ? "" : startStr}
+              inputMode="decimal"
               onChange={handleInputStartStr}
               onBlur={validateInputStartStr}
               onFocus={reacquireFocus}
@@ -51,7 +54,7 @@ const InputSection = ({
 
         <div className={styles.formRow} style={{ marginTop: "0.25rem" }}>
           <label className={styles.noHighlight}>
-            <h3>From Currency</h3>
+            <h3>From</h3>
             <div className={styles.selectWithArrow}>
               <select
                 className={styles.limitWidth}
@@ -67,7 +70,7 @@ const InputSection = ({
           </label>
 
           <label className={styles.noHighlight}>
-            <h3>To Currency</h3>
+            <h3>To</h3>
             <div className={styles.selectWithArrow}>
               <select
                 className={styles.limitWidth}
@@ -87,16 +90,26 @@ const InputSection = ({
   );
 
   function handleInputStartStr(e) {
+    //e.persist();
     let val = e.target.value;
-    const regex = /^[a-z0-9]+$/i;
-    if (!regex.test(val)) {
-      val = "";
-    }
-    val = val.toUpperCase();
     setStartStrFunc(val);
   }
 
-  function validateInputStartStr() {}
+  function validateInputStartStr() {
+    let result = startStr;
+    // Count decimal places in string value entered so that the user can choose the decimal precision by adding trailing zeros if they desire
+    const decplaces = countDecimalPlacesString(result);
+    result = parseFloat(result);
+    // Negative values don't make sense, just make them positive
+    //result = Math.abs(result);
+
+    if (isNaN(result)) {
+      setStartStrFunc(0);
+    } else {
+      setStartStrFunc(Number(result).toFixed(decplaces > 2 ? decplaces : 2));
+      setDecPlacesFunc(decplaces > 2 ? decplaces : 2);
+    }
+  }
 
   function handleInputfromC(e) {
     let val = e.target.value;
@@ -139,7 +152,7 @@ const InputSection = ({
     }
   }
 
-  function countdecimalPlacesString(value) {
+  function countDecimalPlacesString(value) {
     const str = value.toString().split(".")[1];
     if (!str) return 2;
     const result = str ? str.length : 0;

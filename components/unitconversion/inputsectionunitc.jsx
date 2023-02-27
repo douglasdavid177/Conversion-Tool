@@ -29,6 +29,9 @@ const InputSection = ({
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
         key="myform"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
       >
         <div className={styles.formRow}>
           <label>
@@ -125,7 +128,7 @@ const InputSection = ({
       : plural + " (" + unit + ")";
   }
   function handleInputDec(e) {
-    e.persist();
+    //e.persist();
     setStartNumFunc(e.target.value);
   }
   function validateInputDec() {

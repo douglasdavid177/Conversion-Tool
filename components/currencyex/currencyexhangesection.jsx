@@ -11,14 +11,46 @@ const CurrencyExchangeSection = (props) => {
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1); // The numerator
   const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
+  const [loading, setLoading] = useState(false);
+  const [prevLoading, setPrevLoading] = useState(loading);
+  const [curHeight, setCurHeight] = useState(2);
+  const [prevHeight, setPrevHeight] = useState(3);
+
+  const [curKey, setCurKey] = useState("input");
+  const [prevKey, setPrevKey] = useState("input");
+
   const mainSectionRef = useRef(null);
   const subSectionRef = useRef(null);
+
+  const [timer, setTimer] = useState(null);
 
   useEffect(() => {
     if (props.attemptCalculate) {
       calculate(startValString, fromCType, toCType);
     }
   }, [props.attemptCalculate]);
+
+  // useEffect(() => {
+  //   console.log("height: " + inputHeight);
+  // }, [inputHeight]);
+
+  useEffect(() => {
+    if (!props.showResults) {
+      setLoading(false);
+      if (timer) clearTimeout(timer);
+    }
+    setKey();
+    // setCurKey(findKey());
+  }, [props.showResults]);
+
+  useEffect(() => {
+    setKey();
+    // setCurKey(findKey());
+  }, [loading]);
+
+  const showResultsScreen = props.showResults && loading == false;
+  const theKey = findKey();
+  // console.log("the key is... " + theKey);
 
   return (
     <div ref={mainSectionRef}>
@@ -47,50 +79,109 @@ const CurrencyExchangeSection = (props) => {
               but wait until after any layout changes are done */
             }
             const target = props.showResults ? subSectionRef : mainSectionRef;
+            let delay;
+            switch (theKey) {
+              case "input":
+                delay = 420;
+                break;
+
+              case "result":
+                delay = 750;
+                break;
+              case "loading":
+                delay = 70;
+                return; // Don't scroll down at all if currently loading
+            }
             setTimeout(() => {
               props.smoothScrollTo(target);
-            }, 420);
+            }, delay);
+            //console.log("the key is: " + theKey);
           }}
         >
           <motion.div
-            key={props.showResults ? "results" : "input"}
+            //key={showResultsScreen ? "results" : "input"}
+            key={theKey}
             initial={{ translateY: 30, opacity: 0 }}
-            animate={{ translateY: 0, opacity: 1 }}
+            animate={{
+              translateY: 0,
+              opacity: 1,
+              transition: {
+                duration: curKey == "loading" ? 0 : 0.35,
+                delay: curKey != "loading" && prevKey == "loading" ? 0.25 : 0,
+                // delay:
+                //   mainSectionRef.current?.clientHeight > curHeight ? 0.25 : 0,
+              },
+            }}
             exit={{ translateY: -30, opacity: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={
+              curKey == "loading" ? { duration: 0.0 } : { duration: 0.35 }
+            }
           >
-            {props.showResults ? (
-              <ResultsSection
-                fromC={fromCType}
-                toC={toCType}
-                startStr={startValString}
-                result={resultsVal}
-                decimalPlaces={decimalPlaces}
-                addCommas={props.addCommas}
-              />
-            ) : (
-              <InputSection
-                fromC={fromCType}
-                toC={toCType}
-                startStr={startValString}
-                setStartStrFunc={setStartValString}
-                setFromCFunc={setFromCType}
-                setToCFunc={setToCType}
-                triggerW={triggerWarning}
-                setTriggerFunc={setTriggerWarning}
-                setDecPlacesFunc={setDecimalPlaces}
-              />
-            )}
+            {LoadingInputResult()}
           </motion.div>
         </AnimatePresence>
       </div>
     </div>
   );
+  function findKey() {
+    if (loading) return "loading";
+    if (!props.showResults) return "input";
+    return "result";
+  }
+  function setKey() {
+    const k = findKey();
+    if (k != curKey) {
+      setPrevKey(curKey);
+      setCurKey(k);
+    }
+    const h = mainSectionRef.current.clientHeight;
+    if (h != curHeight) {
+      setPrevHeight(curHeight);
+      setCurHeight(mainSectionRef.current?.clientHeight);
+    }
+  }
+  function LoadingInputResult() {
+    if (loading) {
+      return (
+        <div>
+          <p>loading...</p>
+        </div>
+      );
+    }
 
-  function calculate(num, fromC, toC) {
-    const val = Number(startValString);
+    if (!props.showResults) {
+      return (
+        <InputSection
+          // key="inputsection"
+          fromC={fromCType}
+          toC={toCType}
+          startStr={startValString}
+          setStartStrFunc={setStartValString}
+          setFromCFunc={setFromCType}
+          setToCFunc={setToCType}
+          triggerW={triggerWarning}
+          setTriggerFunc={setTriggerWarning}
+          setDecPlacesFunc={setDecimalPlaces}
+        />
+      );
+    }
+    return (
+      <ResultsSection
+        fromC={fromCType}
+        toC={toCType}
+        startStr={startValString}
+        result={resultsVal}
+        decimalPlaces={decimalPlaces}
+        addCommas={props.addCommas}
+      />
+    );
+  }
+
+  async function calculate(num, fromC, toC) {
+    const val = Number(num);
     if (val == 0 || isNaN(val)) {
       props.setAttemptCalculate(false);
+
       setTriggerWarning(true);
       props.setShowResults(false);
       // Scroll to red instructions
@@ -102,7 +193,15 @@ const CurrencyExchangeSection = (props) => {
 
     const finalResult = 0;
     setResultsVal(finalResult);
-    //props.setShowResults(true);
+    setLoading(true);
+    props.setShowResults(true);
+
+    await grabFromOnline();
+    setLoading(false);
+  }
+
+  async function grabFromOnline() {
+    await new Promise((resolve) => setTimer(setTimeout(resolve, 2500))); // Creates a timer and sets it to the state variable at the same timd
   }
 };
 export default CurrencyExchangeSection;

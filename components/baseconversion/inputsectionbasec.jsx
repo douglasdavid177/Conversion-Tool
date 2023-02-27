@@ -34,6 +34,9 @@ const InputSection = ({
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
         key="myform"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
       >
         <div className={styles.formRow}>
           <label className={styles.large}>
@@ -136,7 +139,7 @@ const InputSection = ({
     }
   }
 
-  function countdecimalPlacesString(value) {
+  function countDecimalPlacesString(value) {
     const str = value.toString().split(".")[1];
     if (!str) return 2;
     const result = str ? str.length : 0;

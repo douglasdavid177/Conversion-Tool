@@ -25,7 +25,13 @@ const InputSection = ({
         Enter the decimal you want converted, and the denominator of the
         fraction you want it converted to.
       </p>
-      <form className={styles.inputFields} key="myform">
+      <form
+        className={styles.inputFields}
+        key="myform"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <label className={styles.small}>
           <h3>Decimal value</h3>
           {/*This input field tries to display the state variable (a string) but will display nothing unless the value is either 
