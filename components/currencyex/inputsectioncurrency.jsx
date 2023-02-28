@@ -12,11 +12,10 @@ const InputSection = ({
   triggerW,
   setTriggerFunc,
   setDecPlacesFunc,
+  currencyObjects,
 }) => {
   return (
-    <div
-      className={`${styles.fromCFracInput} ${styles.inputSection} ${styles.mainSection}`}
-    >
+    <div className={`${styles.inputSection} ${styles.mainSection}`}>
       {/*This heading has an animation attached that fades from red back to grey, 
       and is triggered by the triggerW prop when action button is pressed without input*/}
       <p
@@ -62,6 +61,7 @@ const InputSection = ({
                 //value={startU}
               >
                 <option value="default">Select currency</option>
+                {createSelectOptions()}
               </select>
               <div className={styles.arrow}>
                 <FaChevronDown />
@@ -88,6 +88,26 @@ const InputSection = ({
       </form>
     </div>
   );
+
+  function createSelectOptions() {
+    // if (!currencyObjects) return;
+    if (!currencyObjects)
+      return (
+        <option value={"loading"} key={"loading"}>
+          Loading...
+        </option>
+      );
+    const entries = Object.entries(currencyObjects);
+    console.log(entries);
+    return entries.map((val, ind) => {
+      console.log(val[1].currency_name);
+      return (
+        <option value={val[1]?.currency_code} key={val[1]?.currency_name}>
+          {val[1]?.currency_name}
+        </option>
+      );
+    });
+  }
 
   function handleInputStartStr(e) {
     //e.persist();

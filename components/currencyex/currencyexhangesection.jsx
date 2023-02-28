@@ -1,8 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import InputSection from "./inputsectioncurrency";
 import ResultsSection from "./resultssectioncurrency";
 import styles from "../../styles/mainsection.module.css";
+import {
+  getListOfCurrencyObjects,
+  ConvertBetweenCurrencies,
+} from "../../apifunctions";
 
 const CurrencyExchangeSection = (props) => {
   const [startValString, setStartValString] = useState("");
@@ -15,6 +19,7 @@ const CurrencyExchangeSection = (props) => {
   const [prevLoading, setPrevLoading] = useState(loading);
   const [curHeight, setCurHeight] = useState(2);
   const [prevHeight, setPrevHeight] = useState(3);
+  const [currencyObjects, setCurrencyObjects] = useState(null);
 
   const [curKey, setCurKey] = useState("input");
   const [prevKey, setPrevKey] = useState("input");
@@ -23,6 +28,16 @@ const CurrencyExchangeSection = (props) => {
   const subSectionRef = useRef(null);
 
   const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    async function getStuff() {
+      const stuff = await getListOfCurrencyObjects();
+      console.log("stuffffff: ");
+      console.log(stuff);
+      setCurrencyObjects(stuff);
+    }
+    getStuff();
+  }, []);
 
   useEffect(() => {
     if (props.attemptCalculate) {
@@ -164,6 +179,7 @@ const CurrencyExchangeSection = (props) => {
           triggerW={triggerWarning}
           setTriggerFunc={setTriggerWarning}
           setDecPlacesFunc={setDecimalPlaces}
+          currencyObjects={currencyObjects}
         />
       );
     }
@@ -175,6 +191,7 @@ const CurrencyExchangeSection = (props) => {
         result={resultsVal}
         decimalPlaces={decimalPlaces}
         addCommas={props.addCommas}
+        currencyObjects={currencyObjects}
       />
     );
   }

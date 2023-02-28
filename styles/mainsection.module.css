@@ -166,7 +166,7 @@ span.mainSectionLabelIntro h5 {
 }
 
 select.limitWidth {
-  max-width: 10rem;
+  width: 10rem;
 }
 .resultsSection {
   margin-bottom: -0.5rem;

@@ -13,9 +13,7 @@ const InputSection = ({
   setDecPlacesFunc,
 }) => {
   return (
-    <div
-      className={`${styles.startBFracInput} ${styles.inputSection} ${styles.mainSection}`}
-    >
+    <div className={`${styles.inputSection} ${styles.mainSection}`}>
       {/*This heading has an animation attached that fades from red back to grey, 
       and is triggered by the triggerW prop when action button is pressed without input*/}
       <p

@@ -69,7 +69,7 @@ export default function Home() {
                         opacity: 1,
                         transition: {
                           duration: 0.35,
-                          delay: 0.05 + scrollToTopDelay,
+                          delay: 0 + scrollToTopDelay,
                         },
                       }}
                       exit={{
@@ -78,7 +78,7 @@ export default function Home() {
                       }}
                       transition={{
                         duration: 0.35,
-                        delay: 0.05 + scrollToTopDelay,
+                        delay: 0.15 + scrollToTopDelay,
                       }}
                     >
                       <h5>Welcome to...</h5>
@@ -110,12 +110,12 @@ export default function Home() {
                     opacity: 0,
                     transition: {
                       duration: 0.35,
-                      delay: 0.05 + scrollToTopDelay,
+                      delay: 0.15 + scrollToTopDelay,
                     },
                   }}
                   transition={{
                     duration: 0.35,
-                    delay: 0.05,
+                    delay: 0.0,
                   }}
                 >
                   {componentFromKey(actualMainSectionKey)}
@@ -155,7 +155,7 @@ export default function Home() {
                     }}
                     transition={{
                       duration: 0.35,
-                      delay: 0.05 + scrollToTopDelay,
+                      delay: 0.15 + scrollToTopDelay,
                     }}
                   >
                     <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
@@ -272,13 +272,13 @@ export default function Home() {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
 
+    setScrollTopDelay(
+      containerRef.current ? containerRef.current.scrollTop * 0.0002 : 0.0
+    );
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
     // The delay gives time to add the layout property back to the buttonholder
     if (containerRef.current.scrollTop >= 0 && (diffKey || diffShowRes)) {
-      setScrollTopDelay(
-        containerRef.current ? containerRef.current.scrollTop * 0.00015 : 0.0
-      );
       // Prev threshold was 15 from top with 20 ms timeout delay
       if (diffKey) {
         if (actualMainSectionKey > 1) setShowHeading(false);
