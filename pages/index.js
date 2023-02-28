@@ -37,6 +37,10 @@ export default function Home() {
     checkScroll();
   }, [showResults]);
 
+  const scrollToTopDelay = containerRef.current
+    ? containerRef.current.scrollTop * 0.00015
+    : 0.0;
+
   return (
     <div>
       <div className={`${styles.container}`}>
@@ -62,6 +66,10 @@ export default function Home() {
                       animate={{
                         translateY: 0,
                         opacity: 1,
+                        transition: {
+                          duration: 0.35,
+                          delay: 0.05 + scrollToTopDelay,
+                        },
                       }}
                       exit={{
                         translateY: -30,
@@ -69,7 +77,7 @@ export default function Home() {
                       }}
                       transition={{
                         duration: 0.35,
-                        delay: 0.05,
+                        delay: 0.05 + scrollToTopDelay,
                       }}
                     >
                       <h5>Welcome to...</h5>
@@ -83,7 +91,12 @@ export default function Home() {
 
             {/*This div represents multiple different divs (one at a time) based on the current key. They are the main tools and pages of the app */}
             <motion.div>
-              <AnimatePresence exitBeforeEnter>
+              <AnimatePresence
+                exitBeforeEnter
+                onExitComplete={() => {
+                  setDummyVar(!dummyVar);
+                }}
+              >
                 <motion.div
                   key={actualMainSectionKey}
                   initial={{ translateY: 50, opacity: 0 }}
@@ -94,6 +107,10 @@ export default function Home() {
                   exit={{
                     translateY: -30,
                     opacity: 0,
+                    transition: {
+                      duration: 0.35,
+                      delay: 0.05 + scrollToTopDelay,
+                    },
                   }}
                   transition={{
                     duration: 0.35,
@@ -127,7 +144,7 @@ export default function Home() {
                       opacity: 1,
                       transition: {
                         duration: 0.6,
-                        delay: 0.805,
+                        delay: 0.805 + scrollToTopDelay,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}
@@ -137,7 +154,7 @@ export default function Home() {
                     }}
                     transition={{
                       duration: 0.35,
-                      delay: 0.05,
+                      delay: 0.05 + scrollToTopDelay,
                     }}
                   >
                     <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
@@ -253,16 +270,16 @@ export default function Home() {
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
     // The delay gives time to add the layout property back to the buttonholder
-    if (containerRef.current.scrollTop < 15 && (diffKey || diffShowRes)) {
-      setTimeout(() => {
-        if (diffKey) {
-          if (actualMainSectionKey > 1) setShowHeading(false);
-          setActualMainSectionKey(mainSectionKey);
-        }
-        if (diffShowRes) {
-          setActuallyShowResults(showResults);
-        }
-      }, 20);
+    if (containerRef.current.scrollTop >= 0 && (diffKey || diffShowRes)) {
+      // Prev threshold was 15 from top with 20 ms timeout delay
+      if (diffKey) {
+        if (actualMainSectionKey > 1) setShowHeading(false);
+        setActualMainSectionKey(mainSectionKey);
+      }
+      if (diffShowRes) {
+        setActuallyShowResults(showResults);
+      }
+      //setTimeout(() => {}, 0);
     }
   }
   function scrollUpSlightly() {

@@ -101,9 +101,10 @@ button.hamburger img {
 .header h1::after {
   content: "App built by David Douglas";
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
+  top: 100%;
   left: 0;
-  transform: translateY(1.75rem);
+  transform: translateY(0.5rem);
   font-size: 0.83rem;
   color: hsl(0, 0%, 50%);
 }
