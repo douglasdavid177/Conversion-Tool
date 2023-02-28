@@ -17,6 +17,7 @@ export default function Home() {
   const [attemptCalculate, setAttemptCalculate] = useState(false); // Triggers the active tool to run its calculate function
   const [navPanelOpen, setNavPanelOpen] = useState(false); // Controls whether navigation panel is open or not
   const [showHeading, setShowHeading] = useState(true); // Controls whether app title is shown or not
+  const [scrollToTopDelay, setScrollTopDelay] = useState(0);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const containerRef = useRef();
 
@@ -37,9 +38,9 @@ export default function Home() {
     checkScroll();
   }, [showResults]);
 
-  const scrollToTopDelay = containerRef.current
-    ? containerRef.current.scrollTop * 0.00015
-    : 0.0;
+  // const scrollToTopDelay = containerRef.current
+  //   ? containerRef.current.scrollTop * 0.00015
+  //   : 0.0;
 
   return (
     <div>
@@ -212,6 +213,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
+            scrollDelay={scrollToTopDelay}
             smoothScrollTo={smoothScrollTo}
             addCommas={addCommasToNumber}
           />
@@ -226,6 +228,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
+            scrollDelay={scrollToTopDelay}
             smoothScrollTo={smoothScrollTo}
             addCommas={addCommasToNumber}
           />
@@ -240,6 +243,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
+            scrollDelay={scrollToTopDelay}
             smoothScrollTo={smoothScrollTo}
             addCommas={addCommasToNumber}
           />
@@ -253,6 +257,7 @@ export default function Home() {
             setAttemptCalculate={setAttemptCalculate}
             setDummyVar={setDummyVar}
             dummyVar={dummyVar}
+            scrollDelay={scrollToTopDelay}
             smoothScrollTo={smoothScrollTo}
             addCommas={addCommasToNumber}
           />
@@ -271,6 +276,9 @@ export default function Home() {
     // then update actual to match desired
     // The delay gives time to add the layout property back to the buttonholder
     if (containerRef.current.scrollTop >= 0 && (diffKey || diffShowRes)) {
+      setScrollTopDelay(
+        containerRef.current ? containerRef.current.scrollTop * 0.00015 : 0.0
+      );
       // Prev threshold was 15 from top with 20 ms timeout delay
       if (diffKey) {
         if (actualMainSectionKey > 1) setShowHeading(false);

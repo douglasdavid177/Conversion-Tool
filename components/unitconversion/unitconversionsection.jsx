@@ -82,7 +82,11 @@ const UnitConversionSection = (props) => {
             key={props.showResults ? "results" : "input"}
             initial={{ translateY: 30, opacity: 0 }}
             animate={{ translateY: 0, opacity: 1 }}
-            exit={{ translateY: -30, opacity: 0 }}
+            exit={{
+              translateY: -30,
+              opacity: 0,
+              transition: { duration: 0.35, delay: props.scrollDelay },
+            }}
             transition={{ duration: 0.35 }}
           >
             {props.showResults ? (

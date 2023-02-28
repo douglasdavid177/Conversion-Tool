@@ -114,7 +114,9 @@ const CurrencyExchangeSection = (props) => {
             }}
             exit={{ translateY: -30, opacity: 0 }}
             transition={
-              curKey == "loading" ? { duration: 0.0 } : { duration: 0.35 }
+              curKey == "loading"
+                ? { duration: 0.0 }
+                : { duration: 0.35, delay: props.scrollDelay }
             }
           >
             {LoadingInputResult()}
