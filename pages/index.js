@@ -68,7 +68,7 @@ export default function Home() {
                         translateY: 0,
                         opacity: 1,
                         transition: {
-                          duration: 0.35,
+                          duration: 0.4,
                           delay: 0.1 + scrollToTopDelay,
                         },
                       }}
@@ -77,7 +77,7 @@ export default function Home() {
                         opacity: 0,
                       }}
                       transition={{
-                        duration: 0.35,
+                        duration: 0.4,
                         delay: 0.2 + scrollToTopDelay,
                       }}
                     >
@@ -109,12 +109,12 @@ export default function Home() {
                     translateY: -30,
                     opacity: 0,
                     transition: {
-                      duration: 0.35,
+                      duration: 0.4,
                       delay: 0.2 + scrollToTopDelay,
                     },
                   }}
                   transition={{
-                    duration: 0.35,
+                    duration: 0.4,
                     delay: 0.1,
                   }}
                 >
@@ -145,7 +145,7 @@ export default function Home() {
                       opacity: 1,
                       transition: {
                         duration: 0.6 + 0,
-                        delay: 0.805 + scrollToTopDelay + 0.1,
+                        delay: 0.855 + scrollToTopDelay + 0.1,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}
@@ -154,7 +154,7 @@ export default function Home() {
                       opacity: 0,
                     }}
                     transition={{
-                      duration: 0.35,
+                      duration: 0.4,
                       delay: 0.2 + scrollToTopDelay,
                     }}
                   >

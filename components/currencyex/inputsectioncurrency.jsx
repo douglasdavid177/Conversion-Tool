@@ -104,7 +104,7 @@ const InputSection = ({
       console.log(val[1].currency_name);
       return (
         <option value={val[1]?.currency_code} key={val[1]?.currency_name}>
-          {val[1]?.currency_name}
+          {val[1]?.currency_code} — {val[1]?.currency_name}
         </option>
       );
     });
