@@ -225,7 +225,10 @@ const CurrencyExchangeSection = (props) => {
     setLoading(true);
     props.setShowResults(true);
 
-    await grabFromOnline();
+    const answer =
+      //await grabFromOnline();
+      await ConvertBetweenCurrencies(fromC, toC, val);
+    setResultsVal(answer);
     setLoading(false);
   }
 
