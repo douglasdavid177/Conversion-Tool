@@ -13,6 +13,7 @@ const InputSection = ({
   setTriggerFunc,
   setDecPlacesFunc,
   currencyObject,
+  currencyRatesObj,
 }) => {
   return (
     <div className={`${styles.inputSection} ${styles.mainSection}`}>
@@ -99,9 +100,21 @@ const InputSection = ({
         </option>
       );
     const entries = Object.entries(currencyObject);
+    // return (
+    //   <option value="loading" key="loading">
+    //     Loading...
+    //   </option>
+    // );
+
     return entries.map((val, ind) => {
       const code = val[1]?.currency_code;
       const name = val[1]?.currency_name;
+
+      if (isNaN(currencyRatesObj[code])) {
+        //console.log(code);
+        return null;
+      }
+
       return (
         <option value={code} key={code}>
           {getOptionLabelString(code, name, current)}

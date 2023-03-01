@@ -278,7 +278,7 @@ export default function Home() {
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
     // The delay gives time to add the layout property back to the buttonholder
-    if (containerRef.current.scrollTop >= 0 && (diffKey || diffShowRes)) {
+    if (containerRef.current?.scrollTop >= 0 && (diffKey || diffShowRes)) {
       // Prev threshold was 15 from top with 20 ms timeout delay
       if (diffKey) {
         if (actualMainSectionKey > 1) setShowHeading(false);
@@ -291,21 +291,21 @@ export default function Home() {
     }
   }
   function scrollUpSlightly() {
-    containerRef.current.scrollBy({
+    containerRef.current?.scrollBy({
       top: -1,
       left: 0,
       behavior: "smooth",
     });
   }
   function scrollDownSlightly() {
-    containerRef.current.scrollBy({
+    containerRef.current?.scrollBy({
       top: 1,
       left: 0,
       behavior: "smooth",
     });
   }
   function scrollToTop() {
-    containerRef.current.scrollTo({
+    containerRef.current?.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
@@ -321,9 +321,9 @@ export default function Home() {
   }
   function smoothScrollTo(targetRef) {
     // Attempt trigger rerender to ensure no layout transitions are stuck
-    void containerRef.current.offsetTop;
+    void containerRef.current?.offsetTop;
     setDummyVar(!dummyVar);
-    targetRef.current.scrollIntoView({
+    targetRef.current?.scrollIntoView({
       behavior: "smooth",
     });
   }

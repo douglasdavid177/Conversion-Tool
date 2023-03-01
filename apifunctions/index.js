@@ -1,14 +1,18 @@
 export async function ConvertBetweenCurrencies(from, to, startAmount) {
   //Get current rates
-  const ratesObj = await getListOfRatesObject();
+  //console.log("starting");
+  const ratesObj = await getCurrencyRatesObject();
   let rate1 = ratesObj[from];
   let rate2 = ratesObj[to];
   const factor = rate2 / rate1;
   const result = startAmount * factor;
+
+  //console.log(to);
+  //console.log("finished");
   return result;
 }
 
-export async function getListOfRatesObject() {
+export async function getCurrencyRatesObject() {
   // Get current rates
   const options = {
     method: "GET",
@@ -28,11 +32,11 @@ export async function getListOfRatesObject() {
   }
   const j = await resp.json();
   const rates = j.response.rates;
-  console.log(rates);
+  //console.log(rates);
   return rates;
 }
 
-export async function getListOfCurrenciesObject() {
+export async function getCurrenciesObject() {
   const options = {
     method: "GET",
     headers: {
@@ -50,6 +54,12 @@ export async function getListOfCurrenciesObject() {
     throw new Error("something happened.... status: " + resp.status);
   }
   const j = await resp.json();
-  //console.log(j);
-  return j.response.fiats;
+  const fiats = j.response.fiats;
+  // const entries = Object.entries(fiats);
+  // const newArr = entries.map((val, ind) => {
+  //   return val[1];
+  // });
+  //console.log(fiats);
+
+  return fiats;
 }

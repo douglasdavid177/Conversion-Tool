@@ -4,8 +4,8 @@ import InputSection from "./inputsectioncurrency";
 import ResultsSection from "./resultssectioncurrency";
 import styles from "../../styles/mainsection.module.css";
 import {
-  getListOfCurrenciesObject,
-  getListOfRatesObject,
+  getCurrenciesObject,
+  getCurrencyRatesObject,
   ConvertBetweenCurrencies,
 } from "../../apifunctions";
 
@@ -33,17 +33,12 @@ const CurrencyExchangeSection = (props) => {
 
   useEffect(() => {
     async function getCurrencies() {
-      const stuff = await getListOfCurrenciesObject();
-      setcurrencyObject(stuff);
-    }
-    async function getRates() {
-      //const stuff = await getListOfRatesObject();
-      //setCurrencyRatesObj(stuff);
-      let testC1 = "USD";
-      let testC2 = "CAD";
-      let testAmnt = 200;
-      //const res = await ConvertBetweenCurrencies(testC1, testC2, testAmnt);
-      //console.log("test result: " + res);
+      const [currencies, rates] = await Promise.all([
+        getCurrenciesObject(),
+        getCurrencyRatesObject(),
+      ]);
+      setcurrencyObject(currencies);
+      setCurrencyRatesObj(rates);
     }
     getCurrencies();
     //getRates();
@@ -190,6 +185,7 @@ const CurrencyExchangeSection = (props) => {
           setTriggerFunc={setTriggerWarning}
           setDecPlacesFunc={setDecimalPlaces}
           currencyObject={currencyObject}
+          currencyRatesObj={currencyRatesObj}
         />
       );
     }
@@ -202,13 +198,19 @@ const CurrencyExchangeSection = (props) => {
         decimalPlaces={decimalPlaces}
         addCommas={props.addCommas}
         currencyObject={currencyObject}
+        currencyRatesObj={currencyRatesObj}
       />
     );
   }
 
   async function calculate(num, fromC, toC) {
     const val = Number(num);
-    if (val == 0 || isNaN(val)) {
+    if (
+      val == 0 ||
+      isNaN(val) ||
+      isNaN(currencyRatesObj[fromC]) ||
+      isNaN(currencyRatesObj[toC])
+    ) {
       props.setAttemptCalculate(false);
 
       setTriggerWarning(true);
@@ -224,11 +226,20 @@ const CurrencyExchangeSection = (props) => {
     setResultsVal(finalResult);
     setLoading(true);
     props.setShowResults(true);
+    const [answer, obj] = await Promise.all([
+      ConvertBetweenCurrencies(fromC, toC, val),
+      getCurrencyRatesObject(),
+    ]);
 
-    const answer =
-      //await grabFromOnline();
-      await ConvertBetweenCurrencies(fromC, toC, val);
+    // console.log("answer: ");
+    // console.log(answer);
+
+    // const answer =
+    //   //await grabFromOnline();
+    //   await ConvertBetweenCurrencies(fromC, toC, val);
+
     setResultsVal(answer);
+    setCurrencyRatesObj(obj);
     setLoading(false);
   }
 

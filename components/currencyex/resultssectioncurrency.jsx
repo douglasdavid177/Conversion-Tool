@@ -9,10 +9,17 @@ const ResultsSection = ({
   decimalPlaces,
   addCommas,
   currencyObject,
+  currencyRatesObj,
 }) => {
-  const fromCStyle = fromC > toC ? styles.higher : styles.lower;
-  const toCStyle = toC > fromC ? styles.higher : styles.lower;
-  const sameBase = fromC == toC;
+  const fromCStyle =
+    currencyRatesObj[fromC] < currencyRatesObj[toC]
+      ? styles.higher
+      : styles.lower;
+  const toCStyle =
+    currencyRatesObj[toC] < currencyRatesObj[fromC]
+      ? styles.higher
+      : styles.lower;
+  const sameBase = currencyRatesObj[fromC] == currencyRatesObj[toC];
 
   return (
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
@@ -21,16 +28,16 @@ const ResultsSection = ({
         {result} {toC}
       </h1>
       <h3 className={styles.description}>
-        The value <span className={styles.correct}>{startStr}</span>
+        The amount of <span className={styles.correct}>{startStr} </span>
         {fromC} (
         <span className={sameBase ? styles.correct : fromCStyle}>
-          United States Dollar
+          {currencyObject[fromC].currency_name}
         </span>
-        ) is equivalent to the value{" "}
-        <span className={styles.correct}>{result}</span>
+        ) is equivalent to the amount of{" "}
+        <span className={styles.correct}>{result} </span>
         {toC} (
         <span className={sameBase ? styles.correct : toCStyle}>
-          United States Dollar
+          {currencyObject[toC].currency_name}
         </span>
         ).
       </h3>
