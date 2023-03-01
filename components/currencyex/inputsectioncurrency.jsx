@@ -78,6 +78,7 @@ const InputSection = ({
                 //value={startU}
               >
                 <option value="default">Select currency</option>
+                {createSelectOptions()}
               </select>
               <div className={styles.arrow}>
                 <FaChevronDown />
