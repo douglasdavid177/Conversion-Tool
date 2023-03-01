@@ -12,7 +12,7 @@ const InputSection = ({
   triggerW,
   setTriggerFunc,
   setDecPlacesFunc,
-  currencyObjects,
+  currencyObject,
 }) => {
   return (
     <div className={`${styles.inputSection} ${styles.mainSection}`}>
@@ -39,7 +39,7 @@ const InputSection = ({
       >
         <div className={styles.formRow}>
           <label className={styles.large}>
-            <h3>Value</h3>
+            <h3>Starting amount</h3>
             <input
               type="text"
               value={isNaN(Number(startStr)) && startStr != "." ? "" : startStr}
@@ -57,11 +57,11 @@ const InputSection = ({
             <div className={styles.selectWithArrow}>
               <select
                 className={styles.limitWidth}
-                //onChange={handleStartUSelectChange}
-                //value={startU}
+                onChange={handleInputfromC}
+                value={fromC}
               >
                 <option value="default">Select currency</option>
-                {createSelectOptions()}
+                {createSelectOptions(fromC)}
               </select>
               <div className={styles.arrow}>
                 <FaChevronDown />
@@ -74,11 +74,11 @@ const InputSection = ({
             <div className={styles.selectWithArrow}>
               <select
                 className={styles.limitWidth}
-                //onChange={handleStartUSelectChange}
-                //value={startU}
+                onChange={handleInputtoC}
+                value={toC}
               >
                 <option value="default">Select currency</option>
-                {createSelectOptions()}
+                {createSelectOptions(toC)}
               </select>
               <div className={styles.arrow}>
                 <FaChevronDown />
@@ -90,24 +90,31 @@ const InputSection = ({
     </div>
   );
 
-  function createSelectOptions() {
-    // if (!currencyObjects) return;
-    if (!currencyObjects)
+  function createSelectOptions(current) {
+    // if (!currencyObject) return;
+    if (!currencyObject)
       return (
-        <option value={"loading"} key={"loading"}>
+        <option value="loading" key="loading">
           Loading...
         </option>
       );
-    const entries = Object.entries(currencyObjects);
-    console.log(entries);
+    const entries = Object.entries(currencyObject);
     return entries.map((val, ind) => {
-      console.log(val[1].currency_name);
+      const code = val[1]?.currency_code;
+      const name = val[1]?.currency_name;
       return (
-        <option value={val[1]?.currency_code} key={val[1]?.currency_name}>
-          {val[1]?.currency_code} — {val[1]?.currency_name}
+        <option value={code} key={code}>
+          {getOptionLabelString(code, name, current)}
         </option>
       );
     });
+  }
+
+  function getOptionLabelString(code, name, current) {
+    if (code == current) {
+      return code + " (" + name + ")";
+    }
+    return code + " — " + name;
   }
 
   function handleInputStartStr(e) {
@@ -133,12 +140,8 @@ const InputSection = ({
   }
 
   function handleInputfromC(e) {
-    let val = e.target.value;
-    const regex = /^[0-9]+$/i;
-    if (!regex.test(val)) {
-      val = "";
-    }
-    setFromCFunc(val);
+    const justSelected = e.target.value;
+    setFromCFunc(justSelected);
   }
   function validateInputfromC() {
     let result = fromC;
@@ -153,12 +156,9 @@ const InputSection = ({
     }
   }
   function handleInputtoC(e) {
-    let val = e.target.value;
-    const regex = /^[0-9]+$/i;
-    if (!regex.test(val)) {
-      val = "";
-    }
-    setToCFunc(val);
+    const justSelected = e.target.value;
+
+    setToCFunc(justSelected);
   }
   function validateInputtoC() {
     let result = toC;

@@ -8,7 +8,7 @@ const ResultsSection = ({
   result,
   decimalPlaces,
   addCommas,
-  currencyObjects,
+  currencyObject,
 }) => {
   const fromCStyle = fromC > toC ? styles.higher : styles.lower;
   const toCStyle = toC > fromC ? styles.higher : styles.lower;

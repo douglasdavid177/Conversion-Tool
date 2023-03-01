@@ -4,14 +4,15 @@ import InputSection from "./inputsectioncurrency";
 import ResultsSection from "./resultssectioncurrency";
 import styles from "../../styles/mainsection.module.css";
 import {
-  getListOfCurrencyObjects,
+  getListOfCurrenciesObject,
+  getListOfRatesObject,
   ConvertBetweenCurrencies,
 } from "../../apifunctions";
 
 const CurrencyExchangeSection = (props) => {
   const [startValString, setStartValString] = useState("");
-  const [fromCType, setFromCType] = useState(NaN);
-  const [toCType, setToCType] = useState(NaN);
+  const [fromCType, setFromCType] = useState("");
+  const [toCType, setToCType] = useState("");
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1); // The numerator
   const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
@@ -19,7 +20,8 @@ const CurrencyExchangeSection = (props) => {
   const [prevLoading, setPrevLoading] = useState(loading);
   const [curHeight, setCurHeight] = useState(2);
   const [prevHeight, setPrevHeight] = useState(3);
-  const [currencyObjects, setCurrencyObjects] = useState(null);
+  const [currencyObject, setcurrencyObject] = useState(null);
+  const [currencyRatesObj, setCurrencyRatesObj] = useState(null);
 
   const [curKey, setCurKey] = useState("input");
   const [prevKey, setPrevKey] = useState("input");
@@ -30,13 +32,21 @@ const CurrencyExchangeSection = (props) => {
   const [timer, setTimer] = useState(null);
 
   useEffect(() => {
-    async function getStuff() {
-      const stuff = await getListOfCurrencyObjects();
-      console.log("stuffffff: ");
-      console.log(stuff);
-      setCurrencyObjects(stuff);
+    async function getCurrencies() {
+      const stuff = await getListOfCurrenciesObject();
+      setcurrencyObject(stuff);
     }
-    getStuff();
+    async function getRates() {
+      //const stuff = await getListOfRatesObject();
+      //setCurrencyRatesObj(stuff);
+      let testC1 = "USD";
+      let testC2 = "CAD";
+      let testAmnt = 200;
+      //const res = await ConvertBetweenCurrencies(testC1, testC2, testAmnt);
+      //console.log("test result: " + res);
+    }
+    getCurrencies();
+    //getRates();
   }, []);
 
   useEffect(() => {
@@ -179,7 +189,7 @@ const CurrencyExchangeSection = (props) => {
           triggerW={triggerWarning}
           setTriggerFunc={setTriggerWarning}
           setDecPlacesFunc={setDecimalPlaces}
-          currencyObjects={currencyObjects}
+          currencyObject={currencyObject}
         />
       );
     }
@@ -191,7 +201,7 @@ const CurrencyExchangeSection = (props) => {
         result={resultsVal}
         decimalPlaces={decimalPlaces}
         addCommas={props.addCommas}
-        currencyObjects={currencyObjects}
+        currencyObject={currencyObject}
       />
     );
   }
