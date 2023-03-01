@@ -127,7 +127,7 @@ export default function Home() {
               className="debuggin"
               layout
               transition={{
-                duration: 0.4,
+                duration: 0.45,
               }}
             >
               <AnimatePresence
@@ -145,7 +145,7 @@ export default function Home() {
                       opacity: 1,
                       transition: {
                         duration: 0.6 + 0,
-                        delay: 0.855 + scrollToTopDelay + 0.1,
+                        delay: 0.905 + scrollToTopDelay + 0.1,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}
