@@ -26,6 +26,7 @@ export default function Home() {
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
     scrollToTop();
     checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
+    resetInput();
   }, [mainSectionKey]);
 
   useEffect(() => {
@@ -288,7 +289,7 @@ export default function Home() {
     console.log(scrollToTopDelay);
     setScrollTopDelay(scrollDelay);
 
-    if (scrollDist <= 3) {
+    if (scrollDist <= 0.5) {
       console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);

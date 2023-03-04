@@ -146,8 +146,9 @@ const CurrencyExchangeSection = (props) => {
     </div>
   );
   function findKey() {
-    if (loading) return "loading";
     if (!props.showResults) return "input";
+    if (loading) return "loading";
+
     return "result";
   }
   function setKey() {
@@ -163,14 +164,6 @@ const CurrencyExchangeSection = (props) => {
     }
   }
   function LoadingInputResult() {
-    if (loading) {
-      return (
-        <div>
-          <p>loading...</p>
-        </div>
-      );
-    }
-
     if (!props.showResults) {
       return (
         <InputSection
@@ -187,6 +180,13 @@ const CurrencyExchangeSection = (props) => {
           currencyObject={currencyObject}
           currencyRatesObj={currencyRatesObj}
         />
+      );
+    }
+    if (loading) {
+      return (
+        <div>
+          <p>loading...</p>
+        </div>
       );
     }
     return (
