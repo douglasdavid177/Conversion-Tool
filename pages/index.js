@@ -25,7 +25,7 @@ export default function Home() {
     // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
     scrollToTop();
-    checkScroll();
+    checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
   }, [mainSectionKey]);
 
   useEffect(() => {
@@ -41,6 +41,8 @@ export default function Home() {
   // const scrollToTopDelay = containerRef.current
   //   ? containerRef.current.scrollTop * 0.00015
   //   : 0.0;
+
+  const baseExitDelay = scrollToTopDelay > 0 ? 0.1 : 0.05;
 
   return (
     <div>
@@ -78,7 +80,7 @@ export default function Home() {
                       }}
                       transition={{
                         duration: 0.4,
-                        delay: 0.2 + scrollToTopDelay,
+                        delay: baseExitDelay + scrollToTopDelay,
                       }}
                     >
                       <h5>Welcome to...</h5>
@@ -110,7 +112,7 @@ export default function Home() {
                     opacity: 0,
                     transition: {
                       duration: 0.4,
-                      delay: 0.2 + scrollToTopDelay,
+                      delay: baseExitDelay + scrollToTopDelay,
                     },
                   }}
                   transition={{
@@ -127,12 +129,13 @@ export default function Home() {
               className="debuggin"
               layout
               transition={{
-                duration: 0.45,
+                duration: 0.4,
               }}
             >
               <AnimatePresence
                 onExitComplete={() => {
                   // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
+                  setScrollTopDelay(0);
                   setShowHeading(true);
                 }}
               >
@@ -145,7 +148,7 @@ export default function Home() {
                       opacity: 1,
                       transition: {
                         duration: 0.6 + 0,
-                        delay: 0.905 + scrollToTopDelay + 0.1,
+                        delay: 0.805 + scrollToTopDelay + 0.05,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}
@@ -155,7 +158,7 @@ export default function Home() {
                     }}
                     transition={{
                       duration: 0.4,
-                      delay: 0.2 + scrollToTopDelay,
+                      delay: baseExitDelay + scrollToTopDelay,
                     }}
                   >
                     <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
@@ -268,27 +271,61 @@ export default function Home() {
   }
 
   // Runs automatically every time content scroll container detects change in scroll position
-  function checkScroll() {
+  function checkScroll(waitTilTop = true) {
+    if (!containerRef.current) {
+      return;
+    }
+
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
+    const scrollDist = containerRef.current.scrollTop;
+    let scrollDelay = scrollDist * 0.0004;
+    //scrollDelay = 2;
+    console.log(scrollToTopDelay);
+    setScrollTopDelay(scrollDelay);
 
-    setScrollTopDelay(
-      containerRef.current ? containerRef.current.scrollTop * 0.00018 : 0.0
-    );
-    // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
-    // then update actual to match desired
-    // The delay gives time to add the layout property back to the buttonholder
-    if (containerRef.current?.scrollTop >= 0 && (diffKey || diffShowRes)) {
-      // Prev threshold was 15 from top with 20 ms timeout delay
-      if (diffKey) {
-        if (actualMainSectionKey > 1) setShowHeading(false);
-        setActualMainSectionKey(mainSectionKey);
-      }
+    if (scrollDist <= 3) {
+      console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
       }
-      //setTimeout(() => {}, 0);
+      if (diffKey) {
+        changeKey(mainSectionKey);
+      }
+      setScrollTopDelay(0);
+    } else {
+      console.log("not top...");
+
+      if (!waitTilTop) {
+        if (diffKey) {
+          changeKey(mainSectionKey);
+          // setScrollTopDelay(scrollDist * 0.00018);
+        }
+      }
     }
+
+    // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
+    // then update actual to match desired
+    // The delay gives time to add the layout property back to the buttonholder
+    // else if (scrollDist <= 15 && (diffKey || diffShowRes)) {
+    //   // Prev threshold was 15 from top with 20 ms timeout delay
+    //   if (diffKey) {
+    //     if (actualMainSectionKey > 1) setShowHeading(false);
+    //     setActualMainSectionKey(mainSectionKey);
+    //   }
+    //   if (diffShowRes) {
+    //     setActuallyShowResults(showResults);
+    //   }
+    //   //setTimeout(() => {}, 0);
+    // }
+  }
+
+  function changeKey(newKey) {
+    if (newKey > 1) setShowHeading(false);
+
+    setActualMainSectionKey(newKey);
+
+    //setTimeout(() => {}, 0);
   }
   function scrollUpSlightly() {
     containerRef.current?.scrollBy({
