@@ -43,7 +43,7 @@ export default function Home() {
   //   ? containerRef.current.scrollTop * 0.00015
   //   : 0.0;
 
-  const baseExitDelay = scrollToTopDelay > 0 ? 0.0 : 0.0;
+  const baseExitDelay = scrollToTopDelay > 0 ? 0.1 : 0.1;
   const baseTransDur = 0.35;
 
   return (
