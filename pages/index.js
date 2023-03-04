@@ -42,7 +42,8 @@ export default function Home() {
   //   ? containerRef.current.scrollTop * 0.00015
   //   : 0.0;
 
-  const baseExitDelay = scrollToTopDelay > 0 ? 0.1 : 0.05;
+  const baseExitDelay = scrollToTopDelay > 0 ? 0.0 : 0.0;
+  const baseTransDur = 0.35;
 
   return (
     <div>
@@ -70,8 +71,8 @@ export default function Home() {
                         translateY: 0,
                         opacity: 1,
                         transition: {
-                          duration: 0.4,
-                          delay: 0.1 + scrollToTopDelay,
+                          duration: baseTransDur,
+                          delay: baseExitDelay + scrollToTopDelay,
                         },
                       }}
                       exit={{
@@ -79,7 +80,7 @@ export default function Home() {
                         opacity: 0,
                       }}
                       transition={{
-                        duration: 0.4,
+                        duration: baseTransDur,
                         delay: baseExitDelay + scrollToTopDelay,
                       }}
                     >
@@ -111,13 +112,13 @@ export default function Home() {
                     translateY: -30,
                     opacity: 0,
                     transition: {
-                      duration: 0.4,
+                      duration: baseTransDur,
                       delay: baseExitDelay + scrollToTopDelay,
                     },
                   }}
                   transition={{
-                    duration: 0.4,
-                    delay: 0.1,
+                    duration: baseTransDur,
+                    delay: baseExitDelay,
                   }}
                 >
                   {componentFromKey(actualMainSectionKey)}
@@ -129,7 +130,7 @@ export default function Home() {
               className="debuggin"
               layout
               transition={{
-                duration: 0.4,
+                duration: 0.375,
               }}
             >
               <AnimatePresence
@@ -148,7 +149,10 @@ export default function Home() {
                       opacity: 1,
                       transition: {
                         duration: 0.6 + 0,
-                        delay: 0.805 + scrollToTopDelay + 0.05,
+                        delay:
+                          baseTransDur * 2 +
+                          scrollToTopDelay +
+                          baseExitDelay * 2,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}
@@ -157,7 +161,7 @@ export default function Home() {
                       opacity: 0,
                     }}
                     transition={{
-                      duration: 0.4,
+                      duration: baseTransDur,
                       delay: baseExitDelay + scrollToTopDelay,
                     }}
                   >
@@ -279,7 +283,7 @@ export default function Home() {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     const scrollDist = containerRef.current.scrollTop;
-    let scrollDelay = scrollDist * 0.0004;
+    let scrollDelay = scrollDist * 0.000425;
     //scrollDelay = 2;
     console.log(scrollToTopDelay);
     setScrollTopDelay(scrollDelay);

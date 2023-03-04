@@ -127,7 +127,7 @@ const CurrencyExchangeSection = (props) => {
               opacity: 1,
               transition: {
                 duration: curKey == "loading" ? 0 : 0.35,
-                delay: curKey != "loading" && prevKey == "loading" ? 0.25 : 0,
+                delay: curKey != "loading" && prevKey == "loading" ? 0.225 : 0,
                 // delay:
                 //   mainSectionRef.current?.clientHeight > curHeight ? 0.25 : 0,
               },
