@@ -43,8 +43,8 @@ export default function Home() {
   //   ? containerRef.current.scrollTop * 0.00015
   //   : 0.0;
 
-  const baseExitDelay = 0.05;
-  const baseTransDur = 0.35;
+  const baseExitDelay = 0.15;
+  const baseTransDur = 0.45;
 
   return (
     <div>
@@ -73,7 +73,7 @@ export default function Home() {
                         opacity: 1,
                         transition: {
                           duration: baseTransDur,
-                          delay: baseExitDelay + scrollToTopDelay,
+                          delay: 0 + 0,
                         },
                       }}
                       exit={{
@@ -99,6 +99,10 @@ export default function Home() {
               <AnimatePresence
                 exitBeforeEnter
                 onExitComplete={() => {
+                  if (actualMainSectionKey < 2) {
+                    setShowHeading(true);
+                    //   console.log("yay...!");
+                  }
                   setDummyVar(!dummyVar);
                 }}
               >
@@ -119,7 +123,7 @@ export default function Home() {
                   }}
                   transition={{
                     duration: baseTransDur,
-                    delay: baseExitDelay,
+                    delay: 0,
                   }}
                 >
                   {componentFromKey(actualMainSectionKey)}
@@ -131,13 +135,13 @@ export default function Home() {
               className="debuggin"
               layout
               transition={{
-                duration: 0.405,
+                duration: 0.5,
               }}
             >
               <AnimatePresence
                 onExitComplete={() => {
                   // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
-                  setScrollTopDelay(0);
+                  //setScrollTopDelay(0);
                   setShowHeading(true);
                 }}
               >
@@ -153,7 +157,7 @@ export default function Home() {
                         delay:
                           baseTransDur * 2 +
                           scrollToTopDelay +
-                          baseExitDelay * 2,
+                          baseExitDelay * 1,
                         ease: [0.1, 0.1, 0, 1],
                       },
                     }}
