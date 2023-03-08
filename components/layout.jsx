@@ -21,6 +21,7 @@ function Layout(props) {
   const [showButton, setShowButton] = useState(false); // Controls whether app title is shown or not
   const [scrollToTopDelay, setScrollTopDelay] = useState(0);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
+  const scrollRoutine = useRef();
   const containerRef = useRef();
   const router = useRouter();
 
@@ -38,7 +39,8 @@ function Layout(props) {
     // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
     scrollToTop();
-    checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
+    //checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
+    checkScroll();
     //resetInput();
   }, [mainSectionKey]);
 
@@ -55,8 +57,8 @@ function Layout(props) {
   //   ? containerRef.current.scrollTop * 0.00015
   //   : 0.0;
 
-  const baseExitDelay = 0.15;
-  const baseTransDur = 0.45;
+  const baseExitDelay = 0.05; //0.15;
+  const baseTransDur = 0.35;
 
   let currentKey = 0;
   switch (router.asPath) {
@@ -174,7 +176,7 @@ function Layout(props) {
               className="debuggin"
               layout
               transition={{
-                duration: 0.5,
+                duration: 0.4,
               }}
             >
               <AnimatePresence
@@ -259,9 +261,12 @@ function Layout(props) {
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
-    const scrollDist = containerRef.current.scrollTop;
-    let scrollDelay = scrollDist * 0.0004275;
-    //scrollDelay = 2;
+    const scrollDist = containerRef.current.scrollTop - 3;
+    //console.log("scroll dist: " + scrollDist);
+    let scrollDelay =
+      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(17 / 20);
+    scrollDelay *= 0.01;
+    scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
     if (scrollDist <= 1) {
@@ -352,14 +357,45 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop() {
-    containerRef.current?.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
+  function scrollToTop(manualScrolling = true) {
+    if (!manualScrolling) {
+      containerRef.current?.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    } else {
+      startScrollingTowardstop();
+    }
+  }
+  function startScrollingTowardstop() {
+    clearInterval(scrollRoutine.current);
+    const routine = setInterval(scrollTowardsTop, 15);
+    scrollRoutine.current = routine;
   }
 
+  function scrollTowardsTop() {
+    if (!containerRef.current) return;
+    let totalScrollLeft = containerRef.current?.scrollTop;
+    if (totalScrollLeft > 0.9) {
+      let scrollStep = totalScrollLeft / 6.7;
+      //if (scrollStep > 20) scrollStep = 20;
+
+      containerRef.current?.scrollBy({
+        top: -scrollStep,
+        left: 0,
+        behavior: "auto",
+      });
+    } else {
+      clearInterval(scrollRoutine.current);
+      //setScrollRoutine(null);
+      //printRoutine();
+    }
+  }
+
+  function printRoutine() {
+    console.log(scrollRoutine);
+  }
   function gotoResults() {
     setAttemptCalculate(true);
   }
@@ -410,16 +446,25 @@ function Layout(props) {
     return num;
   }
 
-  function checkShowHeading() {
-    if (numberFromRoute(router.asPath) < 2) return true;
+  function checkShowHeading(usePath = true) {
+    if (usePath) {
+      if (numberFromRoute(router.asPath) < 2) return true;
+      return false;
+    }
+    if (actualMainSectionKey < 2) return true;
     return false;
   }
-  function checkShowButton() {
-    if (numberFromRoute(router.asPath) > 1) return true;
+  function checkShowButton(usePath = true) {
+    if (usePath) {
+      if (numberFromRoute(router.asPath) > 1) return true;
+      return false;
+    }
+    if (actualMainSectionKey > 1) return true;
     return false;
   }
   function checkAndSetHeaderAndButton() {
-    const num = numberFromRoute(router.asPath);
+    let num = numberFromRoute(router.asPath);
+    //num = actualMainSectionKey;
     if (num < 2) {
       setShowButton(false);
       setShowHeading(true);

@@ -11,6 +11,8 @@ const ResultsSection = ({
   currencyObject,
   currencyRatesObj,
 }) => {
+  let formattedResult = result;
+
   const fromCStyle =
     currencyRatesObj[fromC] < currencyRatesObj[toC]
       ? styles.higher
