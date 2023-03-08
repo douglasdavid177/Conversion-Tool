@@ -30,6 +30,7 @@ function Layout(props) {
   }, []);
   useEffect(() => {
     scrollToTop();
+    resetInput();
   }, [router.asPath]);
 
   useEffect(() => {
@@ -37,12 +38,11 @@ function Layout(props) {
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
     scrollToTop();
     checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
-    resetInput();
+    //resetInput();
   }, [mainSectionKey]);
 
   useEffect(() => {
     // When sections actually chnage, Make sure tools are loaded in on their input page and are loaded in fresh, clean and with no remembered values
-    resetInput();
   }, [actualMainSectionKey]);
 
   useEffect(() => {
@@ -272,6 +272,7 @@ function Layout(props) {
         console.log("going home");
         changeKey(mainSectionKey);
       }
+
       setScrollTopDelay(0);
     } else {
       console.log("not top...");
