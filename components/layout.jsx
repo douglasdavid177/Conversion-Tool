@@ -261,15 +261,15 @@ function Layout(props) {
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
-    const scrollDist = containerRef.current.scrollTop - 3;
+    const scrollDist = containerRef.current.scrollTop - 0;
     //console.log("scroll dist: " + scrollDist);
     let scrollDelay =
-      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(14 / 15);
+      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(24 / 25);
     scrollDelay *= 0.0038;
     scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
-    if (scrollDist <= 1) {
+    if (scrollDist <= 9) {
       //console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
@@ -377,9 +377,9 @@ function Layout(props) {
   function scrollTowardsTop() {
     if (!containerRef.current) return;
     let totalScrollLeft = containerRef.current?.scrollTop;
-    if (totalScrollLeft > 0.95) {
-      let scrollStep = totalScrollLeft / 15;
-      //if (scrollStep > 20) scrollStep = 20;
+    if (totalScrollLeft > 0.5) {
+      let scrollStep = totalScrollLeft / 25;
+      if (scrollStep > 15) scrollStep = 15;
 
       containerRef.current?.scrollBy({
         top: -scrollStep,
