@@ -29,8 +29,9 @@ function Layout(props) {
     setMainSectionKey(numberFromRoute(router.asPath));
   }, []);
   useEffect(() => {
-    scrollToTop();
+    //scrollToTop();
     resetInput();
+    setMainSectionKey(numberFromRoute(router.asPath));
   }, [router.asPath]);
 
   useEffect(() => {
@@ -41,9 +42,9 @@ function Layout(props) {
     //resetInput();
   }, [mainSectionKey]);
 
-  useEffect(() => {
-    // When sections actually chnage, Make sure tools are loaded in on their input page and are loaded in fresh, clean and with no remembered values
-  }, [actualMainSectionKey]);
+  // useEffect(() => {
+  //   // When sections actually chnage, Make sure tools are loaded in on their input page and are loaded in fresh, clean and with no remembered values
+  // }, [actualMainSectionKey]);
 
   useEffect(() => {
     scrollToTop();
@@ -259,7 +260,7 @@ function Layout(props) {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     const scrollDist = containerRef.current.scrollTop;
-    let scrollDelay = scrollDist * 0.000425;
+    let scrollDelay = scrollDist * 0.0004275;
     //scrollDelay = 2;
     setScrollTopDelay(scrollDelay);
 
@@ -269,7 +270,6 @@ function Layout(props) {
         setActuallyShowResults(showResults);
       }
       if (diffKey) {
-        console.log("going home");
         changeKey(mainSectionKey);
       }
 

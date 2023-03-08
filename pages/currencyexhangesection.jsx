@@ -224,10 +224,12 @@ const CurrencyExchangeSection = (props) => {
       return;
     }
 
-    const finalResult = 0;
-    setResultsVal(finalResult);
+    //const finalResult = 0;
+    //setResultsVal(finalResult);
     setLoading(true);
     props.setShowResults(true);
+
+    await waitForTransition();
     const [answer, obj] = await Promise.all([
       ConvertBetweenCurrencies(fromC, toC, val),
       getCurrencyRatesObject(),
@@ -247,6 +249,9 @@ const CurrencyExchangeSection = (props) => {
 
   async function grabFromOnline() {
     await new Promise((resolve) => setTimer(setTimeout(resolve, 2500))); // Creates a timer and sets it to the state variable at the same timd
+  }
+  async function waitForTransition() {
+    await new Promise((resolve) => setTimer(setTimeout(resolve, 345))); // Creates a timer and sets it to the state variable at the same timd
   }
 };
 export default CurrencyExchangeSection;
