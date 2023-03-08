@@ -264,8 +264,8 @@ function Layout(props) {
     const scrollDist = containerRef.current.scrollTop - 3;
     //console.log("scroll dist: " + scrollDist);
     let scrollDelay =
-      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(17 / 20);
-    scrollDelay *= 0.01;
+      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(14 / 15);
+    scrollDelay *= 0.0038;
     scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
@@ -370,15 +370,15 @@ function Layout(props) {
   }
   function startScrollingTowardstop() {
     clearInterval(scrollRoutine.current);
-    const routine = setInterval(scrollTowardsTop, 15);
+    const routine = setInterval(scrollTowardsTop, 4);
     scrollRoutine.current = routine;
   }
 
   function scrollTowardsTop() {
     if (!containerRef.current) return;
     let totalScrollLeft = containerRef.current?.scrollTop;
-    if (totalScrollLeft > 0.9) {
-      let scrollStep = totalScrollLeft / 6.7;
+    if (totalScrollLeft > 0.95) {
+      let scrollStep = totalScrollLeft / 15;
       //if (scrollStep > 20) scrollStep = 20;
 
       containerRef.current?.scrollBy({
