@@ -262,15 +262,15 @@ function Layout(props) {
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
-    const scrollDist = containerRef.current.scrollTop - 0;
+    const scrollDist = containerRef.current.scrollTop - 2;
     //console.log("scroll dist: " + scrollDist);
     let scrollDelay =
-      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(24 / 25);
+      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(19 / 20);
     scrollDelay *= 0.0038;
     scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
-    if (scrollDist <= 9) {
+    if (scrollDist <= 1) {
       //console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
