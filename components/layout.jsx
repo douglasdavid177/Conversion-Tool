@@ -38,7 +38,7 @@ function Layout(props) {
   useEffect(() => {
     // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
-    //scrollToTop(mainSectionKey == numberFromRoute(router.asPath));
+    // scrollToTop(mainSectionKey == numberFromRoute(router.asPath));
     scrollToTop();
     //checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
     checkScroll();
@@ -266,7 +266,6 @@ function Layout(props) {
     //console.log("scroll dist: " + scrollDist);
     let scrollDelay =
       Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(24 / 25);
-    scrollDelay = scrollDist / 8;
     scrollDelay *= 0.0038;
     scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
@@ -380,9 +379,8 @@ function Layout(props) {
     if (!containerRef.current) return;
     let totalScrollLeft = containerRef.current?.scrollTop;
     if (totalScrollLeft > 0.5) {
-      let scrollStep = totalScrollLeft / 25;
-      if (scrollStep > 10) scrollStep = 10;
-      scrollStep = 8;
+      let scrollStep = totalScrollLeft / 20;
+      if (scrollStep > 15) scrollStep = 15;
 
       containerRef.current?.scrollBy({
         top: -scrollStep,
