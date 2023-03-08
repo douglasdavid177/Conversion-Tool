@@ -37,13 +37,13 @@ const UnitConversionSection = (props) => {
   }, [props.attemptCalculate]);
 
   useEffect(() => {
-    if (!props.showResults) {
+    if (!props.actuallyShowResults) {
       if (endUnitAuto) {
         setEndUnit("auto");
         setEndUnitAuto(false);
       }
     }
-  }, [props.showResults]);
+  }, [props.actuallyShowResults]);
 
   return (
     <div ref={mainSectionRef}>
@@ -71,7 +71,9 @@ const UnitConversionSection = (props) => {
               /*Scroll back down to the part of the main section that we requested to view when pressing action button, 
               but wait until after any layout changes are done */
             }
-            const target = props.showResults ? subSectionRef : mainSectionRef;
+            const target = props.actuallyShowResults
+              ? subSectionRef
+              : mainSectionRef;
             setTimeout(() => {
               props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
@@ -79,24 +81,24 @@ const UnitConversionSection = (props) => {
           }}
         >
           <motion.div
-            key={props.showResults ? "results" : "input"}
+            key={props.actuallyShowResults ? "results" : "input"}
             initial={{ translateY: 30, opacity: 0 }}
             animate={{ translateY: 0, opacity: 1 }}
             exit={{
               translateY: -30,
               opacity: 0,
-              transition: { duration: 0.35, delay: props.scrollDelay },
+              transition: { duration: 0.35, delay: 0 },
             }}
             transition={{ duration: 0.35 }}
           >
-            {props.showResults ? (
+            {props.actuallyShowResults ? (
               <ResultsSection
                 startNum={startNumVal}
                 startU={startUnit}
                 endU={endUnit}
                 decPlaces={decimalPlaces}
                 result={resultsVal}
-                addCommas={props.addCommas}
+                addCommas={props.addCommasToNumber}
               />
             ) : (
               <InputSection

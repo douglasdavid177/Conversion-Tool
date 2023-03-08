@@ -9,7 +9,7 @@ import BaseConversionSection from "../components/baseconversion/baseconversionse
 import CurrencyExchangeSection from "../components/currencyex/currencyexhangesection";
 import NavPanel from "../components/navpanel";
 
-export default function Home() {
+function Layout(props) {
   const [mainSectionKey, setMainSectionKey] = useState(0); // Triggers page scrolling to top before setting 'actual' state
   const [actualMainSectionKey, setActualMainSectionKey] = useState(0); // The id of the active page because the app uses state-based routing
   const [showResults, setShowResults] = useState(false); // Triggers page scrolling to top before setting 'actual' state
@@ -18,7 +18,6 @@ export default function Home() {
   const [navPanelOpen, setNavPanelOpen] = useState(false); // Controls whether navigation panel is open or not
   const [showHeading, setShowHeading] = useState(true); // Controls whether app title is shown or not
   const [scrollToTopDelay, setScrollTopDelay] = useState(0);
-  const [fakescrollToTopDelay, setfakeScrollTopDelay] = useState(0);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const containerRef = useRef();
 
@@ -127,7 +126,16 @@ export default function Home() {
                     delay: 0,
                   }}
                 >
-                  {componentFromKey(actualMainSectionKey)}
+                  {React.cloneElement(props.children, {
+                    actuallyShowResults,
+                    setShowResults,
+                    attemptCalculate,
+                    setAttemptCalculate,
+                    setDummyVar,
+                    dummyVar,
+                    smoothScrollTo,
+                    addCommasToNumber,
+                  })}
                 </motion.div>
               </AnimatePresence>
             </motion.div>
@@ -209,171 +217,6 @@ export default function Home() {
       />
     </div>
   );
-
-  function componentFromKey(key) {
-    switch (key) {
-      case 0:
-        return <HomeSection setOpenNav={setNavPanelOpen} />;
-      case 1:
-        return <AboutSection />;
-
-      case 2:
-        return (
-          <DecToFracSection
-            actuallyShowResults={actuallyShowResults}
-            setShowResults={setShowResults}
-            attemptCalculate={attemptCalculate}
-            setAttemptCalculate={setAttemptCalculate}
-            setDummyVar={setDummyVar}
-            dummyVar={dummyVar}
-            smoothScrollTo={smoothScrollTo}
-            addCommasToNumber={addCommasToNumber}
-          />
-        );
-
-      case 3:
-        return (
-          <BaseConversionSection
-            actuallyShowResults={actuallyShowResults}
-            setShowResults={setShowResults}
-            attemptCalculate={attemptCalculate}
-            setAttemptCalculate={setAttemptCalculate}
-            setDummyVar={setDummyVar}
-            dummyVar={dummyVar}
-            smoothScrollTo={smoothScrollTo}
-            addCommasToNumber={addCommasToNumber}
-          />
-        );
-
-      case 4:
-        return (
-          <UnitConversionSection
-            actuallyShowResults={actuallyShowResults}
-            setShowResults={setShowResults}
-            attemptCalculate={attemptCalculate}
-            setAttemptCalculate={setAttemptCalculate}
-            setDummyVar={setDummyVar}
-            dummyVar={dummyVar}
-            smoothScrollTo={smoothScrollTo}
-            addCommasToNumber={addCommasToNumber}
-          />
-        );
-      case 5:
-        return (
-          <CurrencyExchangeSection
-            actuallyShowResults={actuallyShowResults}
-            setShowResults={setShowResults}
-            attemptCalculate={attemptCalculate}
-            setAttemptCalculate={setAttemptCalculate}
-            setDummyVar={setDummyVar}
-            dummyVar={dummyVar}
-            smoothScrollTo={smoothScrollTo}
-            addCommasToNumber={addCommasToNumber}
-          />
-        );
-      default:
-        return <HomeSection />;
-    }
-  }
-
-  // Runs automatically every time content scroll container detects change in scroll position
-  function checkScroll(waitTilTop = true) {
-    if (!containerRef.current) {
-      return;
-    }
-
-    const diffKey = actualMainSectionKey != mainSectionKey;
-    const diffShowRes = actuallyShowResults != showResults;
-    const scrollDist = containerRef.current.scrollTop;
-    let scrollDelay = scrollDist * 0.000425;
-    //scrollDelay = 2;
-    setScrollTopDelay(scrollDelay);
-
-    if (scrollDist <= 0.5) {
-      console.log("top...");
-      if (diffShowRes) {
-        setActuallyShowResults(showResults);
-      }
-      if (diffKey) {
-        changeKey(mainSectionKey);
-      }
-      setScrollTopDelay(0);
-    } else {
-      console.log("not top...");
-
-      if (!waitTilTop) {
-        if (diffKey) {
-          changeKey(mainSectionKey);
-          // setScrollTopDelay(scrollDist * 0.00018);
-        }
-      }
-    }
-
-    // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
-    // then update actual to match desired
-    // The delay gives time to add the layout property back to the buttonholder
-    // else if (scrollDist <= 15 && (diffKey || diffShowRes)) {
-    //   // Prev threshold was 15 from top with 20 ms timeout delay
-    //   if (diffKey) {
-    //     if (actualMainSectionKey > 1) setShowHeading(false);
-    //     setActualMainSectionKey(mainSectionKey);
-    //   }
-    //   if (diffShowRes) {
-    //     setActuallyShowResults(showResults);
-    //   }
-    //   //setTimeout(() => {}, 0);
-    // }
-  }
-
-  function changeKey(newKey) {
-    if (newKey > 1) setShowHeading(false);
-    //console.log(scrollToTopDelay);
-    setActualMainSectionKey(newKey);
-
-    //setTimeout(() => {}, 0);
-  }
-  function scrollUpSlightly() {
-    containerRef.current?.scrollBy({
-      top: -1,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-  function scrollDownSlightly() {
-    containerRef.current?.scrollBy({
-      top: 1,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-  function scrollToTop() {
-    containerRef.current?.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-
-  function gotoResults() {
-    setAttemptCalculate(true);
-  }
-  function resetInput() {
-    setShowResults(false);
-    setAttemptCalculate(false);
-  }
-  function smoothScrollTo(targetRef) {
-    // Attempt trigger rerender to ensure no layout transitions are stuck
-    void containerRef.current?.offsetTop;
-    setDummyVar(!dummyVar);
-    targetRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }
-
-  function addCommasToNumber(num) {
-    // Regex that looks for triplets of digits adds commas after them
-    let parts = num.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-  }
 }
+
+export default Layout;

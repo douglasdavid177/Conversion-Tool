@@ -46,31 +46,33 @@ const BaseConversionSection = (props) => {
               /*Scroll back down to the part of the main section that we requested to view when pressing action button, 
               but wait until after any layout changes are done */
             }
-            const target = props.showResults ? subSectionRef : mainSectionRef;
+            const target = props.actuallyShowResults
+              ? subSectionRef
+              : mainSectionRef;
             setTimeout(() => {
               props.smoothScrollTo(target);
             }, 420);
           }}
         >
           <motion.div
-            key={props.showResults ? "results" : "input"}
+            key={props.actuallyShowResults ? "results" : "input"}
             initial={{ translateY: 30, opacity: 0 }}
             animate={{ translateY: 0, opacity: 1 }}
             exit={{
               translateY: -30,
               opacity: 0,
-              transition: { duration: 0.35, delay: props.scrollDelay },
+              transition: { duration: 0.35, delay: 0 },
             }}
             transition={{ duration: 0.35 }}
           >
-            {props.showResults ? (
+            {props.actuallyShowResults ? (
               <ResultsSection
                 startB={startBase}
                 endB={endBase}
                 startStr={startValString}
                 result={resultsVal}
                 decimalPlaces={decimalPlaces}
-                addCommas={props.addCommas}
+                addCommas={props.addCommasToNumber}
               />
             ) : (
               <InputSection

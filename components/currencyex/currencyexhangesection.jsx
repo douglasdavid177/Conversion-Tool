@@ -55,20 +55,20 @@ const CurrencyExchangeSection = (props) => {
   // }, [inputHeight]);
 
   useEffect(() => {
-    if (!props.showResults) {
+    if (!props.actuallyShowResults) {
       setLoading(false);
       if (timer) clearTimeout(timer);
     }
     setKey();
     // setCurKey(findKey());
-  }, [props.showResults]);
+  }, [props.actuallyShowResults]);
 
   useEffect(() => {
     setKey();
     // setCurKey(findKey());
   }, [loading]);
 
-  const showResultsScreen = props.showResults && loading == false;
+  const showResultsScreen = props.actuallyShowResults && loading == false;
   const theKey = findKey();
   // console.log("the key is... " + theKey);
 
@@ -98,7 +98,9 @@ const CurrencyExchangeSection = (props) => {
               /*Scroll back down to the part of the main section that we requested to view when pressing action button, 
               but wait until after any layout changes are done */
             }
-            const target = props.showResults ? subSectionRef : mainSectionRef;
+            const target = props.actuallyShowResults
+              ? subSectionRef
+              : mainSectionRef;
             let delay;
             switch (theKey) {
               case "input":
@@ -136,7 +138,7 @@ const CurrencyExchangeSection = (props) => {
             transition={
               curKey == "loading"
                 ? { duration: 0.0 }
-                : { duration: 0.35, delay: props.scrollDelay }
+                : { duration: 0.35, delay: 0 }
             }
           >
             {LoadingInputResult()}
@@ -146,7 +148,7 @@ const CurrencyExchangeSection = (props) => {
     </div>
   );
   function findKey() {
-    if (!props.showResults) return "input";
+    if (!props.actuallyShowResults) return "input";
     if (loading) return "loading";
 
     return "result";
@@ -164,7 +166,7 @@ const CurrencyExchangeSection = (props) => {
     }
   }
   function LoadingInputResult() {
-    if (!props.showResults) {
+    if (!props.actuallyShowResults) {
       return (
         <InputSection
           // key="inputsection"
@@ -196,7 +198,7 @@ const CurrencyExchangeSection = (props) => {
         startStr={startValString}
         result={resultsVal}
         decimalPlaces={decimalPlaces}
-        addCommas={props.addCommas}
+        addCommas={props.addCommasToNumber}
         currencyObject={currencyObject}
         currencyRatesObj={currencyRatesObj}
       />
