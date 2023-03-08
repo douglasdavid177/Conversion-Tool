@@ -1,49 +1,24 @@
-import convert from "convert-units";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import InputSection from "./inputsectionunitc";
-import ResultsSection from "./resultssectionunitc";
-import styles from "../../styles/mainsection.module.css";
+import InputSection from "../components/dectofrac/inputsectionfrac";
+import ResultsSection from "../components/dectofrac/resultssectionfrac";
+import styles from "../styles/mainsection.module.css";
 
-const UnitConversionSection = (props) => {
-  const [startUnit, setStartUnit] = useState("default");
-  const [endUnit, setEndUnit] = useState("default");
-  const [endUnitAuto, setEndUnitAuto] = useState(false); // True if 'auto' is selected for end unit , false othereise
-  const [startNumVal, setStartNumVal] = useState(NaN);
+const DecToFracSection = (props) => {
+  const [decVal, setDecVal] = useState(NaN);
+  const [denVal, setDenVal] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
-  const [resultsVal, setResultsVal] = useState(-1); // The converted value
+  const [resultsVal, setResultsVal] = useState(-1); // The numerator
+  const [resultsSndVal, setResultsSndVal] = useState(-1); // The second closest numerator
   const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
   const mainSectionRef = useRef(null);
   const subSectionRef = useRef(null);
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      let num = startNumVal;
-      let start = startUnit;
-      let end = endUnit;
-
-      if (start == "default" || end == "default" || isNaN(num)) {
-        setTriggerWarning(true);
-        props.setAttemptCalculate(false);
-        props.setShowResults(false);
-        // Scroll to red instructions
-        if (subSectionRef.current) {
-          props.smoothScrollTo(subSectionRef);
-        }
-        return;
-      }
-      calculate(num, start, end);
+      calculate(decVal, denVal);
     }
   }, [props.attemptCalculate]);
-
-  useEffect(() => {
-    if (!props.actuallyShowResults) {
-      if (endUnitAuto) {
-        setEndUnit("auto");
-        setEndUnitAuto(false);
-      }
-    }
-  }, [props.actuallyShowResults]);
 
   return (
     <div ref={mainSectionRef}>
@@ -55,7 +30,7 @@ const UnitConversionSection = (props) => {
         </span>
 
         <span className={styles.mainSectionLabel}>
-          <h4>Unit Conversion for Measurements</h4>
+          <h4>Decimal to Fraction Converter</h4>
         </span>
       </div>
 
@@ -75,7 +50,6 @@ const UnitConversionSection = (props) => {
               ? subSectionRef
               : mainSectionRef;
             setTimeout(() => {
-              props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
             }, 420);
           }}
@@ -93,21 +67,19 @@ const UnitConversionSection = (props) => {
           >
             {props.actuallyShowResults ? (
               <ResultsSection
-                startNum={startNumVal}
-                startU={startUnit}
-                endU={endUnit}
-                decPlaces={decimalPlaces}
-                result={resultsVal}
+                dec={decVal}
+                den={denVal}
+                resultsVal={resultsVal}
+                resultsSndVal={resultsSndVal}
+                decimalPlaces={decimalPlaces}
                 addCommas={props.addCommasToNumber}
               />
             ) : (
               <InputSection
-                startNum={startNumVal}
-                startU={startUnit}
-                endU={endUnit}
-                setStartNumFunc={setStartNumVal}
-                setStartUFunc={setStartUnit}
-                setEndUFunc={setEndUnit}
+                dec={decVal}
+                den={denVal}
+                setDecFunc={setDecVal}
+                setDenFunc={setDenVal}
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
                 setDecPlacesFunc={setDecimalPlaces}
@@ -118,22 +90,46 @@ const UnitConversionSection = (props) => {
       </div>
     </div>
   );
-  function calculate(val, startU, endU) {
-    let resultV;
-    if (endUnit == "auto") {
-      const resultObj = convert(val).from(startU).toBest();
-      endU = resultObj.unit;
-      resultV = resultObj.val;
-      setEndUnit(endU);
-      setEndUnitAuto(true);
-    } else {
-      resultV = convert(val).from(startU).to(endU);
-    }
 
-    setResultsVal(resultV);
-    console.log("attempted actual conversion: ");
-    console.log(resultV);
+  function calculate(dec, den) {
+    dec = Math.abs(dec);
+    den = Math.abs(den);
+    if (den == 0 || isNaN(dec) || isNaN(den)) {
+      props.setAttemptCalculate(false);
+      setTriggerWarning(true);
+      props.setShowResults(false);
+      // Scroll to red instructions
+      if (subSectionRef.current) {
+        props.smoothScrollTo(subSectionRef);
+      }
+      return;
+    }
+    const fractionsArray = new Array(den + 1);
+    let n = 0;
+    for (n = 0; n <= den; n++) {
+      fractionsArray[n] = n / den;
+    }
+    const leftOverDec = dec - Math.floor(dec);
+    const fractionsArrayCopy = [...fractionsArray];
+    const fractionsArrayCopy2 = [...fractionsArray];
+
+    const closest = fractionsArrayCopy.reduce(function (prev, curr) {
+      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
+        ? curr
+        : prev;
+    });
+
+    const closestIndex = fractionsArray.indexOf(closest);
+    fractionsArrayCopy2.splice(closestIndex, 1);
+    const secondClosest = fractionsArrayCopy2.reduce(function (prev, curr) {
+      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
+        ? curr
+        : prev;
+    });
+    const secondClosestIndex = fractionsArray.indexOf(secondClosest);
+    setResultsVal(closestIndex);
+    setResultsSndVal(secondClosestIndex);
     props.setShowResults(true);
   }
 };
-export default UnitConversionSection;
+export default DecToFracSection;

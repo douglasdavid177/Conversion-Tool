@@ -63,12 +63,12 @@ const ResultsSection = ({
 
   // The following two functions merely correct a bug in the api that incorrectly displays cm2 as Centimeters
   function getPlural(unit) {
-    const plural = convert().describe(unit).plural;
+    let plural = convert().describe(unit).plural;
     if (unit == "cm2") plural = "Square Centimeters";
     return plural;
   }
   function getSingular(unit) {
-    const singular = convert().describe(unit).singular;
+    let singular = convert().describe(unit).singular;
     if (unit == "cm2") singular = "Square Centimeter";
     return singular;
   }

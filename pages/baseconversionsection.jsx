@@ -1,22 +1,22 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import InputSection from "./inputsectionfrac";
-import ResultsSection from "./resultssectionfrac";
-import styles from "../../styles/mainsection.module.css";
+import InputSection from "../components/baseconversion/inputsectionbasec";
+import ResultsSection from "../components/baseconversion/resultssectionbasec";
+import styles from "../styles/mainsection.module.css";
 
-const DecToFracSection = (props) => {
-  const [decVal, setDecVal] = useState(NaN);
-  const [denVal, setDenVal] = useState(NaN);
+const BaseConversionSection = (props) => {
+  const [startValString, setStartValString] = useState("");
+  const [startBase, setstartBase] = useState(NaN);
+  const [endBase, setendBase] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
   const [resultsVal, setResultsVal] = useState(-1); // The numerator
-  const [resultsSndVal, setResultsSndVal] = useState(-1); // The second closest numerator
   const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
   const mainSectionRef = useRef(null);
   const subSectionRef = useRef(null);
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      calculate(decVal, denVal);
+      calculate(startValString, startBase, endBase);
     }
   }, [props.attemptCalculate]);
 
@@ -30,7 +30,7 @@ const DecToFracSection = (props) => {
         </span>
 
         <span className={styles.mainSectionLabel}>
-          <h4>Decimal to Fraction Converter</h4>
+          <h4>Number Base Conversion</h4>
         </span>
       </div>
 
@@ -67,19 +67,21 @@ const DecToFracSection = (props) => {
           >
             {props.actuallyShowResults ? (
               <ResultsSection
-                dec={decVal}
-                den={denVal}
-                resultsVal={resultsVal}
-                resultsSndVal={resultsSndVal}
+                startB={startBase}
+                endB={endBase}
+                startStr={startValString}
+                result={resultsVal}
                 decimalPlaces={decimalPlaces}
                 addCommas={props.addCommasToNumber}
               />
             ) : (
               <InputSection
-                dec={decVal}
-                den={denVal}
-                setDecFunc={setDecVal}
-                setDenFunc={setDenVal}
+                startB={startBase}
+                endB={endBase}
+                startStr={startValString}
+                setStartStrFunc={setStartValString}
+                setStartBFunc={setstartBase}
+                setEndBFunc={setendBase}
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
                 setDecPlacesFunc={setDecimalPlaces}
@@ -91,10 +93,8 @@ const DecToFracSection = (props) => {
     </div>
   );
 
-  function calculate(dec, den) {
-    dec = Math.abs(dec);
-    den = Math.abs(den);
-    if (den == 0 || isNaN(dec) || isNaN(den)) {
+  function calculate(num, startB, endB) {
+    if (startB == 0 || isNaN(startB) || endB == 0 || isNaN(endB)) {
       props.setAttemptCalculate(false);
       setTriggerWarning(true);
       props.setShowResults(false);
@@ -104,32 +104,24 @@ const DecToFracSection = (props) => {
       }
       return;
     }
-    const fractionsArray = new Array(den + 1);
-    let n = 0;
-    for (n = 0; n <= den; n++) {
-      fractionsArray[n] = n / den;
+
+    const decResult = parseInt(num, startB);
+    if (isNaN(decResult)) {
+      props.setAttemptCalculate(false);
+      setTriggerWarning(true);
+      props.setShowResults(false);
+      // Scroll to red instructions
+      if (subSectionRef.current) {
+        props.smoothScrollTo(subSectionRef);
+      }
+      return;
     }
-    const leftOverDec = dec - Math.floor(dec);
-    const fractionsArrayCopy = [...fractionsArray];
-    const fractionsArrayCopy2 = [...fractionsArray];
+    setStartValString(decResult.toString(startB).toUpperCase());
+    const finalResult = decResult.toString(endB).toUpperCase();
+    console.log("decR: " + decResult + ", finR: " + finalResult);
+    setResultsVal(finalResult);
 
-    const closest = fractionsArrayCopy.reduce(function (prev, curr) {
-      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
-        ? curr
-        : prev;
-    });
-
-    const closestIndex = fractionsArray.indexOf(closest);
-    fractionsArrayCopy2.splice(closestIndex, 1);
-    const secondClosest = fractionsArrayCopy2.reduce(function (prev, curr) {
-      return Math.abs(curr - leftOverDec) < Math.abs(prev - leftOverDec)
-        ? curr
-        : prev;
-    });
-    const secondClosestIndex = fractionsArray.indexOf(secondClosest);
-    setResultsVal(closestIndex);
-    setResultsSndVal(secondClosestIndex);
     props.setShowResults(true);
   }
 };
-export default DecToFracSection;
+export default BaseConversionSection;

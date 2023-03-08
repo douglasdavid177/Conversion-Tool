@@ -2,7 +2,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/navpanel.module.css";
 
-const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
+const NavPanel = ({
+  isOpen,
+  setIsOpen,
+  currentSectionKey,
+  setSectionKey,
+  numberFromRoute,
+}) => {
   const [comingSoonWarning, setComingSoonWarning] = useState(false);
   const [dummyVar, setDummyVar] = useState(false);
   const badge = useRef();
@@ -82,11 +88,12 @@ const NavPanel = ({ isOpen, setIsOpen, currentSectionKey, setSectionKey }) => {
               return;
             }
             setSectionKey(props.sectionKey);
+            console.log("keyy: " + props.sectionKey);
             setIsOpen(false);
           }}
           // Make label text gray if disabled, green if it's the active section, or white otherwise
           className={`${disabled ? styles.disabledButton : ""} ${
-            props.sectionKey == currentSectionKey ? styles.currentMenuItem : ""
+            props.sectionKey == numberFromRoute() ? styles.currentMenuItem : ""
           }`}
         >
           <h3>{props.label}</h3>

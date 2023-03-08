@@ -1,13 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import InputSection from "./inputsectioncurrency";
-import ResultsSection from "./resultssectioncurrency";
-import styles from "../../styles/mainsection.module.css";
+import InputSection from "../components/currencyex/inputsectioncurrency";
+import ResultsSection from "../components/currencyex/resultssectioncurrency";
+import styles from "../styles/mainsection.module.css";
 import {
   getCurrenciesObject,
   getCurrencyRatesObject,
   ConvertBetweenCurrencies,
-} from "../../apifunctions";
+} from "../apifunctions";
 
 const CurrencyExchangeSection = (props) => {
   const [startValString, setStartValString] = useState("");

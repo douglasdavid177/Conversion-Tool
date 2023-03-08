@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
 import HomeSection from "../components/homesection";
-import AboutSection from "../components/aboutsection";
-import DecToFracSection from "../components/dectofrac/decfracsection";
-import UnitConversionSection from "../components/unitconversion/unitconversionsection";
-import BaseConversionSection from "../components/baseconversion/baseconversionsection";
-import CurrencyExchangeSection from "../components/currencyex/currencyexhangesection";
+import AboutSection from "../pages/aboutsection";
+import DecToFracSection from "../pages/decfracsection";
+import UnitConversionSection from "../pages/unitconversionsection";
+import BaseConversionSection from "../pages/baseconversionsection";
+import CurrencyExchangeSection from "../pages/currencyexhangesection";
 import NavPanel from "../components/navpanel";
+import { useRouter } from "next/router";
 
 function Layout(props) {
   const [mainSectionKey, setMainSectionKey] = useState(0); // Triggers page scrolling to top before setting 'actual' state
@@ -16,10 +17,20 @@ function Layout(props) {
   const [actuallyShowResults, setActuallyShowResults] = useState(false); // controls Whether input or result of a particular tool is shown
   const [attemptCalculate, setAttemptCalculate] = useState(false); // Triggers the active tool to run its calculate function
   const [navPanelOpen, setNavPanelOpen] = useState(false); // Controls whether navigation panel is open or not
-  const [showHeading, setShowHeading] = useState(true); // Controls whether app title is shown or not
+  const [showHeading, setShowHeading] = useState(false); // Controls whether app title is shown or not
+  const [showButton, setShowButton] = useState(false); // Controls whether app title is shown or not
   const [scrollToTopDelay, setScrollTopDelay] = useState(0);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const containerRef = useRef();
+  const router = useRouter();
+
+  useEffect(() => {
+    checkAndSetHeaderAndButton();
+    setMainSectionKey(numberFromRoute(router.asPath));
+  }, []);
+  useEffect(() => {
+    scrollToTop();
+  }, [router.asPath]);
 
   useEffect(() => {
     // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
@@ -46,6 +57,16 @@ function Layout(props) {
   const baseExitDelay = 0.15;
   const baseTransDur = 0.45;
 
+  let currentKey = 0;
+  switch (router.asPath) {
+    case "/index":
+      currentKey = 0;
+      break;
+    case "/aboutsection":
+      currentKey = 1;
+      break;
+  }
+
   return (
     <div>
       <div className={`${styles.container}`}>
@@ -64,7 +85,7 @@ function Layout(props) {
                 />
                 {/*the app title and subheading will only display on the 'home' and 'about' pages*/}
                 <AnimatePresence>
-                  {actualMainSectionKey < 2 && showHeading && (
+                  {checkShowHeading() && showHeading && (
                     <motion.div
                       key={"headertext"}
                       initial={{ translateY: 50, opacity: 0 }}
@@ -73,7 +94,7 @@ function Layout(props) {
                         opacity: 1,
                         transition: {
                           duration: baseTransDur,
-                          delay: 0 + 0,
+                          delay: 0,
                         },
                       }}
                       exit={{
@@ -99,44 +120,52 @@ function Layout(props) {
               <AnimatePresence
                 exitBeforeEnter
                 onExitComplete={() => {
-                  if (actualMainSectionKey < 2) {
-                    setShowHeading(true);
-                    //   console.log("yay...!");
-                  }
-                  setDummyVar(!dummyVar);
+                  //   if (numberFromRoute() < 2) {
+                  //     setShowHeading(true);
+                  //     //   console.log("yay...!");
+                  //   }
+                  //   if (numberFromRoute() > 1) {
+                  //     setShowButton(true);
+                  //   }
+                  //   setDummyVar(!dummyVar);
+
+                  checkAndSetHeaderAndButton();
                 }}
               >
-                <motion.div
-                  key={actualMainSectionKey}
-                  initial={{ translateY: 50, opacity: 0 }}
-                  animate={{
-                    translateY: 0,
-                    opacity: 1,
-                  }}
-                  exit={{
-                    translateY: -30,
-                    opacity: 0,
-                    transition: {
+                {(showHeading || showButton) && (
+                  <motion.div
+                    key={router.asPath}
+                    initial={{ translateY: 50, opacity: 0 }}
+                    animate={{
+                      translateY: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      translateY: -30,
+                      opacity: 0,
+                      transition: {
+                        duration: baseTransDur,
+                        delay: baseExitDelay + scrollToTopDelay,
+                      },
+                    }}
+                    transition={{
                       duration: baseTransDur,
-                      delay: baseExitDelay + scrollToTopDelay,
-                    },
-                  }}
-                  transition={{
-                    duration: baseTransDur,
-                    delay: 0,
-                  }}
-                >
-                  {React.cloneElement(props.children, {
-                    actuallyShowResults,
-                    setShowResults,
-                    attemptCalculate,
-                    setAttemptCalculate,
-                    setDummyVar,
-                    dummyVar,
-                    smoothScrollTo,
-                    addCommasToNumber,
-                  })}
-                </motion.div>
+                      delay: 0,
+                    }}
+                  >
+                    {React.cloneElement(props.children, {
+                      setNavPanelOpen,
+                      actuallyShowResults,
+                      setShowResults,
+                      attemptCalculate,
+                      setAttemptCalculate,
+                      setDummyVar,
+                      dummyVar,
+                      smoothScrollTo,
+                      addCommasToNumber,
+                    })}
+                  </motion.div>
+                )}
               </AnimatePresence>
             </motion.div>
 
@@ -151,10 +180,11 @@ function Layout(props) {
                 onExitComplete={() => {
                   // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
                   //setScrollTopDelay(0);
-                  setShowHeading(true);
+                  //setShowHeading(true);
+                  //checkAndSetHeaderAndButton();
                 }}
               >
-                {actualMainSectionKey > 1 && (
+                {checkShowButton() && showButton && (
                   <motion.div
                     key="buttonholder"
                     initial={{ translateY: 55, opacity: 0 }}
@@ -163,8 +193,9 @@ function Layout(props) {
                       opacity: 1,
                       transition: {
                         duration: 0.6 + 0,
+                        //baseTransDur,
                         delay:
-                          baseTransDur * 2 +
+                          baseTransDur * 0.85 +
                           scrollToTopDelay +
                           baseExitDelay * 1,
                         ease: [0.1, 0.1, 0, 1],
@@ -214,9 +245,188 @@ function Layout(props) {
         setIsOpen={setNavPanelOpen}
         currentSectionKey={mainSectionKey}
         setSectionKey={setMainSectionKey}
+        numberFromRoute={numberFromRoute}
       />
     </div>
   );
-}
 
+  // Runs automatically every time content scroll container detects change in scroll position
+  function checkScroll(waitTilTop = true) {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const diffKey = actualMainSectionKey != mainSectionKey;
+    const diffShowRes = actuallyShowResults != showResults;
+    const scrollDist = containerRef.current.scrollTop;
+    let scrollDelay = scrollDist * 0.000425;
+    //scrollDelay = 2;
+    setScrollTopDelay(scrollDelay);
+
+    if (scrollDist <= 1) {
+      //console.log("top...");
+      if (diffShowRes) {
+        setActuallyShowResults(showResults);
+      }
+      if (diffKey) {
+        console.log("going home");
+        changeKey(mainSectionKey);
+      }
+      setScrollTopDelay(0);
+    } else {
+      console.log("not top...");
+
+      if (!waitTilTop) {
+        if (diffKey) {
+          changeKey(mainSectionKey);
+          // setScrollTopDelay(scrollDist * 0.00018);
+        }
+      }
+    }
+
+    // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
+    // then update actual to match desired
+    // The delay gives time to add the layout property back to the buttonholder
+    // else if (scrollDist <= 15 && (diffKey || diffShowRes)) {
+    //   // Prev threshold was 15 from top with 20 ms timeout delay
+    //   if (diffKey) {
+    //     if (actualMainSectionKey > 1) setShowHeading(false);
+    //     setActualMainSectionKey(mainSectionKey);
+    //   }
+    //   if (diffShowRes) {
+    //     setActuallyShowResults(showResults);
+    //   }
+    //   //setTimeout(() => {}, 0);
+    // }
+  }
+
+  function changeKey(newKey) {
+    // if (newKey > 1) setShowHeading(false);
+    // if (newKey <= 1) setShowButton(false);
+    //console.log(scrollToTopDelay);
+    setActualMainSectionKey(newKey);
+
+    //setTimeout(() => {}, 0);
+
+    let route = ``;
+    console.log("key: " + newKey);
+    switch (newKey) {
+      case 0:
+        route = `/`;
+        router.push(router.basePath);
+        break;
+      case 1:
+        route = `/aboutsection`;
+        break;
+      case 2:
+        route = `/decfracsection`;
+        break;
+      case 3:
+        route = `/baseconversionsection`;
+        break;
+      case 4:
+        route = `/unitconversionsection`;
+        break;
+      case 5:
+        route = `/currencyexhangesection`;
+        break;
+      default:
+        break;
+    }
+
+    router.push(route);
+    // console.log(router.basePath);
+  }
+  function scrollUpSlightly() {
+    containerRef.current?.scrollBy({
+      top: -1,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function scrollDownSlightly() {
+    containerRef.current?.scrollBy({
+      top: 1,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function scrollToTop() {
+    containerRef.current?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+
+  function gotoResults() {
+    setAttemptCalculate(true);
+  }
+  function resetInput() {
+    setShowResults(false);
+    setAttemptCalculate(false);
+  }
+  function smoothScrollTo(targetRef) {
+    // Attempt trigger rerender to ensure no layout transitions are stuck
+    void containerRef.current?.offsetTop;
+    setDummyVar(!dummyVar);
+    targetRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }
+
+  function addCommasToNumber(num) {
+    // Regex that looks for triplets of digits adds commas after them
+    let parts = num.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
+
+  function numberFromRoute(path = router.asPath) {
+    let num = 0;
+    switch (path) {
+      case `/`:
+        num = 0;
+        break;
+      case `/aboutsection`:
+        num = 1;
+        break;
+      case `/decfracsection`:
+        num = 2;
+        break;
+      case `/baseconversionsection`:
+        num = 3;
+        break;
+      case `/unitconversionsection`:
+        num = 4;
+        break;
+      case `/currencyexhangesection`:
+        num = 5;
+        break;
+      default:
+        break;
+    }
+    return num;
+  }
+
+  function checkShowHeading() {
+    if (numberFromRoute(router.asPath) < 2) return true;
+    return false;
+  }
+  function checkShowButton() {
+    if (numberFromRoute(router.asPath) > 1) return true;
+    return false;
+  }
+  function checkAndSetHeaderAndButton() {
+    const num = numberFromRoute(router.asPath);
+    if (num < 2) {
+      setShowButton(false);
+      setShowHeading(true);
+    }
+    if (num > 1) {
+      setShowHeading(false);
+      setShowButton(true);
+    }
+  }
+}
 export default Layout;

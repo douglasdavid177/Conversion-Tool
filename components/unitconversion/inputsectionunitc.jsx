@@ -117,7 +117,7 @@ const InputSection = ({
     }
   }
   function getOptionLabelString(unit, currentSelected) {
-    const plural = convert().describe(unit).plural;
+    let plural = convert().describe(unit).plural;
     //Corrects bug in api that incorrectly displays cm2 as Centimeters by default
     if (unit == "cm2") plural = "Square Centimeters";
 

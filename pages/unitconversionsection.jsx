@@ -1,24 +1,49 @@
+import convert from "convert-units";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import InputSection from "./inputsectionbasec";
-import ResultsSection from "./resultssectionbasec";
-import styles from "../../styles/mainsection.module.css";
+import InputSection from "../components/unitconversion/inputsectionunitc";
+import ResultsSection from "../components/unitconversion/resultssectionunitc";
+import styles from "../styles/mainsection.module.css";
 
-const BaseConversionSection = (props) => {
-  const [startValString, setStartValString] = useState("");
-  const [startBase, setstartBase] = useState(NaN);
-  const [endBase, setendBase] = useState(NaN);
+const UnitConversionSection = (props) => {
+  const [startUnit, setStartUnit] = useState("default");
+  const [endUnit, setEndUnit] = useState("default");
+  const [endUnitAuto, setEndUnitAuto] = useState(false); // True if 'auto' is selected for end unit , false othereise
+  const [startNumVal, setStartNumVal] = useState(NaN);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
-  const [resultsVal, setResultsVal] = useState(-1); // The numerator
+  const [resultsVal, setResultsVal] = useState(-1); // The converted value
   const [triggerWarning, setTriggerWarning] = useState(false); // Controls animation of instructions heading
   const mainSectionRef = useRef(null);
   const subSectionRef = useRef(null);
 
   useEffect(() => {
     if (props.attemptCalculate) {
-      calculate(startValString, startBase, endBase);
+      let num = startNumVal;
+      let start = startUnit;
+      let end = endUnit;
+
+      if (start == "default" || end == "default" || isNaN(num)) {
+        setTriggerWarning(true);
+        props.setAttemptCalculate(false);
+        props.setShowResults(false);
+        // Scroll to red instructions
+        if (subSectionRef.current) {
+          props.smoothScrollTo(subSectionRef);
+        }
+        return;
+      }
+      calculate(num, start, end);
     }
   }, [props.attemptCalculate]);
+
+  useEffect(() => {
+    if (!props.actuallyShowResults) {
+      if (endUnitAuto) {
+        setEndUnit("auto");
+        setEndUnitAuto(false);
+      }
+    }
+  }, [props.actuallyShowResults]);
 
   return (
     <div ref={mainSectionRef}>
@@ -30,7 +55,7 @@ const BaseConversionSection = (props) => {
         </span>
 
         <span className={styles.mainSectionLabel}>
-          <h4>Number Base Conversion</h4>
+          <h4>Unit Conversion for Measurements</h4>
         </span>
       </div>
 
@@ -50,6 +75,7 @@ const BaseConversionSection = (props) => {
               ? subSectionRef
               : mainSectionRef;
             setTimeout(() => {
+              props.setDummyVar(!props.dummyVar);
               props.smoothScrollTo(target);
             }, 420);
           }}
@@ -67,21 +93,21 @@ const BaseConversionSection = (props) => {
           >
             {props.actuallyShowResults ? (
               <ResultsSection
-                startB={startBase}
-                endB={endBase}
-                startStr={startValString}
+                startNum={startNumVal}
+                startU={startUnit}
+                endU={endUnit}
+                decPlaces={decimalPlaces}
                 result={resultsVal}
-                decimalPlaces={decimalPlaces}
                 addCommas={props.addCommasToNumber}
               />
             ) : (
               <InputSection
-                startB={startBase}
-                endB={endBase}
-                startStr={startValString}
-                setStartStrFunc={setStartValString}
-                setStartBFunc={setstartBase}
-                setEndBFunc={setendBase}
+                startNum={startNumVal}
+                startU={startUnit}
+                endU={endUnit}
+                setStartNumFunc={setStartNumVal}
+                setStartUFunc={setStartUnit}
+                setEndUFunc={setEndUnit}
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
                 setDecPlacesFunc={setDecimalPlaces}
@@ -92,36 +118,22 @@ const BaseConversionSection = (props) => {
       </div>
     </div>
   );
-
-  function calculate(num, startB, endB) {
-    if (startB == 0 || isNaN(startB) || endB == 0 || isNaN(endB)) {
-      props.setAttemptCalculate(false);
-      setTriggerWarning(true);
-      props.setShowResults(false);
-      // Scroll to red instructions
-      if (subSectionRef.current) {
-        props.smoothScrollTo(subSectionRef);
-      }
-      return;
+  function calculate(val, startU, endU) {
+    let resultV;
+    if (endUnit == "auto") {
+      const resultObj = convert(val).from(startU).toBest();
+      endU = resultObj.unit;
+      resultV = resultObj.val;
+      setEndUnit(endU);
+      setEndUnitAuto(true);
+    } else {
+      resultV = convert(val).from(startU).to(endU);
     }
 
-    const decResult = parseInt(num, startB);
-    if (isNaN(decResult)) {
-      props.setAttemptCalculate(false);
-      setTriggerWarning(true);
-      props.setShowResults(false);
-      // Scroll to red instructions
-      if (subSectionRef.current) {
-        props.smoothScrollTo(subSectionRef);
-      }
-      return;
-    }
-    setStartValString(decResult.toString(startB).toUpperCase());
-    const finalResult = decResult.toString(endB).toUpperCase();
-    console.log("decR: " + decResult + ", finR: " + finalResult);
-    setResultsVal(finalResult);
-
+    setResultsVal(resultV);
+    console.log("attempted actual conversion: ");
+    console.log(resultV);
     props.setShowResults(true);
   }
 };
-export default BaseConversionSection;
+export default UnitConversionSection;
