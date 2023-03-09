@@ -264,10 +264,10 @@ function Layout(props) {
     const diffShowRes = actuallyShowResults != showResults;
     const scrollDist = containerRef.current.scrollTop - 15;
 
-    let scrollDelay =
-      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
-    scrollDelay *= 0.007;
-    scrollDelay = Math.abs(scrollDelay);
+    let scrollDelay = scrollDist * 0.65 * 0.001;
+    //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
+    // scrollDelay *= 0.007;
+    // scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
     if (scrollDist <= 20) {
@@ -358,7 +358,8 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop(manualScrolling = true) {
+  function scrollToTop(manualScrolling = false) {
+    //console.log("beginning scroll...");
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
         top: 0,
@@ -412,6 +413,7 @@ function Layout(props) {
   }
 
   function scrollSmoothlyTo(scrollPos) {
+    console.log("start scroll..");
     const container = containerRef.current;
     if (!container) return;
     const distToCover = scrollPos - container.scrollTop;
