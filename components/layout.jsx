@@ -265,8 +265,8 @@ function Layout(props) {
     const scrollDist = containerRef.current.scrollTop - 15;
 
     let scrollDelay =
-      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(16 / 17);
-    scrollDelay *= 0.0075;
+      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
+    scrollDelay *= 0.007;
     scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
@@ -426,13 +426,13 @@ function Layout(props) {
       if (container.scrollTop > 1) {
         let scrollStep = 0;
         scrollStep = scrollPos - container.scrollTop;
-        scrollStep /= 18;
+        scrollStep /= 8;
         if (difference > 0.0) {
           scrollStep *= difference;
           scrollStep *= 0.0625;
           scrollStep *= 2;
           //console.log("diff: " + difference);
-          if (scrollStep > 10) scrollStep = 10;
+          //if (scrollStep > 10) scrollStep = 10;
 
           containerRef.current?.scrollBy({
             top: scrollStep,
