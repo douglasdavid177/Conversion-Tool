@@ -263,7 +263,7 @@ function Layout(props) {
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
     const scrollDist = containerRef.current.scrollTop - 2;
-    //console.log("scroll dist: " + scrollDist);
+
     let scrollDelay =
       Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(19 / 20);
     scrollDelay *= 0.0038;
@@ -371,7 +371,7 @@ function Layout(props) {
   }
   function startScrollingTowardstop() {
     clearInterval(scrollRoutine.current);
-    const routine = setInterval(scrollTowardsTop, 4);
+    const routine = setInterval(scrollTowardsTop, 2);
     scrollRoutine.current = routine;
   }
 
@@ -379,7 +379,7 @@ function Layout(props) {
     if (!containerRef.current) return;
     let totalScrollLeft = containerRef.current?.scrollTop;
     if (totalScrollLeft > 0.5) {
-      let scrollStep = totalScrollLeft / 20;
+      let scrollStep = totalScrollLeft / 30;
       if (scrollStep > 15) scrollStep = 15;
 
       containerRef.current?.scrollBy({
