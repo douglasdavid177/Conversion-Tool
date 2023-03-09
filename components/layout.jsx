@@ -371,7 +371,7 @@ function Layout(props) {
   }
   function startScrollingTowardstop() {
     clearInterval(scrollRoutine.current);
-    const routine = setInterval(scrollTowardsTop, 2);
+    const routine = setInterval(scrollTowardsTop, 4);
     scrollRoutine.current = routine;
   }
 
@@ -379,7 +379,7 @@ function Layout(props) {
     if (!containerRef.current) return;
     let totalScrollLeft = containerRef.current?.scrollTop;
     if (totalScrollLeft > 0.5) {
-      let scrollStep = totalScrollLeft / 30;
+      let scrollStep = totalScrollLeft / 20;
       if (scrollStep > 15) scrollStep = 15;
 
       containerRef.current?.scrollBy({
