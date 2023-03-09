@@ -262,15 +262,15 @@ function Layout(props) {
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
-    const scrollDist = containerRef.current.scrollTop - 2;
+    const scrollDist = containerRef.current.scrollTop - 15;
 
     let scrollDelay =
-      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(19 / 20);
-    scrollDelay *= 0.0038;
+      Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
+    scrollDelay *= 0.0075;
     scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
-    if (scrollDist <= 1) {
+    if (scrollDist <= 30) {
       //console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
@@ -366,13 +366,83 @@ function Layout(props) {
         behavior: "smooth",
       });
     } else {
-      startScrollingTowardstop();
+      startScrollingTowardsTop();
     }
   }
-  function startScrollingTowardstop() {
-    clearInterval(scrollRoutine.current);
-    const routine = setInterval(scrollTowardsTop, 4);
-    scrollRoutine.current = routine;
+  function startScrollingTowardsTop() {
+    scrollSmoothlyTo(0);
+    return;
+    const container = containerRef.current;
+    if (!container) return;
+    console.log("dist: " + container.scrollTop);
+
+    let starttime = null;
+    let prevtime = null;
+
+    // const totalDist = container.scrollTop;
+    // const durationMS = totalDist / 1.75;
+    requestAnimationFrame(function scroll(timestamp) {
+      if (starttime == null) starttime = timestamp;
+      if (prevtime == null) prevtime = starttime;
+
+      // const elapsed = timestamp - starttime;
+      // const progressPercent = elapsed / durationMS;
+      const difference = timestamp - prevtime;
+      // const differencePercent = difference / durationMS;
+      // const scrollAmount = differencePercent * totalDist;
+
+      if (container.scrollTop > 1) {
+        const totalScrollLeft = container.scrollTop;
+        let scrollStep = totalScrollLeft / 10;
+        if (difference > 0.0) {
+          scrollStep *= difference;
+          scrollStep *= 0.0625;
+          console.log("diff: " + difference);
+        }
+        //if (scrollStep > 25) scrollStep = 25;
+        containerRef.current?.scrollBy({
+          top: -scrollStep,
+          left: 0,
+          behavior: "auto",
+        });
+        prevtime = timestamp;
+        requestAnimationFrame(scroll);
+      }
+    });
+  }
+
+  function scrollSmoothlyTo(scrollPos) {
+    const container = containerRef.current;
+    if (!container) return;
+    const distToCover = scrollPos - container.scrollTop;
+    let starttime = null;
+    let prevtime = null;
+
+    requestAnimationFrame(function scroll(timestamp) {
+      if (starttime == null) starttime = timestamp;
+      if (prevtime == null) prevtime = starttime;
+      const difference = timestamp - prevtime;
+
+      if (container.scrollTop > 1) {
+        let scrollStep = 0;
+        scrollStep = scrollPos - container.scrollTop;
+        scrollStep /= 8;
+        if (difference > 0.0) {
+          scrollStep *= difference;
+          scrollStep *= 0.0625;
+          scrollStep *= 1;
+          //console.log("diff: " + difference);
+
+          containerRef.current?.scrollBy({
+            top: scrollStep,
+            left: 0,
+            behavior: "auto",
+          });
+        }
+        prevtime = timestamp;
+        requestAnimationFrame(scroll);
+      }
+    });
   }
 
   function scrollTowardsTop() {
