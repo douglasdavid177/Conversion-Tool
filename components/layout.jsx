@@ -264,13 +264,13 @@ function Layout(props) {
     const diffShowRes = actuallyShowResults != showResults;
     const scrollDist = containerRef.current.scrollTop - 15;
 
-    let scrollDelay = scrollDist * 0.65 * 0.001;
+    let scrollDelay = (scrollDist > 0 ? scrollDist : 0) * 0.65 * 0.001;
     //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
     // scrollDelay *= 0.007;
     // scrollDelay = Math.abs(scrollDelay);
     setScrollTopDelay(scrollDelay);
 
-    if (scrollDist <= 20) {
+    if (scrollDist < 15) {
       //console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
@@ -281,7 +281,7 @@ function Layout(props) {
 
       setScrollTopDelay(0);
     } else {
-      console.log("not top...");
+      // console.log("not top...");
 
       if (!waitTilTop) {
         if (diffKey) {
@@ -311,7 +311,6 @@ function Layout(props) {
     // if (newKey > 1) setShowHeading(false);
     // if (newKey <= 1) setShowButton(false);
     //console.log(scrollToTopDelay);
-    setActualMainSectionKey(newKey);
 
     //setTimeout(() => {}, 0);
 
@@ -342,6 +341,8 @@ function Layout(props) {
     }
 
     router.push(route);
+    setActualMainSectionKey(newKey);
+
     // console.log(router.basePath);
   }
   function scrollUpSlightly() {
