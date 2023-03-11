@@ -456,8 +456,6 @@ function Layout(props) {
 
     requestAnimationFrame(function scroll(timestamp) {
       if (starttime == null) starttime = timestamp;
-      if (prevtime == null) prevtime = starttime;
-      const difference = timestamp - prevtime;
 
       const elapsed = timestamp - starttime;
       const elapsed01 = elapsed / duration;
@@ -469,12 +467,11 @@ function Layout(props) {
 
         const scrollKeyframe = startPos + scrollAmount;
 
-        containerRef.current?.scrollTo({
+        container.scrollTo({
           top: scrollKeyframe,
-          left: 0,
-          behavior: "auto",
+          //left: 0,
+          behavior: "instant",
         });
-        prevtime = timestamp;
         requestAnimationFrame(scroll);
       }
     });
