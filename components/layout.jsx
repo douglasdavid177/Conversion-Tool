@@ -424,7 +424,6 @@ function Layout(props) {
     // console.log("dist to scroll: " + distToCover);
     //console.log("duration: " + duration);
     let starttime = null;
-    let prevtime = null;
     const startPos = container.scrollTop;
 
     // requestAnimationFrame(function scroll(timestamp) {
@@ -474,6 +473,12 @@ function Layout(props) {
         });
         requestAnimationFrame(scroll);
       }
+    });
+
+    container.scrollTo({
+      top: startPos + distToCover,
+      //left: 0,
+      behavior: "instant",
     });
   }
 
