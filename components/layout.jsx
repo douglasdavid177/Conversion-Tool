@@ -359,7 +359,7 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop(manualScrolling = true) {
+  function scrollToTop(manualScrolling = false) {
     //console.log("beginning scroll...");
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
