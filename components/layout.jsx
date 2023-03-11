@@ -359,7 +359,7 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop(manualScrolling = false) {
+  function scrollToTop(manualScrolling = true) {
     //console.log("beginning scroll...");
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
@@ -413,40 +413,75 @@ function Layout(props) {
     // });
   }
 
-  function scrollSmoothlyTo(scrollPos) {
+  async function scrollSmoothlyTo(targetScrollPos, duration = -1) {
     console.log("start scroll..");
     const container = containerRef.current;
     if (!container) return;
-    const distToCover = scrollPos - container.scrollTop;
+    const distToCover = targetScrollPos - container.scrollTop;
+    if (duration == -1) {
+      duration = scrollToTopDelay * 1000;
+    }
+    // console.log("dist to scroll: " + distToCover);
+    //console.log("duration: " + duration);
     let starttime = null;
     let prevtime = null;
+    const startPos = container.scrollTop;
+
+    // requestAnimationFrame(function scroll(timestamp) {
+    //   if (starttime == null) starttime = timestamp;
+    //   if (prevtime == null) prevtime = starttime;
+    //   const difference = timestamp - prevtime;
+
+    //   if (container.scrollTop > 1) {
+    //     let scrollStep = 0;
+    //     scrollStep = targetScrollPos - container.scrollTop;
+    //     scrollStep /= 8;
+    //     if (difference > 0.0) {
+    //       scrollStep *= difference;
+    //       scrollStep *= 0.0625;
+    //       scrollStep *= 2;
+    //       //console.log("diff: " + difference);
+    //       //if (scrollStep > 10) scrollStep = 10;
+
+    //       containerRef.current?.scrollBy({
+    //         top: scrollStep,
+    //         left: 0,
+    //         behavior: "auto",
+    //       });
+    //     }
+    //     prevtime = timestamp;
+    //     requestAnimationFrame(scroll);
+    //   }
+    // });
 
     requestAnimationFrame(function scroll(timestamp) {
       if (starttime == null) starttime = timestamp;
       if (prevtime == null) prevtime = starttime;
       const difference = timestamp - prevtime;
 
-      if (container.scrollTop > 1) {
-        let scrollStep = 0;
-        scrollStep = scrollPos - container.scrollTop;
-        scrollStep /= 8;
-        if (difference > 0.0) {
-          scrollStep *= difference;
-          scrollStep *= 0.0625;
-          scrollStep *= 2;
-          //console.log("diff: " + difference);
-          //if (scrollStep > 10) scrollStep = 10;
+      const elapsed = timestamp - starttime;
+      const elapsed01 = elapsed / duration;
+      // console.log("elapsed01: " + elapsed01);
 
-          containerRef.current?.scrollBy({
-            top: scrollStep,
-            left: 0,
-            behavior: "auto",
-          });
-        }
+      if (elapsed01 < 1) {
+        const scrollAmount = bezier01(elapsed01) * distToCover;
+        //console.log("bezier01: " + bezier01(elapsed01));
+
+        const scrollKeyframe = startPos + scrollAmount;
+
+        containerRef.current?.scrollTo({
+          top: scrollKeyframe,
+          left: 0,
+          behavior: "auto",
+        });
         prevtime = timestamp;
         requestAnimationFrame(scroll);
       }
     });
+  }
+
+  function bezier01(t) {
+    return t * t * (3 - 2 * t);
   }
 
   function scrollTowardsTop() {
