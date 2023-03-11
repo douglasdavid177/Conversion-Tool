@@ -41,7 +41,7 @@ function Layout(props) {
     // scrollToTop(mainSectionKey == numberFromRoute(router.asPath));
     scrollToTop();
     //checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
-    checkScroll();
+    checkScroll(false);
     //resetInput();
   }, [mainSectionKey]);
 
