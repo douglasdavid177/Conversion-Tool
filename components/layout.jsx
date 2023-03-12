@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { animateScroll } from "react-scroll";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
 import HomeSection from "../components/homesection";
@@ -78,6 +79,7 @@ function Layout(props) {
           className={styles.content}
           ref={containerRef}
           onScroll={checkScroll}
+          id="scrollable"
         >
           <LayoutGroup>
             <motion.div>
@@ -359,7 +361,7 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop(manualScrolling = false) {
+  function scrollToTop(manualScrolling = true) {
     //console.log("beginning scroll...");
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
@@ -372,6 +374,14 @@ function Layout(props) {
     }
   }
   function startScrollingTowardsTop() {
+    animateScroll.scrollTo(0, {
+      duration: scrollToTopDelay * 1000,
+      delay: 0,
+      smooth: true,
+      containerId: "scrollable",
+    });
+    return;
+
     scrollSmoothlyTo(0);
     return;
     // const container = containerRef.current;
