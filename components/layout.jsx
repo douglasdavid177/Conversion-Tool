@@ -22,6 +22,7 @@ function Layout(props) {
   const [showButton, setShowButton] = useState(false); // Controls whether app title is shown or not
   const [scrollToTopDelay, setScrollTopDelay] = useState(0);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
+  const [currentlyAutoScrolling, setCurrentlyAutoScrolling] = useState(false);
   const scrollRoutine = useRef();
   const containerRef = useRef();
   const router = useRouter();
@@ -261,6 +262,7 @@ function Layout(props) {
     if (!containerRef.current) {
       return;
     }
+    //if (actualMainSectionKey != numberFromRoute(router.asPath)) return;
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
@@ -270,7 +272,6 @@ function Layout(props) {
     //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
     // scrollDelay *= 0.007;
     // scrollDelay = Math.abs(scrollDelay);
-    setScrollTopDelay(scrollDelay);
 
     if (scrollDist < 15) {
       //console.log("top...");
@@ -292,6 +293,7 @@ function Layout(props) {
         }
       }
     }
+    if (!currentlyAutoScrolling) setScrollTopDelay(scrollDelay);
 
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
@@ -374,6 +376,10 @@ function Layout(props) {
     }
   }
   function startScrollingTowardsTop() {
+    setCurrentlyAutoScrolling(true);
+    setTimeout(() => {
+      setCurrentlyAutoScrolling(false);
+    }, scrollToTopDelay * 1000);
     animateScroll.scrollTo(0, {
       duration: scrollToTopDelay * 1000,
       delay: 0,
@@ -423,7 +429,7 @@ function Layout(props) {
     // });
   }
 
-  async function scrollSmoothlyTo(targetScrollPos, duration = -1) {
+  function scrollSmoothlyTo(targetScrollPos, duration = -1) {
     console.log("start scroll..");
     const container = containerRef.current;
     if (!container) return;
