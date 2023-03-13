@@ -270,8 +270,8 @@ function Layout(props) {
 
     let scrollDelay = (scrollDist > 0 ? scrollDist : 0) * 0.65 * 0.001; // Lniear increase, result in seconds
     scrollDelay *= scrollDelay; // Now it's a square function
-    scrollDelay /= 0.5; // Bring it back down based on 'average time'
-    scrollDelay += 0.25;
+    scrollDelay /= 0.6; // Bring it back down based on 'average time'
+    scrollDelay += 0.2;
 
     //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
     // scrollDelay *= 0.007;
