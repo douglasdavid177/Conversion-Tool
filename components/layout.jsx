@@ -380,13 +380,14 @@ function Layout(props) {
     }
   }
   function startScrollingTowardsTop() {
+    let scrollDelayMS = (scrollToTopDelay > 0 ? scrollToTopDelay : 0.2) * 1000;
     setCurrentlyAutoScrolling(true);
     setTimeout(() => {
       setCurrentlyAutoScrolling(false);
-    }, scrollToTopDelay * 1000);
-    console.log("delay when scroll satrts: " + scrollToTopDelay);
+    }, scrollDelayMS);
+    console.log("delay when scroll starts (ms): " + scrollDelayMS);
     animateScroll.scrollTo(0, {
-      duration: scrollToTopDelay * 1000,
+      duration: scrollDelayMS,
       delay: 0,
       smooth: true,
       containerId: "scrollable",
