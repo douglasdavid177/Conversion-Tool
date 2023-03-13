@@ -266,11 +266,11 @@ function Layout(props) {
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
-    const scrollDist = containerRef.current.scrollTop - 15;
+    const scrollDist = containerRef.current.scrollTop - 3;
 
     let scrollDelay = (scrollDist > 0 ? scrollDist : 0) * 0.65 * 0.001; // Lniear increase, result in seconds
     scrollDelay *= scrollDelay; // Now it's a square function
-    scrollDelay /= 0.65; // Bring it back down based on 'average time'
+    scrollDelay /= 0.5; // Bring it back down based on 'average time'
     scrollDelay += 0.25;
 
     //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
@@ -278,7 +278,7 @@ function Layout(props) {
     // scrollDelay = Math.abs(scrollDelay);
     if (!currentlyAutoScrolling) setScrollTopDelay(scrollDelay);
 
-    if (scrollDist < 15) {
+    if (scrollDist < 3) {
       //console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
