@@ -60,7 +60,9 @@ function Layout(props) {
   // }, [actualMainSectionKey]);
 
   useEffect(() => {
-    scrollToTop();
+    if (showResults) {
+      scrollToTop();
+    }
     checkScroll();
   }, [showResults]);
 
@@ -232,7 +234,7 @@ function Layout(props) {
                     <div className={`${styles.buttonHolder}, ${"debuggin"}`}>
                       <button
                         onClick={() => {
-                          showResults ? resetInput() : gotoResults();
+                          showResults ? resetInput(true) : gotoResults();
                         }}
                         className={
                           showResults ? styles.secondary : styles.primary
@@ -266,6 +268,14 @@ function Layout(props) {
         setSectionKey={setMainSectionKey}
         numberFromRoute={numberFromRoute}
       />
+      <div className={styles.loadingSpinnerWrapper}>
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ ease: "linear", duration: 1, repeat: Infinity }}
+        >
+          <div className={styles.loadingSpinner}></div>
+        </motion.div>
+      </div>
     </div>
   );
 
@@ -545,9 +555,12 @@ function Layout(props) {
   function gotoResults() {
     setAttemptCalculate(true);
   }
-  function resetInput() {
+  function resetInput(scrollToTheTop = false) {
     setShowResults(false);
     setAttemptCalculate(false);
+    if (scrollToTheTop) {
+      scrollToTop();
+    }
   }
   function smoothScrollTo(targetRef) {
     // Attempt trigger rerender to ensure no layout transitions are stuck

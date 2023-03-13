@@ -198,6 +198,24 @@ button.secondary:active::before {
   bottom: 0;
   width: 85%;
 }
+.loadingSpinnerWrapper {
+  height: 2rem;
+  width: 2rem;
+  background-color: var(--turquoise);
+  background-color: transparent;
+  /* background-color: red; */
+  position: fixed;
+  top: 5rem;
+  padding-top: calc(1rem - 5px);
+  right: 1.5rem;
+}
+
+.loadingSpinner {
+  background-color: var(--turquoise);
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+}
 /* Media queries adjust the amount of padding on the sides of the application 
 based on the width of the screen, to better accommodate smaller devices 
 as well as larger ones.   The application uses a mobile first design. */
