@@ -268,7 +268,11 @@ function Layout(props) {
     const diffShowRes = actuallyShowResults != showResults;
     const scrollDist = containerRef.current.scrollTop - 15;
 
-    let scrollDelay = (scrollDist > 0 ? scrollDist : 0) * 0.65 * 0.001;
+    let scrollDelay = (scrollDist > 0 ? scrollDist : 0) * 0.65 * 0.001; // Lniear increase, result in seconds
+    scrollDelay *= scrollDelay; // Now it's a square function
+    scrollDelay /= 0.65; // Bring it back down based on 'average time'
+    scrollDelay += 0.25;
+
     //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
     // scrollDelay *= 0.007;
     // scrollDelay = Math.abs(scrollDelay);
@@ -380,6 +384,7 @@ function Layout(props) {
     setTimeout(() => {
       setCurrentlyAutoScrolling(false);
     }, scrollToTopDelay * 1000);
+    console.log("delay when scroll satrts: " + scrollToTopDelay);
     animateScroll.scrollTo(0, {
       duration: scrollToTopDelay * 1000,
       delay: 0,
