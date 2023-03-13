@@ -9,6 +9,11 @@ import UnitConversionSection from "../pages/unitconversionsection";
 import BaseConversionSection from "../pages/baseconversionsection";
 import CurrencyExchangeSection from "../pages/currencyexhangesection";
 import NavPanel from "../components/navpanel";
+import {
+  getCurrenciesObject,
+  getCurrencyRatesObject,
+  ConvertBetweenCurrencies,
+} from "../apifunctions";
 import { useRouter } from "next/router";
 
 function Layout(props) {
@@ -21,6 +26,9 @@ function Layout(props) {
   const [showHeading, setShowHeading] = useState(false); // Controls whether app title is shown or not
   const [showButton, setShowButton] = useState(false); // Controls whether app title is shown or not
   const [scrollToTopDelay, setScrollTopDelay] = useState(0);
+  const [currencyObject, setcurrencyObject] = useState(null);
+  const [currencyRatesObj, setCurrencyRatesObj] = useState(null);
+  const [curAPITimestamp, setcurAPITimestamp] = useState(null);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const [currentlyAutoScrolling, setCurrentlyAutoScrolling] = useState(false);
   const scrollRoutine = useRef();
@@ -170,6 +178,10 @@ function Layout(props) {
                       dummyVar,
                       smoothScrollTo,
                       addCommasToNumber,
+                      currencyObject,
+                      currencyRatesObj,
+                      getCurrencies,
+                      curAPITimestamp,
                     })}
                   </motion.div>
                 )}
@@ -607,6 +619,23 @@ function Layout(props) {
       setShowHeading(false);
       setShowButton(true);
     }
+  }
+
+  async function getCurrencies(justRates = false) {
+    if (justRates) {
+      const rates = await getCurrencyRatesObject();
+      setCurrencyRatesObj(rates);
+      setcurAPITimestamp(Date.now());
+    }
+    if (currencyObject != null && currencyRatesObj != null) return; // If these are already set, then there's no need to fetch from api again
+
+    const [currencies, rates] = await Promise.all([
+      getCurrenciesObject(),
+      getCurrencyRatesObject(),
+    ]);
+    setcurrencyObject(currencies);
+    setCurrencyRatesObj(rates);
+    setcurAPITimestamp(Date.now());
   }
 }
 export default Layout;

@@ -11,7 +11,14 @@ const ResultsSection = ({
   currencyObject,
   currencyRatesObj,
 }) => {
-  let formattedResult = result;
+  let decPlaces = -1;
+  decPlaces = currencyObject[toC]?.decimal_units;
+  // console.log("decplaces: " + decPlaces);
+  // console.log(decPlaces);
+  let formattedResult = result.toFixed(
+    // If decplaces is undefined, use same amount of decimals as input
+    decPlaces == -1 ? decimalPlaces : decPlaces
+  );
 
   const fromCStyle =
     currencyRatesObj[fromC] < currencyRatesObj[toC]
@@ -27,7 +34,7 @@ const ResultsSection = ({
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
-        {result} {toC}
+        {formattedResult} {toC}
       </h1>
       <h3 className={styles.description}>
         The amount of <span className={styles.correct}>{startStr} </span>

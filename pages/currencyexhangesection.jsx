@@ -3,11 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import InputSection from "../components/currencyex/inputsectioncurrency";
 import ResultsSection from "../components/currencyex/resultssectioncurrency";
 import styles from "../styles/mainsection.module.css";
-import {
-  getCurrenciesObject,
-  getCurrencyRatesObject,
-  ConvertBetweenCurrencies,
-} from "../apifunctions";
+import { ConvertBetweenCurrencies } from "../apifunctions";
 
 const CurrencyExchangeSection = (props) => {
   const [startValString, setStartValString] = useState("");
@@ -20,9 +16,6 @@ const CurrencyExchangeSection = (props) => {
   const [prevLoading, setPrevLoading] = useState(loading);
   const [curHeight, setCurHeight] = useState(2);
   const [prevHeight, setPrevHeight] = useState(3);
-  const [currencyObject, setcurrencyObject] = useState(null);
-  const [currencyRatesObj, setCurrencyRatesObj] = useState(null);
-
   const [curKey, setCurKey] = useState("input");
   const [prevKey, setPrevKey] = useState("input");
 
@@ -32,15 +25,7 @@ const CurrencyExchangeSection = (props) => {
   const [timer, setTimer] = useState(null);
 
   useEffect(() => {
-    async function getCurrencies() {
-      const [currencies, rates] = await Promise.all([
-        getCurrenciesObject(),
-        getCurrencyRatesObject(),
-      ]);
-      setcurrencyObject(currencies);
-      setCurrencyRatesObj(rates);
-    }
-    getCurrencies();
+    props.getCurrencies();
     //getRates();
   }, []);
 
@@ -179,8 +164,8 @@ const CurrencyExchangeSection = (props) => {
           triggerW={triggerWarning}
           setTriggerFunc={setTriggerWarning}
           setDecPlacesFunc={setDecimalPlaces}
-          currencyObject={currencyObject}
-          currencyRatesObj={currencyRatesObj}
+          currencyObject={props.currencyObject}
+          currencyRatesObj={props.currencyRatesObj}
         />
       );
     }
@@ -199,8 +184,8 @@ const CurrencyExchangeSection = (props) => {
         result={resultsVal}
         decimalPlaces={decimalPlaces}
         addCommas={props.addCommasToNumber}
-        currencyObject={currencyObject}
-        currencyRatesObj={currencyRatesObj}
+        currencyObject={props.currencyObject}
+        currencyRatesObj={props.currencyRatesObj}
       />
     );
   }
@@ -210,8 +195,8 @@ const CurrencyExchangeSection = (props) => {
     if (
       val == 0 ||
       isNaN(val) ||
-      isNaN(currencyRatesObj[fromC]) ||
-      isNaN(currencyRatesObj[toC])
+      isNaN(props.currencyRatesObj[fromC]) ||
+      isNaN(props.currencyRatesObj[toC])
     ) {
       props.setAttemptCalculate(false);
 
@@ -230,9 +215,14 @@ const CurrencyExchangeSection = (props) => {
     props.setShowResults(true);
 
     await waitForTransition();
-    const [answer, obj] = await Promise.all([
-      ConvertBetweenCurrencies(fromC, toC, val),
-      getCurrencyRatesObject(),
+    await simulateLoading();
+    const refetch = Math.abs(props.curAPITimestamp - Date.now()) > 300000; // Greater than 5 minutes
+    if (refetch) {
+      props.getCurrencies(true);
+    }
+    const [answer] = await Promise.all([
+      ConvertBetweenCurrencies(fromC, toC, val, props.currencyRatesObj),
+      //getCurrencyRatesObject(),
     ]);
 
     // console.log("answer: ");
@@ -243,15 +233,20 @@ const CurrencyExchangeSection = (props) => {
     //   await ConvertBetweenCurrencies(fromC, toC, val);
 
     setResultsVal(answer);
-    setCurrencyRatesObj(obj);
+    //setCurrencyRatesObj(obj);
     setLoading(false);
   }
 
   async function grabFromOnline() {
-    await new Promise((resolve) => setTimer(setTimeout(resolve, 2500))); // Creates a timer and sets it to the state variable at the same timd
+    await new Promise((resolve) => setTimer(setTimeout(resolve, 2500)));
   }
   async function waitForTransition() {
-    await new Promise((resolve) => setTimer(setTimeout(resolve, 345))); // Creates a timer and sets it to the state variable at the same timd
+    await new Promise((resolve) => setTimer(setTimeout(resolve, 800)));
+  }
+  async function simulateLoading() {
+    await new Promise((resolve) =>
+      setTimer(setTimeout(resolve, Math.floor(Math.random() * 1000)))
+    );
   }
 };
 export default CurrencyExchangeSection;
