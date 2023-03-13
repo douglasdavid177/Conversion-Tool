@@ -268,14 +268,14 @@ function Layout(props) {
         setSectionKey={setMainSectionKey}
         numberFromRoute={numberFromRoute}
       />
-      <div className={styles.loadingSpinnerWrapper}>
+      {/* <div className={styles.loadingSpinnerWrapper}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ ease: "linear", duration: 1, repeat: Infinity }}
         >
           <div className={styles.loadingSpinner}></div>
         </motion.div>
-      </div>
+      </div> */}
     </div>
   );
 
@@ -389,7 +389,7 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop(manualScrolling = true) {
+  function scrollToTop(manualScrolling = false) {
     //console.log("beginning scroll...");
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
