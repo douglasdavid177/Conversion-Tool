@@ -276,6 +276,7 @@ function Layout(props) {
     //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
     // scrollDelay *= 0.007;
     // scrollDelay = Math.abs(scrollDelay);
+    if (!currentlyAutoScrolling) setScrollTopDelay(scrollDelay);
 
     if (scrollDist < 15) {
       //console.log("top...");
@@ -297,7 +298,6 @@ function Layout(props) {
         }
       }
     }
-    if (!currentlyAutoScrolling) setScrollTopDelay(scrollDelay);
 
     // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
     // then update actual to match desired
