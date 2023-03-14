@@ -198,18 +198,24 @@ button.secondary:active::before {
   bottom: 0;
   width: 85%;
 }
-.loadingSpinnerWrapper {
-  height: 2rem;
+.loadingBar {
+  height: 0.25rem;
   width: 2rem;
   background-color: var(--turquoise);
   background-color: transparent;
+  background-color: hsla(0, 0%, 30%, 0.75);
   /* background-color: red; */
   position: fixed;
-  top: 5rem;
-  padding-top: calc(1rem - 5px);
+  top: 4rem;
+  /* padding-top: calc(1rem - 5px); */
   right: 1.5rem;
 }
 
+.loadingBarProgress {
+  height: 100%;
+  background-color: var(--turquoise);
+  width: 0%;
+}
 .loadingSpinner {
   background-color: var(--turquoise);
   height: 10px;

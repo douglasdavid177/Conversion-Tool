@@ -31,6 +31,11 @@ function Layout(props) {
   const [curAPITimestamp, setcurAPITimestamp] = useState(null);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const [currentlyAutoScrolling, setCurrentlyAutoScrolling] = useState(false);
+  const [loadingPercent01, setLoadingPercen01] = useState(0.7);
+  const [scrollPosAtLoadStart, setScrollPosAtLoadStart] = useState(0);
+  const [loadingBarActive, setLoadingBarActive] = useState(false);
+  const barVal = useRef(0.5);
+  const loadingBarRef = useRef();
   const scrollRoutine = useRef();
   const containerRef = useRef();
   const router = useRouter();
@@ -276,6 +281,34 @@ function Layout(props) {
           <div className={styles.loadingSpinner}></div>
         </motion.div>
       </div> */}
+      <AnimatePresence>
+        {loadingPercent01 <= 1 && (
+          <motion.div
+            key={"loader"}
+            //initial={{ translateY: 50, opacity: 0 }}
+            animate={{
+              translateY: 0,
+              opacity: 1,
+            }}
+            exit={{
+              translateY: 2.5,
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.7,
+              delay: 0,
+            }}
+          >
+            <div className={styles.loadingBar}>
+              <div
+                className={styles.loadingBarProgress}
+                ref={loadingBarRef}
+                //style={{ width: `${loadingPercent01 * 100}%` }}
+              ></div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 
@@ -389,8 +422,70 @@ function Layout(props) {
       behavior: "smooth",
     });
   }
-  function scrollToTop(manualScrolling = false) {
+  function fillLoadingBar(ScrolldurationMS, exitAnimDuratinMS) {
+    if (ScrolldurationMS == 0) ScrolldurationMS = 1;
+    //const totalDur = ScrolldurationMS + exitAnimDuratinMS;
+    let seperationPercent01 = ScrolldurationMS * 0.001;
+    if (seperationPercent01 < 0.2) seperationPercent01 = 0.2;
+    if (seperationPercent01 > 0.75) seperationPercent01 = 0.75;
+    const remainingMarginPercent01 = 1 - seperationPercent01;
+    //seperationPoint = totalDur * seperationPercent01;
+    //console.log("sep point: " + seperationPercent01);
+
+    let starttime = null;
+    let frameCounter = 0;
+    requestAnimationFrame(function anim() {
+      frameCounter++;
+      if (starttime == null) starttime = Date.now();
+      //console.log("animation step");
+      //console.log(Date.now());
+      //console.log(Date.now());
+      const totalElapsedMS = Date.now() - starttime;
+      const totalProgress01 =
+        totalElapsedMS / (ScrolldurationMS + exitAnimDuratinMS);
+
+      const durationThruScroll =
+        totalElapsedMS > ScrolldurationMS ? ScrolldurationMS : totalElapsedMS;
+      const durationThruExitAnim =
+        totalElapsedMS - ScrolldurationMS < 0
+          ? 0
+          : totalElapsedMS - ScrolldurationMS;
+
+      const barWidth =
+        (durationThruScroll / ScrolldurationMS) * seperationPercent01 +
+        (durationThruExitAnim / exitAnimDuratinMS) * remainingMarginPercent01;
+
+      //if (frameCounter % 1 == 0) setloadingBarWidthAsync(barWidth);
+      //barVal.current = barWidth;
+      //setLoadingPercen01(barWidth);
+      //console.log("width: " + loadingBarRef.current?.style.width);
+      const barStyle = loadingBarRef.current?.style;
+      //console.log("style: ");
+      //console.log(barStyle.width);
+      if (barStyle) {
+        loadingBarRef.current.style.width = `${barWidth * 100}%`;
+      }
+
+      if (barWidth < 1) {
+        requestAnimationFrame(() => {
+          //setLoadingPercen01(barWidth);
+
+          anim();
+        });
+        //setLoadingPercen01(barWidth);
+      } else {
+        setLoadingPercen01(1.001);
+        return;
+      }
+    });
+  }
+
+  function scrollToTop() {
+    let manualScrolling = false;
     //console.log("beginning scroll...");
+    setLoadingPercen01(0);
+    //const scrollDistToTop = containerRef.current?.scrollTop;
+    //setScrollPosAtLoadStart(scrollDistToTop);
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
         top: 0,
@@ -400,6 +495,7 @@ function Layout(props) {
     } else {
       startScrollingTowardsTop();
     }
+    fillLoadingBar(scrollToTopDelay * 1000, baseTransDur * 1000);
   }
   function startScrollingTowardsTop() {
     let scrollDelayMS = (scrollToTopDelay > 0 ? scrollToTopDelay : 0.2) * 1000;
@@ -463,7 +559,7 @@ function Layout(props) {
     if (!container) return;
     const distToCover = targetScrollPos - container.scrollTop;
     if (duration == -1) {
-      duration = scrollToTopDelay * 1000;
+      duration = (scrollToTopDelay > 0 ? scrollToTopDelay : 0.2) * 1000;
     }
     // console.log("dist to scroll: " + distToCover);
     //console.log("duration: " + duration);
@@ -513,7 +609,7 @@ function Layout(props) {
         container.scrollTo({
           top: scrollKeyframe,
           //left: 0,
-          behavior: "instant",
+          //behavior: "instant",
         });
         requestAnimationFrame(scroll);
       }
@@ -522,7 +618,7 @@ function Layout(props) {
     container.scrollTo({
       top: startPos + distToCover,
       //left: 0,
-      behavior: "instant",
+      // behavior: "instant",
     });
   }
 
