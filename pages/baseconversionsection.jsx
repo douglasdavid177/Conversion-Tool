@@ -94,7 +94,14 @@ const BaseConversionSection = (props) => {
   );
 
   function calculate(num, startB, endB) {
-    if (startB == 0 || isNaN(startB) || endB == 0 || isNaN(endB)) {
+    if (
+      startB == 0 ||
+      startB == 1 ||
+      isNaN(startB) ||
+      endB == 0 ||
+      endB == 1 ||
+      isNaN(endB)
+    ) {
       props.setAttemptCalculate(false);
       setTriggerWarning(true);
       props.setShowResults(false);

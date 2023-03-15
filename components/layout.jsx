@@ -31,7 +31,7 @@ function Layout(props) {
   const [curAPITimestamp, setcurAPITimestamp] = useState(null);
   const [dummyVar, setDummyVar] = useState(false); // A variable that is never applied anywhere and whose only purpose is to trigger a rerender
   const [currentlyAutoScrolling, setCurrentlyAutoScrolling] = useState(false);
-  const [loadingPercent01, setLoadingPercen01] = useState(0.7);
+  const [loadingPercent01, setLoadingPercen01] = useState(1.01);
   const [scrollPosAtLoadStart, setScrollPosAtLoadStart] = useState(0);
   const [loadingBarActive, setLoadingBarActive] = useState(false);
   const barVal = useRef(0.5);
@@ -54,7 +54,7 @@ function Layout(props) {
     // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
     // scrollToTop(mainSectionKey == numberFromRoute(router.asPath));
-    scrollToTop();
+    scrollToTop(true);
     //checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
     checkScroll(false);
     //resetInput();
@@ -423,6 +423,8 @@ function Layout(props) {
     });
   }
   function fillLoadingBar(ScrolldurationMS, exitAnimDuratinMS) {
+    setLoadingPercen01(0);
+
     if (ScrolldurationMS == 0) ScrolldurationMS = 1;
     //const totalDur = ScrolldurationMS + exitAnimDuratinMS;
     let seperationPercent01 = ScrolldurationMS * 0.001;
@@ -480,10 +482,9 @@ function Layout(props) {
     });
   }
 
-  function scrollToTop() {
+  function scrollToTop(showloadingBar = false) {
     let manualScrolling = false;
     //console.log("beginning scroll...");
-    setLoadingPercen01(0);
     //const scrollDistToTop = containerRef.current?.scrollTop;
     //setScrollPosAtLoadStart(scrollDistToTop);
     if (!manualScrolling) {
@@ -495,7 +496,9 @@ function Layout(props) {
     } else {
       startScrollingTowardsTop();
     }
-    fillLoadingBar(scrollToTopDelay * 1000, baseTransDur * 1000);
+    if (showloadingBar) {
+      fillLoadingBar(scrollToTopDelay * 1000, baseTransDur * 1000);
+    }
   }
   function startScrollingTowardsTop() {
     let scrollDelayMS = (scrollToTopDelay > 0 ? scrollToTopDelay : 0.2) * 1000;
