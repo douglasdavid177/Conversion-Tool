@@ -106,12 +106,21 @@ const InputSection = ({
     //   </option>
     // );
 
-    return entries.map((val, ind) => {
+    const currencyOptionsNonUS = entries.map((val, ind) => {
       const code = val[1]?.currency_code;
       const name = val[1]?.currency_name;
+      //console.log();
 
-      if (isNaN(currencyRatesObj[code])) {
+      // if (val[1].countries.includes("United States")) {
+      //   console.log(name);
+      //   console.log(val[1]?.countries);
+      // }
+      if (
+        isNaN(currencyRatesObj[code]) ||
+        val[1].countries.includes("United States")
+      ) {
         //console.log(code);
+
         return null;
       }
 
@@ -121,6 +130,36 @@ const InputSection = ({
         </option>
       );
     });
+
+    const currencyOptionsOnlyUS = entries.map((val, ind) => {
+      const code = val[1]?.currency_code;
+      const name = val[1]?.currency_name;
+
+      // if (!val[1].countries.includes("United States")) {
+      //   console.log(name);
+      //   console.log(val[1]?.countries);
+      // }
+
+      if (
+        isNaN(currencyRatesObj[code]) ||
+        !val[1].countries.includes("United States")
+      ) {
+        //console.log(code);
+
+        return null;
+      }
+
+      return (
+        <option value={code} key={code}>
+          {getOptionLabelString(code, name, current)}
+        </option>
+      );
+    });
+
+    const sortedCurrencyOptions =
+      currencyOptionsOnlyUS.concat(currencyOptionsNonUS);
+    // console.log(sortedCurrencyOptions);
+    return sortedCurrencyOptions;
   }
 
   function getOptionLabelString(code, name, current) {
@@ -190,7 +229,7 @@ const InputSection = ({
     const str = value.toString().split(".")[1];
     if (!str) return 2;
     const result = str ? str.length : 0;
-    console.log("decimal places in string: " + result);
+    // console.log("decimal places in string: " + result);
     if (result > 0 && result < 16) {
       return result;
     }
@@ -200,7 +239,7 @@ const InputSection = ({
 
   // Just to avoid an occasional bug that would prevent mobile numpad from popping up when clicking input
   function reacquireFocus(e) {
-    console.log(e.target);
+    // console.log(e.target);
     setTimeout(() => {
       e.target.focus();
     }, 10);
