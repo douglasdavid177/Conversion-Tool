@@ -171,6 +171,10 @@ select.limitWidth {
   width: 8rem;
   margin-right: 0.15rem;
 }
+select.limitWidthXS {
+  width: 7rem;
+  margin-right: 0.15rem;
+}
 .resultsSection {
   margin-bottom: -0.5rem;
 }

@@ -6,6 +6,7 @@ import ResultsSection from "../components/unitconversion/resultssectionunitc";
 import styles from "../styles/mainsection.module.css";
 
 const UnitConversionSection = (props) => {
+  const [measurementType, setMeasurementType] = useState("default");
   const [startUnit, setStartUnit] = useState("default");
   const [endUnit, setEndUnit] = useState("default");
   const [endUnitAuto, setEndUnitAuto] = useState(false); // True if 'auto' is selected for end unit , false othereise
@@ -111,6 +112,8 @@ const UnitConversionSection = (props) => {
                 triggerW={triggerWarning}
                 setTriggerFunc={setTriggerWarning}
                 setDecPlacesFunc={setDecimalPlaces}
+                measurementType={measurementType}
+                setMeasurementTypeFunc={setMeasurementType}
               />
             )}
           </motion.div>

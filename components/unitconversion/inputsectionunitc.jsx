@@ -5,6 +5,8 @@ import styles from "../../styles/mainsection.module.css";
 import { FaChevronDown } from "react-icons/fa";
 
 const InputSection = ({
+  measurementType,
+  setMeasurementTypeFunc,
   startNum,
   startU,
   endU,
@@ -23,8 +25,10 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        Enter your starting measurement value and its unit type, then select
-        your desired unit type.
+        {/* Enter your starting measurement value and its unit type, then select
+        your desired unit type. */}
+        Enter your starting measurement value, its unit type, and your desired
+        unit type. The type parameter can be used to filter units.
       </p>
       <form
         className={`${styles.inputFields} ${styles.wrapChildren}`}
@@ -34,6 +38,30 @@ const InputSection = ({
         }}
       >
         <div className={styles.formRow}>
+          {/*Since clicking the heding doesn't open the select (and can't), don't highlight it despite default behavior*/}
+          <label className={styles.noHighlight}>
+            <h3>Type</h3>
+            <div className={styles.selectWithArrow}>
+              <select
+                className={styles.limitWidthXS}
+                onChange={handleMasurementTypeSelectChange}
+                value={measurementType}
+              >
+                <option value="default">Any (all)</option>
+
+                {getMeasurementDomains().map((mType, ind) => {
+                  return (
+                    <option value={mType} key={mType}>
+                      {getMeasurementTypeString(mType)}
+                    </option>
+                  );
+                })}
+              </select>
+              <div className={styles.arrow}>
+                <FaChevronDown />
+              </div>
+            </div>
+          </label>
           <label>
             <h3>Given value</h3>
             {/*This input field tries to display the state variable (a string) but will display nothing unless the value is either 
@@ -50,7 +78,9 @@ const InputSection = ({
               onBlur={validateInputDec}
             />
           </label>
+        </div>
 
+        <div className={styles.formRow} style={{ marginTop: "0.25rem" }}>
           {/*Since clicking the heding doesn't open the select (and can't), don't highlight it despite default behavior*/}
           <label className={styles.noHighlight}>
             <h3>Given unit</h3>
@@ -74,13 +104,14 @@ const InputSection = ({
               </div>
             </div>
           </label>
-        </div>
-
-        <div className={styles.formRow} style={{ marginTop: "0.25rem" }}>
-          <label className={`${styles.fullWidth} ${styles.noHighlight}`}>
+          <label className={` ${styles.noHighlight}`}>
             <h3>Desired unit</h3>
             <div className={styles.selectWithArrow}>
-              <select onChange={handleEndUSelectChange} value={endU}>
+              <select
+                onChange={handleEndUSelectChange}
+                value={endU}
+                className={styles.limitWidth}
+              >
                 <option value="default">Select unit</option>
                 <option value="auto">Auto (chooses best unit)</option>
                 {getCurrentPossibilities(false).map((unit, ind) => {
@@ -101,7 +132,15 @@ const InputSection = ({
     </div>
   );
 
+  function getMeasurementDomains() {
+    const measures = convert().measures();
+    // console.log(measures);
+    return measures;
+  }
   function getCurrentPossibilities(isStartUnit) {
+    if (measurementType != "default") {
+      return convert().possibilities(measurementType);
+    }
     if (isStartUnit) {
       if (endU == null || endU == "default" || endU == "auto") {
         return convert().possibilities();
@@ -115,6 +154,14 @@ const InputSection = ({
         return convert().from(startU).possibilities();
       }
     }
+  }
+  function getMeasurementTypeString(mType) {
+    const text = "" + mType;
+
+    const result = text.replace(/([A-Z])/g, " $1");
+    const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+    // console.log(finalResult);
+    return finalResult;
   }
   function getOptionLabelString(unit, currentSelected) {
     let plural = convert().describe(unit).plural;
@@ -162,18 +209,50 @@ const InputSection = ({
     // If select (default) is manually selected, reset both select inputs so that all possibilities become available
     if (justSelected === "default") {
       setStartUFunc("default");
-      setEndUFunc("default");
+      //setEndUFunc("default");
+      if (endU === "default") {
+        setMeasurementTypeFunc("default");
+      }
     } else {
       setStartUFunc(justSelected);
+      setMeasurementTypeFunc(convert().describe(justSelected).measure);
     }
   }
   function handleEndUSelectChange(e) {
     const justSelected = e.target.value;
     if (justSelected === "default") {
       setEndUFunc("default");
-      setStartUFunc("default");
+      //setStartUFunc("default");
+      if (startU === "default") {
+        setMeasurementTypeFunc("default");
+      }
     } else {
       setEndUFunc(justSelected);
+      if (justSelected != "auto")
+        setMeasurementTypeFunc(convert().describe(justSelected).measure);
+    }
+  }
+  function handleMasurementTypeSelectChange(e) {
+    const justSelected = e.target.value;
+    setMeasurementTypeFunc(justSelected);
+
+    if (justSelected == "default") {
+      setStartUFunc("default");
+      setEndUFunc("default");
+      return;
+    }
+    if (
+      startU != "default" &&
+      justSelected != convert().describe(startU).measure
+    ) {
+      setStartUFunc("default");
+    }
+
+    if (
+      endU != "default" &&
+      !(justSelected == convert().describe(endU)?.measure)
+    ) {
+      setEndUFunc("default");
     }
   }
 };
