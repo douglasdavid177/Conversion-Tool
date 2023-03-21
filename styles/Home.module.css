@@ -9,14 +9,63 @@
   /* Main container is entire viewport, 
   with content as scroll container inside it with heavy padding */
 }
+.navBar {
+  position: fixed;
+  /* width: 100vw; */
+  height: 4rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(0.15rem);
+  background-color: rgb(0 0 0 / 0.4);
+  /* display: none; */
+  height: 4.74rem;
+  width: 2.24rem;
+  top: 0.88rem;
+  left: auto;
+  right: 1.28rem;
+  border-radius: 0.6rem;
+}
+
+button.homeButton {
+  all: unset;
+  position: fixed;
+  top: 1rem;
+  right: 4.5rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: none;
+  border: none;
+  /* outline: none; */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  cursor: pointer;
+  /* color: white; */
+
+  right: 1.5rem;
+}
+.homeButton svg {
+  height: 100%;
+  width: 100%;
+  /* backdrop-filter: blur(0.1rem); */
+  border-radius: 0.2rem;
+  transform: scaleY(0.9);
+}
 .hamburgerHolder {
   position: fixed;
-  top: 1.5rem;
+  top: 1rem;
   right: 1.5rem;
-  width: 2rem;
+  width: 1.8rem;
+
+  top: 3.25rem;
 }
 button.hamburger {
-  width: 2rem;
+  all: unset;
+  width: 1.8rem;
   aspect-ratio: 1;
   background: none;
   border: none;
@@ -29,11 +78,33 @@ button.hamburger {
   justify-content: center;
   cursor: pointer;
 }
-button.hamburger img {
+button.hamburger svg {
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(0.1rem);
+  /* backdrop-filter: blur(0.1rem); */
   border-radius: 0.2rem;
+  transform: scaleY(0.8);
+}
+
+.loadingBar {
+  height: 0.25rem;
+  width: 1.8rem;
+  background-color: var(--turquoise);
+  background-color: transparent;
+  background-color: hsla(0, 0%, 30%, 0.75);
+  /* background-color: red; */
+  position: fixed;
+  top: 3.5rem;
+  /* padding-top: calc(1rem - 5px); */
+  right: 1.5rem;
+
+  top: 5.75rem;
+}
+
+.loadingBarProgress {
+  height: 100%;
+  background-color: var(--turquoise);
+  width: 0%;
 }
 
 .content {
@@ -115,7 +186,7 @@ button.hamburger img {
   max-height: 22.5vh;
   aspect-ratio: 1/1;
   align-self: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .content .buttonHolder {
@@ -198,24 +269,7 @@ button.secondary:active::before {
   bottom: 0;
   width: 85%;
 }
-.loadingBar {
-  height: 0.25rem;
-  width: 2rem;
-  background-color: var(--turquoise);
-  background-color: transparent;
-  background-color: hsla(0, 0%, 30%, 0.75);
-  /* background-color: red; */
-  position: fixed;
-  top: 4rem;
-  /* padding-top: calc(1rem - 5px); */
-  right: 1.5rem;
-}
 
-.loadingBarProgress {
-  height: 100%;
-  background-color: var(--turquoise);
-  width: 0%;
-}
 .loadingSpinner {
   background-color: var(--turquoise);
   height: 10px;

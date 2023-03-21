@@ -1,7 +1,10 @@
 .container p {
   /* font-weight: bold; */
 }
-.container button.chooseToolButton {
+.chooseToolButton,
+button.chooseToolButton,
+.aboutSection a,
+.aboutSection a:visited {
   border: none;
   background: transparent;
   width: auto;
@@ -14,6 +17,7 @@
   margin-top: 3rem;
 }
 
-.container button:active {
+.container button:active,
+.aboutSection a:active {
   filter: brightness(65%);
 }

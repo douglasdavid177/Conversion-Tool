@@ -15,6 +15,8 @@ import {
   ConvertBetweenCurrencies,
 } from "../apifunctions";
 import { useRouter } from "next/router";
+import { FaBars, FaHome } from "react-icons/fa";
+import { HiBars3 } from "react-icons/hi2";
 
 function Layout(props) {
   const [mainSectionKey, setMainSectionKey] = useState(0); // Triggers page scrolling to top before setting 'actual' state
@@ -256,6 +258,7 @@ function Layout(props) {
         </div>
       </div>
 
+      <div className={styles.navBar}></div>
       <div className={styles.hamburgerHolder}>
         <button
           className={styles.hamburger}
@@ -263,9 +266,24 @@ function Layout(props) {
             setNavPanelOpen(!navPanelOpen);
           }}
         >
-          <img src="./menu.svg"></img>
+          {/* <img src="./menu.svg"></img> */}
+          <FaBars />
+          {/* <HiBars3 /> */}
         </button>
       </div>
+
+      <button
+        className={styles.homeButton}
+        onClick={() => {
+          if (router) {
+            console.log("headin home");
+            router.push("/");
+          }
+        }}
+      >
+        <FaHome />
+      </button>
+
       <NavPanel
         isOpen={navPanelOpen}
         setIsOpen={setNavPanelOpen}
@@ -382,7 +400,7 @@ function Layout(props) {
     switch (newKey) {
       case 0:
         route = `/`;
-        router.push(router.basePath);
+        //router.push(router.basePath);
         break;
       case 1:
         route = `/aboutsection`;
@@ -506,7 +524,7 @@ function Layout(props) {
     setTimeout(() => {
       setCurrentlyAutoScrolling(false);
     }, scrollDelayMS);
-    console.log("delay when scroll starts (ms): " + scrollDelayMS);
+    //console.log("delay when scroll starts (ms): " + scrollDelayMS);
     animateScroll.scrollTo(0, {
       duration: scrollDelayMS,
       delay: 0,
