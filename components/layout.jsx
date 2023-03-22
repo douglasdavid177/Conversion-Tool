@@ -16,7 +16,6 @@ import {
 } from "../apifunctions";
 import { useRouter } from "next/router";
 import { FaBars, FaHome } from "react-icons/fa";
-import { HiBars3 } from "react-icons/hi2";
 
 function Layout(props) {
   const [mainSectionKey, setMainSectionKey] = useState(0); // Triggers page scrolling to top before setting 'actual' state
@@ -268,7 +267,6 @@ function Layout(props) {
         >
           {/* <img src="./menu.svg"></img> */}
           <FaBars />
-          {/* <HiBars3 /> */}
         </button>
       </div>
 

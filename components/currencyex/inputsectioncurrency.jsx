@@ -106,6 +106,7 @@ const InputSection = ({
     //   </option>
     // );
 
+    let currencyCount = 0;
     const currencyOptionsNonUS = entries.map((val, ind) => {
       const code = val[1]?.currency_code;
       const name = val[1]?.currency_name;
@@ -123,6 +124,10 @@ const InputSection = ({
 
         return null;
       }
+      // currencyCount++;
+      // console.log(
+      //   "country: " + val[1].currency_name + "count: " + currencyCount
+      // );
 
       return (
         <option value={code} key={code}>
@@ -159,6 +164,7 @@ const InputSection = ({
     const sortedCurrencyOptions =
       currencyOptionsOnlyUS.concat(currencyOptionsNonUS);
     // console.log(sortedCurrencyOptions);
+    console.log(sortedCurrencyOptions.entries);
     return sortedCurrencyOptions;
   }
 
