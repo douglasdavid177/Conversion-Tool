@@ -26,7 +26,7 @@ const HomeSection = (props) => {
         }}
       >
         <button
-          className={styles.chooseToolButton}
+          className={`${styles.chooseToolButton} defaultButton`}
           onClick={() => {
             props.setNavPanelOpen(true);
           }}

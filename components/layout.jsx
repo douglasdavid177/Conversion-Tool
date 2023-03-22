@@ -243,9 +243,9 @@ function Layout(props) {
                         onClick={() => {
                           showResults ? resetInput(true) : gotoResults();
                         }}
-                        className={
+                        className={`defaultButton ${
                           showResults ? styles.secondary : styles.primary
-                        }
+                        }`}
                       >
                         {showResults ? "Change Input" : "View Results"}
                       </button>
