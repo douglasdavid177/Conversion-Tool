@@ -41,7 +41,6 @@ const InputSection = ({
             <h3>Start Number</h3>
             <input
               type="text"
-              //   inputMode="decimal"
               value={startStr}
               onChange={handleInputStartStr}
               onBlur={validateInputStartStr}
@@ -53,8 +52,8 @@ const InputSection = ({
         <div className={styles.formRow} style={{ marginTop: "0.25rem" }}>
           <label className={styles.small}>
             <h3>Start base</h3>
-            {/*This input field tries to display the state variable (a string) but will display nothing unless the value is either 
-          a valid number or a decimal point.
+            {/*This input field tries to display the state variable (a string) but will display nothing unless the value is 
+          a valid number.
           The value is then immediately set to that same state variable again therefore resetting its value to an empty string 
           when the number becomes invalid. 
           This ensures the user can't enter anything but a valid number while still keeping the variable type a string*/}
@@ -151,7 +150,6 @@ const InputSection = ({
 
   // Just to avoid an occasional bug that would prevent mobile numpad from popping up when clicking input
   function reacquireFocus(e) {
-    console.log(e.target);
     setTimeout(() => {
       e.target.focus();
     }, 10);

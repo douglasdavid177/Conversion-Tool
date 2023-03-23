@@ -25,9 +25,6 @@ const InputSection = ({
           setTriggerFunc(false);
         }}
       >
-        {/* Enter the value you want converted, the base it&apos;s written in, and
-        the base you want it converted to. Bases higher than 36 are not
-        supported. Only valid conversions will take place. */}
         Enter the amount of currency you want converted, the currency type
         it&apos;s written in, and the currency type you want it converted to.
       </p>
@@ -92,7 +89,6 @@ const InputSection = ({
   );
 
   function createSelectOptions(current) {
-    // if (!currencyObject) return;
     if (!currencyObject)
       return (
         <option value="loading" key="loading">
@@ -100,34 +96,17 @@ const InputSection = ({
         </option>
       );
     const entries = Object.entries(currencyObject);
-    // return (
-    //   <option value="loading" key="loading">
-    //     Loading...
-    //   </option>
-    // );
 
     let currencyCount = 0;
     const currencyOptionsNonUS = entries.map((val, ind) => {
       const code = val[1]?.currency_code;
       const name = val[1]?.currency_name;
-      //console.log();
-
-      // if (val[1].countries.includes("United States")) {
-      //   console.log(name);
-      //   console.log(val[1]?.countries);
-      // }
       if (
         isNaN(currencyRatesObj[code]) ||
         val[1].countries.includes("United States")
       ) {
-        //console.log(code);
-
         return null;
       }
-      // currencyCount++;
-      // console.log(
-      //   "country: " + val[1].currency_name + "count: " + currencyCount
-      // );
 
       return (
         <option value={code} key={code}>
@@ -140,17 +119,10 @@ const InputSection = ({
       const code = val[1]?.currency_code;
       const name = val[1]?.currency_name;
 
-      // if (!val[1].countries.includes("United States")) {
-      //   console.log(name);
-      //   console.log(val[1]?.countries);
-      // }
-
       if (
         isNaN(currencyRatesObj[code]) ||
         !val[1].countries.includes("United States")
       ) {
-        //console.log(code);
-
         return null;
       }
 
@@ -163,7 +135,6 @@ const InputSection = ({
 
     const sortedCurrencyOptions =
       currencyOptionsOnlyUS.concat(currencyOptionsNonUS);
-    // console.log(sortedCurrencyOptions);
     console.log(sortedCurrencyOptions.entries);
     return sortedCurrencyOptions;
   }
@@ -176,7 +147,6 @@ const InputSection = ({
   }
 
   function handleInputStartStr(e) {
-    //e.persist();
     let val = e.target.value;
     setStartStrFunc(val);
   }
@@ -235,7 +205,6 @@ const InputSection = ({
     const str = value.toString().split(".")[1];
     if (!str) return 2;
     const result = str ? str.length : 0;
-    // console.log("decimal places in string: " + result);
     if (result > 0 && result < 16) {
       return result;
     }
@@ -245,7 +214,6 @@ const InputSection = ({
 
   // Just to avoid an occasional bug that would prevent mobile numpad from popping up when clicking input
   function reacquireFocus(e) {
-    // console.log(e.target);
     setTimeout(() => {
       e.target.focus();
     }, 10);

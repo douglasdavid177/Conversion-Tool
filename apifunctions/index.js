@@ -5,7 +5,6 @@ export async function ConvertBetweenCurrencies(
   ratesObj = null
 ) {
   //Get current rates
-  //console.log("starting");
   if (ratesObj == null) {
     ratesObj = await getCurrencyRatesObject();
   }
@@ -13,9 +12,6 @@ export async function ConvertBetweenCurrencies(
   let rate2 = ratesObj[to];
   const factor = rate2 / rate1;
   const result = startAmount * factor;
-
-  //console.log(to);
-  //console.log("finished");
   return result;
 }
 
@@ -41,7 +37,6 @@ export async function getCurrencyRatesObject() {
   }
   const j = await resp.json();
   const rates = j.response.rates;
-  //console.log(rates);
 
   console.log("fetched from api...");
   return rates;
@@ -68,11 +63,6 @@ export async function getCurrenciesObject() {
   }
   const j = await resp.json();
   const fiats = j.response.fiats;
-  // const entries = Object.entries(fiats);
-  // const newArr = entries.map((val, ind) => {
-  //   return val[1];
-  // });
-  //console.log(fiats);
 
   console.log("fetched from api...");
   return fiats;

@@ -118,7 +118,6 @@ const InputSection = ({
 
   // Just to avoid an occasional bug that would prevent mobile numpad from popping up when clicking input
   function reacquireFocus(e) {
-    console.log(e.target);
     setTimeout(() => {
       e.target.focus();
     }, 10);

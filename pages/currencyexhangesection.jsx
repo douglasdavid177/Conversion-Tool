@@ -26,7 +26,6 @@ const CurrencyExchangeSection = (props) => {
 
   useEffect(() => {
     props.getCurrencies();
-    //getRates();
   }, []);
 
   useEffect(() => {
@@ -35,27 +34,20 @@ const CurrencyExchangeSection = (props) => {
     }
   }, [props.attemptCalculate]);
 
-  // useEffect(() => {
-  //   console.log("height: " + inputHeight);
-  // }, [inputHeight]);
-
   useEffect(() => {
     if (!props.actuallyShowResults) {
       setLoading(false);
       if (timer) clearTimeout(timer);
     }
     setKey();
-    // setCurKey(findKey());
   }, [props.actuallyShowResults]);
 
   useEffect(() => {
     setKey();
-    // setCurKey(findKey());
   }, [loading]);
 
   const showResultsScreen = props.actuallyShowResults && loading == false;
   const theKey = findKey();
-  // console.log("the key is... " + theKey);
 
   return (
     <div ref={mainSectionRef}>
@@ -102,11 +94,9 @@ const CurrencyExchangeSection = (props) => {
             setTimeout(() => {
               props.smoothScrollTo(target);
             }, delay);
-            //console.log("the key is: " + theKey);
           }}
         >
           <motion.div
-            //key={showResultsScreen ? "results" : "input"}
             key={theKey}
             initial={{ translateY: 30, opacity: 0 }}
             animate={{
@@ -115,8 +105,6 @@ const CurrencyExchangeSection = (props) => {
               transition: {
                 duration: curKey == "loading" ? 0 : 0.35,
                 delay: curKey != "loading" && prevKey == "loading" ? 0.225 : 0,
-                // delay:
-                //   mainSectionRef.current?.clientHeight > curHeight ? 0.25 : 0,
               },
             }}
             exit={{ translateY: -30, opacity: 0 }}
@@ -154,7 +142,6 @@ const CurrencyExchangeSection = (props) => {
     if (!props.actuallyShowResults) {
       return (
         <InputSection
-          // key="inputsection"
           fromC={fromCType}
           toC={toCType}
           startStr={startValString}
@@ -208,9 +195,6 @@ const CurrencyExchangeSection = (props) => {
       }
       return;
     }
-
-    //const finalResult = 0;
-    //setResultsVal(finalResult);
     setLoading(true);
     props.setShowResults(true);
 
@@ -222,18 +206,9 @@ const CurrencyExchangeSection = (props) => {
     }
     const [answer] = await Promise.all([
       ConvertBetweenCurrencies(fromC, toC, val, props.currencyRatesObj),
-      //getCurrencyRatesObject(),
     ]);
 
-    // console.log("answer: ");
-    // console.log(answer);
-
-    // const answer =
-    //   //await grabFromOnline();
-    //   await ConvertBetweenCurrencies(fromC, toC, val);
-
     setResultsVal(answer);
-    //setCurrencyRatesObj(obj);
     setLoading(false);
   }
 

@@ -134,7 +134,6 @@ const InputSection = ({
 
   function getMeasurementDomains() {
     const measures = convert().measures();
-    // console.log(measures);
     return measures;
   }
   function getCurrentPossibilities(isStartUnit) {

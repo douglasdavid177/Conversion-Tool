@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { animateScroll } from "react-scroll";
 import styles from "../styles/Home.module.css";
 import { motion, AnimatePresence, LayoutGroup, m } from "framer-motion";
-import HomeSection from "../components/homesection";
 import AboutSection from "../pages/aboutsection";
 import DecToFracSection from "../pages/decfracsection";
 import UnitConversionSection from "../pages/unitconversionsection";
@@ -52,18 +51,11 @@ function Layout(props) {
   }, [router.asPath]);
 
   useEffect(() => {
-    // Begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
+    // By default, begins switching to new section by scrolling to top of page, at which point a scroll listener on the scrollable container
     // will set actual main section key to match the desired key, causing animatepresence to display a different section
-    // scrollToTop(mainSectionKey == numberFromRoute(router.asPath));
-    scrollToTop(true);
-    //checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
-    checkScroll(false);
-    //resetInput();
+    scrollToTop(true); // Adding true param triggers loading bar to show
+    checkScroll(false); // Add false param to instantly chnage route. If true (default) route won't update to match target route unless scroll pos is 0
   }, [mainSectionKey]);
-
-  // useEffect(() => {
-  //   // When sections actually chnage, Make sure tools are loaded in on their input page and are loaded in fresh, clean and with no remembered values
-  // }, [actualMainSectionKey]);
 
   useEffect(() => {
     if (showResults) {
@@ -72,11 +64,7 @@ function Layout(props) {
     checkScroll();
   }, [showResults]);
 
-  // const scrollToTopDelay = containerRef.current
-  //   ? containerRef.current.scrollTop * 0.00015
-  //   : 0.0;
-
-  const baseExitDelay = 0.05; //0.15;
+  const baseExitDelay = 0.05;
   const baseTransDur = 0.35;
 
   let currentKey = 0;
@@ -143,15 +131,6 @@ function Layout(props) {
               <AnimatePresence
                 exitBeforeEnter
                 onExitComplete={() => {
-                  //   if (numberFromRoute() < 2) {
-                  //     setShowHeading(true);
-                  //     //   console.log("yay...!");
-                  //   }
-                  //   if (numberFromRoute() > 1) {
-                  //     setShowButton(true);
-                  //   }
-                  //   setDummyVar(!dummyVar);
-
                   checkAndSetHeaderAndButton();
                 }}
               >
@@ -203,14 +182,7 @@ function Layout(props) {
                 duration: 0.4,
               }}
             >
-              <AnimatePresence
-                onExitComplete={() => {
-                  // If the button is exiting, we must be switching to a non-tool such as home or about which requires main heading to be shown
-                  //setScrollTopDelay(0);
-                  //setShowHeading(true);
-                  //checkAndSetHeaderAndButton();
-                }}
-              >
+              <AnimatePresence>
                 {checkShowButton() && showButton && (
                   <motion.div
                     key="buttonholder"
@@ -289,19 +261,11 @@ function Layout(props) {
         setSectionKey={setMainSectionKey}
         numberFromRoute={numberFromRoute}
       />
-      {/* <div className={styles.loadingSpinnerWrapper}>
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ ease: "linear", duration: 1, repeat: Infinity }}
-        >
-          <div className={styles.loadingSpinner}></div>
-        </motion.div>
-      </div> */}
+
       <AnimatePresence>
         {loadingPercent01 <= 1 && (
           <motion.div
             key={"loader"}
-            //initial={{ translateY: 50, opacity: 0 }}
             animate={{
               translateY: 0,
               opacity: 1,
@@ -319,7 +283,6 @@ function Layout(props) {
               <div
                 className={styles.loadingBarProgress}
                 ref={loadingBarRef}
-                //style={{ width: `${loadingPercent01 * 100}%` }}
               ></div>
             </div>
           </motion.div>
@@ -333,7 +296,6 @@ function Layout(props) {
     if (!containerRef.current) {
       return;
     }
-    //if (actualMainSectionKey != numberFromRoute(router.asPath)) return;
 
     const diffKey = actualMainSectionKey != mainSectionKey;
     const diffShowRes = actuallyShowResults != showResults;
@@ -342,15 +304,11 @@ function Layout(props) {
     let scrollDelay = (scrollDist > 0 ? scrollDist : 0) * 0.65 * 0.001; // Lniear increase, result in seconds
     scrollDelay *= scrollDelay; // Now it's a square function
     scrollDelay /= 0.6; // Bring it back down based on 'average time'
-    scrollDelay += 0.2;
+    scrollDelay += 0.2; // Y intercept
 
-    //   Math.log(scrollDist > 0 ? scrollDist : 0) / Math.log(7 / 8);
-    // scrollDelay *= 0.007;
-    // scrollDelay = Math.abs(scrollDelay);
     if (!currentlyAutoScrolling) setScrollTopDelay(scrollDelay);
 
     if (scrollDist < 10) {
-      //console.log("top...");
       if (diffShowRes) {
         setActuallyShowResults(showResults);
       }
@@ -360,45 +318,20 @@ function Layout(props) {
 
       setScrollTopDelay(0);
     } else {
-      // console.log("not top...");
-
       if (!waitTilTop) {
         if (diffKey) {
           changeKey(mainSectionKey);
-          // setScrollTopDelay(scrollDist * 0.00018);
         }
       }
     }
-
-    // If we reach the top of the page and there's a mismatch between desired and actual values for a state variable,
-    // then update actual to match desired
-    // The delay gives time to add the layout property back to the buttonholder
-    // else if (scrollDist <= 15 && (diffKey || diffShowRes)) {
-    //   // Prev threshold was 15 from top with 20 ms timeout delay
-    //   if (diffKey) {
-    //     if (actualMainSectionKey > 1) setShowHeading(false);
-    //     setActualMainSectionKey(mainSectionKey);
-    //   }
-    //   if (diffShowRes) {
-    //     setActuallyShowResults(showResults);
-    //   }
-    //   //setTimeout(() => {}, 0);
-    // }
   }
 
   function changeKey(newKey) {
-    // if (newKey > 1) setShowHeading(false);
-    // if (newKey <= 1) setShowButton(false);
-    //console.log(scrollToTopDelay);
-
-    //setTimeout(() => {}, 0);
-
     let route = ``;
     console.log("key: " + newKey);
     switch (newKey) {
       case 0:
         route = `/`;
-        //router.push(router.basePath);
         break;
       case 1:
         route = `/aboutsection`;
@@ -421,8 +354,6 @@ function Layout(props) {
 
     router.push(route);
     setActualMainSectionKey(newKey);
-
-    // console.log(router.basePath);
   }
   function scrollUpSlightly() {
     containerRef.current?.scrollBy({
@@ -442,22 +373,16 @@ function Layout(props) {
     setLoadingPercen01(0);
 
     if (ScrolldurationMS == 0) ScrolldurationMS = 1;
-    //const totalDur = ScrolldurationMS + exitAnimDuratinMS;
     let seperationPercent01 = ScrolldurationMS * 0.001;
     if (seperationPercent01 < 0.2) seperationPercent01 = 0.2;
     if (seperationPercent01 > 0.75) seperationPercent01 = 0.75;
     const remainingMarginPercent01 = 1 - seperationPercent01;
-    //seperationPoint = totalDur * seperationPercent01;
-    //console.log("sep point: " + seperationPercent01);
 
     let starttime = null;
     let frameCounter = 0;
     requestAnimationFrame(function anim() {
       frameCounter++;
       if (starttime == null) starttime = Date.now();
-      //console.log("animation step");
-      //console.log(Date.now());
-      //console.log(Date.now());
       const totalElapsedMS = Date.now() - starttime;
       const totalProgress01 =
         totalElapsedMS / (ScrolldurationMS + exitAnimDuratinMS);
@@ -473,24 +398,16 @@ function Layout(props) {
         (durationThruScroll / ScrolldurationMS) * seperationPercent01 +
         (durationThruExitAnim / exitAnimDuratinMS) * remainingMarginPercent01;
 
-      //if (frameCounter % 1 == 0) setloadingBarWidthAsync(barWidth);
-      //barVal.current = barWidth;
-      //setLoadingPercen01(barWidth);
-      //console.log("width: " + loadingBarRef.current?.style.width);
       const barStyle = loadingBarRef.current?.style;
-      //console.log("style: ");
-      //console.log(barStyle.width);
+
       if (barStyle) {
         loadingBarRef.current.style.width = `${barWidth * 100}%`;
       }
 
       if (barWidth < 1) {
         requestAnimationFrame(() => {
-          //setLoadingPercen01(barWidth);
-
           anim();
         });
-        //setLoadingPercen01(barWidth);
       } else {
         setLoadingPercen01(1.001);
         return;
@@ -500,9 +417,6 @@ function Layout(props) {
 
   function scrollToTop(showloadingBar = false) {
     let manualScrolling = false;
-    //console.log("beginning scroll...");
-    //const scrollDistToTop = containerRef.current?.scrollTop;
-    //setScrollPosAtLoadStart(scrollDistToTop);
     if (!manualScrolling) {
       containerRef.current?.scrollTo({
         top: 0,
@@ -510,19 +424,18 @@ function Layout(props) {
         behavior: "smooth",
       });
     } else {
-      startScrollingTowardsTop();
+      startManuallyScrollingTowardsTop();
     }
     if (showloadingBar) {
       fillLoadingBar(scrollToTopDelay * 1000, baseTransDur * 1000);
     }
   }
-  function startScrollingTowardsTop() {
+  function startManuallyScrollingTowardsTop() {
     let scrollDelayMS = (scrollToTopDelay > 0 ? scrollToTopDelay : 0.2) * 1000;
     setCurrentlyAutoScrolling(true);
     setTimeout(() => {
       setCurrentlyAutoScrolling(false);
     }, scrollDelayMS);
-    //console.log("delay when scroll starts (ms): " + scrollDelayMS);
     animateScroll.scrollTo(0, {
       duration: scrollDelayMS,
       delay: 0,
@@ -530,49 +443,43 @@ function Layout(props) {
       containerId: "scrollable",
     });
     return;
-
-    scrollSmoothlyTo(0);
-    return;
-    // const container = containerRef.current;
-    // if (!container) return;
-    // console.log("dist: " + container.scrollTop);
-
-    // let starttime = null;
-    // let prevtime = null;
-
-    // // const totalDist = container.scrollTop;
-    // // const durationMS = totalDist / 1.75;
-    // requestAnimationFrame(function scroll(timestamp) {
-    //   if (starttime == null) starttime = timestamp;
-    //   if (prevtime == null) prevtime = starttime;
-
-    //   // const elapsed = timestamp - starttime;
-    //   // const progressPercent = elapsed / durationMS;
-    //   const difference = timestamp - prevtime;
-    //   // const differencePercent = difference / durationMS;
-    //   // const scrollAmount = differencePercent * totalDist;
-
-    //   if (container.scrollTop > 1) {
-    //     const totalScrollLeft = container.scrollTop;
-    //     let scrollStep = totalScrollLeft / 10;
-    //     if (difference > 0.0) {
-    //       scrollStep *= difference;
-    //       scrollStep *= 0.0625;
-    //       console.log("diff: " + difference);
-    //     }
-    //     //if (scrollStep > 25) scrollStep = 25;
-    //     containerRef.current?.scrollBy({
-    //       top: -scrollStep,
-    //       left: 0,
-    //       behavior: "auto",
-    //     });
-    //     prevtime = timestamp;
-    //     requestAnimationFrame(scroll);
-    //   }
-    // });
   }
 
-  function scrollSmoothlyTo(targetScrollPos, duration = -1) {
+  function manuallySmoothScrollv1To() {
+    const container = containerRef.current;
+    if (!container) return;
+    console.log("dist: " + container.scrollTop);
+
+    let starttime = null;
+    let prevtime = null;
+
+    requestAnimationFrame(function scroll(timestamp) {
+      if (starttime == null) starttime = timestamp;
+      if (prevtime == null) prevtime = starttime;
+
+      const difference = timestamp - prevtime;
+
+      if (container.scrollTop > 1) {
+        const totalScrollLeft = container.scrollTop;
+        let scrollStep = totalScrollLeft / 10;
+        if (difference > 0.0) {
+          scrollStep *= difference;
+          scrollStep *= 0.0625;
+          console.log("diff: " + difference);
+        }
+
+        containerRef.current?.scrollBy({
+          top: -scrollStep,
+          left: 0,
+          behavior: "auto",
+        });
+        prevtime = timestamp;
+        requestAnimationFrame(scroll);
+      }
+    });
+  }
+
+  function manuallySmoothScrollV2To(targetScrollPos, duration = -1) {
     console.log("start scroll..");
     const container = containerRef.current;
     if (!container) return;
@@ -580,55 +487,23 @@ function Layout(props) {
     if (duration == -1) {
       duration = (scrollToTopDelay > 0 ? scrollToTopDelay : 0.2) * 1000;
     }
-    // console.log("dist to scroll: " + distToCover);
-    //console.log("duration: " + duration);
+
     let starttime = null;
     const startPos = container.scrollTop;
-
-    // requestAnimationFrame(function scroll(timestamp) {
-    //   if (starttime == null) starttime = timestamp;
-    //   if (prevtime == null) prevtime = starttime;
-    //   const difference = timestamp - prevtime;
-
-    //   if (container.scrollTop > 1) {
-    //     let scrollStep = 0;
-    //     scrollStep = targetScrollPos - container.scrollTop;
-    //     scrollStep /= 8;
-    //     if (difference > 0.0) {
-    //       scrollStep *= difference;
-    //       scrollStep *= 0.0625;
-    //       scrollStep *= 2;
-    //       //console.log("diff: " + difference);
-    //       //if (scrollStep > 10) scrollStep = 10;
-
-    //       containerRef.current?.scrollBy({
-    //         top: scrollStep,
-    //         left: 0,
-    //         behavior: "auto",
-    //       });
-    //     }
-    //     prevtime = timestamp;
-    //     requestAnimationFrame(scroll);
-    //   }
-    // });
 
     requestAnimationFrame(function scroll(timestamp) {
       if (starttime == null) starttime = timestamp;
 
       const elapsed = timestamp - starttime;
       const elapsed01 = elapsed / duration;
-      // console.log("elapsed01: " + elapsed01);
 
       if (elapsed01 < 1) {
         const scrollAmount = bezier01(elapsed01) * distToCover;
-        //console.log("bezier01: " + bezier01(elapsed01));
 
         const scrollKeyframe = startPos + scrollAmount;
 
         container.scrollTo({
           top: scrollKeyframe,
-          //left: 0,
-          //behavior: "instant",
         });
         requestAnimationFrame(scroll);
       }
@@ -636,8 +511,6 @@ function Layout(props) {
 
     container.scrollTo({
       top: startPos + distToCover,
-      //left: 0,
-      // behavior: "instant",
     });
   }
 
@@ -659,14 +532,9 @@ function Layout(props) {
       });
     } else {
       clearInterval(scrollRoutine.current);
-      //setScrollRoutine(null);
-      //printRoutine();
     }
   }
 
-  function printRoutine() {
-    console.log(scrollRoutine);
-  }
   function gotoResults() {
     setAttemptCalculate(true);
   }
@@ -738,7 +606,7 @@ function Layout(props) {
   }
   function checkAndSetHeaderAndButton() {
     let num = numberFromRoute(router.asPath);
-    //num = actualMainSectionKey;
+
     if (num < 2) {
       setShowButton(false);
       setShowHeading(true);

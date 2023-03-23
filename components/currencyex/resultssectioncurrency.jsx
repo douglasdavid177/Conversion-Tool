@@ -13,8 +13,6 @@ const ResultsSection = ({
 }) => {
   let decPlaces = -1;
   decPlaces = currencyObject[toC]?.decimal_units;
-  // console.log("decplaces: " + decPlaces);
-  // console.log(decPlaces);
   let formattedResult = result.toFixed(
     // If decplaces is undefined, use same amount of decimals as input
     decPlaces == -1 ? decimalPlaces : decPlaces
