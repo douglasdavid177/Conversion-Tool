@@ -47,7 +47,7 @@ const InputSection = ({
                 onChange={handleMasurementTypeSelectChange}
                 value={measurementType}
               >
-                <option value="default">Any (all)</option>
+                <option value="default">Auto (any)</option>
 
                 {getMeasurementDomains().map((mType, ind) => {
                   return (
