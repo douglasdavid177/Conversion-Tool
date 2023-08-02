@@ -39,6 +39,7 @@ export async function getCurrencyRatesObject() {
   const rates = j.response.rates;
 
   console.log("fetched from api...");
+  console.log(rates);
   return rates;
 }
 
@@ -62,8 +63,16 @@ export async function getCurrenciesObject() {
     throw new Error("something happened.... status: " + resp.status);
   }
   const j = await resp.json();
-  const fiats = j.response.fiats;
+  const fiatsArr = j.response;
+
+  const fiatsObj = fiatsArr.reduce((collection, fiatObj) => {
+    return {
+      ...collection,
+      [fiatObj.short_code]: fiatObj,
+    };
+  }, {});
 
   console.log("fetched from api...");
-  return fiats;
+  console.log(fiatsObj);
+  return fiatsObj;
 }

@@ -12,7 +12,8 @@ const ResultsSection = ({
   currencyRatesObj,
 }) => {
   let decPlaces = -1;
-  decPlaces = currencyObject[toC]?.decimal_units;
+  decPlaces = currencyObject[toC]?.precision;
+  //console.log(decPlaces);
   let formattedResult = result.toFixed(
     // If decplaces is undefined, use same amount of decimals as input
     decPlaces == -1 ? decimalPlaces : decPlaces
@@ -32,19 +33,20 @@ const ResultsSection = ({
     <div className={`${styles.resultsSection} ${styles.mainSection}`}>
       <h3>Result:</h3>
       <h1>
-        {formattedResult} {toC}
+        {addCommas(formattedResult)} {toC}
       </h1>
       <h3 className={styles.description}>
-        The amount of <span className={styles.correct}>{startStr} </span>
+        The amount of{" "}
+        <span className={styles.correct}>{addCommas(Number(startStr))} </span>
         {fromC} (
         <span className={sameBase ? styles.correct : fromCStyle}>
-          {currencyObject[fromC].currency_name}
+          {currencyObject[fromC].name}
         </span>
         ) is equivalent to the amount of{" "}
-        <span className={styles.correct}>{result} </span>
+        <span className={styles.correct}>{addCommas(result)} </span>
         {toC} (
         <span className={sameBase ? styles.correct : toCStyle}>
-          {currencyObject[toC].currency_name}
+          {currencyObject[toC].name}
         </span>
         ).
       </h3>

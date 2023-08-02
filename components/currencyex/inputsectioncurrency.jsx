@@ -98,13 +98,12 @@ const InputSection = ({
     const entries = Object.entries(currencyObject);
 
     let currencyCount = 0;
-    const currencyOptionsNonUS = entries.map((val, ind) => {
-      const code = val[1]?.currency_code;
-      const name = val[1]?.currency_name;
-      if (
-        isNaN(currencyRatesObj[code]) ||
-        val[1].countries.includes("United States")
-      ) {
+
+    const currencyOptionsNonUSD = entries.map((val, ind) => {
+      const code = val[1]?.short_code;
+      const name = val[1]?.name;
+      if (isNaN(currencyRatesObj[code]) || code === "USD") {
+        // We'll incude USD seperately, on top of list
         return null;
       }
 
@@ -115,28 +114,13 @@ const InputSection = ({
       );
     });
 
-    const currencyOptionsOnlyUS = entries.map((val, ind) => {
-      const code = val[1]?.currency_code;
-      const name = val[1]?.currency_name;
-
-      if (
-        isNaN(currencyRatesObj[code]) ||
-        !val[1].countries.includes("United States")
-      ) {
-        return null;
-      }
-
-      return (
-        <option value={code} key={code}>
-          {getOptionLabelString(code, name, current)}
-        </option>
-      );
-    });
-
-    const sortedCurrencyOptions =
-      currencyOptionsOnlyUS.concat(currencyOptionsNonUS);
-    console.log(sortedCurrencyOptions.entries);
-    return sortedCurrencyOptions;
+    const currencyOptions = [
+      <option value={"USD"} key={"USD"}>
+        {getOptionLabelString("USD", currencyObject["USD"].name, current)}
+      </option>,
+      ...currencyOptionsNonUSD,
+    ];
+    return currencyOptions;
   }
 
   function getOptionLabelString(code, name, current) {
