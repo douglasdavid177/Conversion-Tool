@@ -63,6 +63,18 @@ const AboutSection = ({ setOpenNav }) => {
         {` converts any amount of currency from one type to an equivalent amount in another, using live exchange rate values that are retrieved in real time for over 160 world currencies. The results section displays the more valuable currency in blue and the less valuable currency yellow. Requires an internet connection. `}
       </p>
       <p>{`The tip calculator (coming soon) helps generate and display convenient tip values based on markers such as nearest percentage or nearest dollar.`}</p>
+      <p>
+        The{" "}
+        <a
+          href="https://github.com/douglasdavid177/Conversion-Tool"
+          target="_blank"
+          rel="noreferrer"
+        >
+          source code
+        </a>{" "}
+        for this project can be viewed online on GitHub.
+      </p>
+      <br />
       <br />
     </div>
   );
