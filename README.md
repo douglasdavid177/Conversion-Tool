@@ -6,7 +6,7 @@ App built by David Douglas
 
 This is a NextJS project using ReactJS under the hood.
 
-More details about development can be found on the apps [About](https://lucas-conversion-tool.netlify.app/aboutsection) page.
+More details about development can be found on the app's [About](https://lucas-conversion-tool.netlify.app/aboutsection) page.
 
 It was built by request for my roomate, Lucas to assist him in being more productive while working hands-on with woodworking and mechanical engineering projects. It's also designed to provide general utilty for everyday calculations that anyone may need to do a wide variety of jobs.
 
